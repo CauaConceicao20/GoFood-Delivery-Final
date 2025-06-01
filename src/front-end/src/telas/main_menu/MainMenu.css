@@ -234,14 +234,37 @@ footer {
   bottom: 0;
   width: 100%;
   margin: 100px 0 0 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
 }
 
 .footer-copyright {
-    background-color: #e53935;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
+  position: fixed;
+  background-color: #e53935;
+  color: white;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 0.7rem;
+  border-top: none;
+  margin-top: 20px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
+
+.minimal-footer p {
+  margin: 0;
+  padding: 0;
+  line-height: 1.3;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+}
+
+
 .opcao-footer {
   text-align: center;
 }
@@ -249,78 +272,78 @@ footer {
 
 /* Estilos gerais */
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background-color: #f8f8f8;
-    margin: 0;
-    padding: 0;
-    color: #333;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #f8f8f8;
+  margin: 0;
+  padding: 0;
+  color: #333;
 }
 
 /* Container principal */
 #app {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
 }
 
 /* Cabeçalho */
 #app h1 {
-    color: #ff6b6b;
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    font-weight: 700;
+  color: #ff6b6b;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  font-weight: 700;
 }
 
 /* Subtítulo */
 #app h2 {
-    color: #555;
-    font-size: 1.3rem;
-    font-weight: 400;
-    margin-bottom: 30px;
+  color: #555;
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-bottom: 30px;
 }
 
 /* Campo de endereço */
 .address-input {
-    width: 100%;
-    padding: 15px;
-    border: 2px solid #ddd;
-    border-radius: 30px;
-    font-size: 1rem;
-    box-sizing: border-box;
-    margin-top: 10px;
-    transition: border-color 0.3s;
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 30px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  margin-top: 10px;
+  transition: border-color 0.3s;
 }
 
 .address-input:focus {
-    outline: none;
-    border-color: #ff6b6b;
+  outline: none;
+  border-color: #ff6b6b;
 }
 
 .address-input::placeholder {
-    color: #aaa;
+  color: #aaa;
 }
 
 /* Botão (se houver) */
 .search-button {
-    background-color: #ff6b6b;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 30px;
-    font-size: 1rem;
-    margin-top: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 30px;
+  font-size: 1rem;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .search-button:hover {
-    background-color: #ff5252;
+  background-color: #ff5252;
 }
 
 /* Efeitos visuais */
 #app {
-    animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 /* Estilos para os Filtros */
@@ -332,7 +355,7 @@ body {
   height: 100%;
   background: white;
   padding: 20px;
-  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   overflow-y: auto;
 }
@@ -364,7 +387,8 @@ body {
   margin-right: 10px;
 }
 
-.price-filter, .distance-filter {
+.price-filter,
+.distance-filter {
   font-weight: bold;
   color: #333;
 }
@@ -488,8 +512,15 @@ body {
 
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Responsividade */
