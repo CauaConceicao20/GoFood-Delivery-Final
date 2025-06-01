@@ -96,7 +96,7 @@ const Login = () => {
 
         {/* Link temporário para o menu - remover na versão final */}
         <div className="temp-menu-link">
-          <Link to="/menu-temporario">Acesso temporário ao Menu</Link>
+          <Link to="/main_menu" className="temp-menu-link">Acesso temporário ao Menu</Link>
         </div>
 
       </div>
