@@ -3,6 +3,7 @@ import Login from './telas/login/Login';
 import Cadastro from './telas/cadastro/Cadastro';
 import LoginRestaurante from './telas/restaurante/login/LoginRestaurante';
 import CadastroRestaurante from './telas/restaurante/cadastro/CadastroRestaurante';
+import MainMenu from './telas/main_menu/MainMenu'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/cadastro/restaurante" element={<CadastroRestaurante />} />
         <Route path="/login/restaurante" element={<LoginRestaurante />} />
+        <Route path="/main_menu/MainMenu" element={<MainMenu />} />
       </Routes>
     </div>
   );

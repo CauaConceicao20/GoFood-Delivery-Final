@@ -183,3 +183,22 @@
 .restaurant-button:hover {
   background-color: #e67e22;
 }
+
+/* estilo link temporario para menu */
+.temp-menu-link {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px dashed #ccc;
+}
+
+.temp-menu-link a {
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.temp-menu-link a:hover {
+  text-decoration: underline;
+  color: #333;
+}
