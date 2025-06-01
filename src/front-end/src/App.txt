@@ -1,0 +1,15 @@
+// codigo temporariamente desativado
+
+import React from 'react';
+import Login from './Login';
+import './Login.css'; // Importe os estilos aqui
+
+function App() {
+  return (
+    <div className="App">
+      <Login />
+    </div>
+  );
+}
+
+export default App;
