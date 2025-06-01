@@ -86,7 +86,6 @@ const Login = () => {
           <Link to="/cadastro" className="action-button primary-button">Cadastre-se</Link>
         </div>
         
-
         
         <div className="restaurant-access">
           <p>Acesso para restaurantes:</p>
