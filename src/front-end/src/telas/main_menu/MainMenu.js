@@ -191,46 +191,6 @@ const MainMenu = () => {
         <div className="footer-copyright">
           <p>&copy; 2025 GoFood Delivery. Todos os direitos reservados.</p>
         </div>
-
-        <nav className="bottom-bar">
-          <div className="opcao-footer">
-            <div className="area-opcao-bottom-bar">
-              <Link to="/">
-                <span role="img" aria-label="home">🏠</span>
-                <div><span>Início</span></div>
-              </Link>
-            </div>
-          </div>
-
-          <div className="divisao-bottom-bar"></div>
-
-          <div className="opcao-footer">
-            <div className="area-opcao-bottom-bar">
-              <span role="img" aria-label="profile">👤</span>
-              <div><span>Perfil</span></div>
-            </div>
-          </div>
-
-          <div className="divisao-bottom-bar"></div>
-
-          <div className="opcao-footer">
-            <div className="area-opcao-bottom-bar">
-              <Link to="/carrinho">
-                <span role="img" aria-label="cart">🛒</span>
-                <div><span>Carrinho</span></div>
-              </Link>
-            </div>
-          </div>
-
-          <div className="divisao-bottom-bar"></div>
-
-          <div className="opcao-footer">
-            <div className="area-opcao-bottom-bar">
-              <span role="img" aria-label="menu">☰</span>
-              <div><span>Menu</span></div>
-            </div>
-          </div>
-        </nav>
       </footer>
     </div>
   );
