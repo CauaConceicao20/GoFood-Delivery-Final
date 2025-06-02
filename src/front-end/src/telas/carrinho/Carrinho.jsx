@@ -44,7 +44,7 @@ const Carrinho = () => {
     <div className="carrinho-container">
       <header className="carrinho-header">
         <h1>Carrinho</h1>
-        <Link to="/" className="btn-voltar">Voltar ao Menu</Link>
+        <Link to="/main_menu" className="btn-voltar">Voltar ao Menu</Link>
       </header>
 
       <main className="carrinho-main">
