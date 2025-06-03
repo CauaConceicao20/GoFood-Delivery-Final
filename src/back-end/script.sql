@@ -1,44 +1,44 @@
-DROP TABLE IF EXISTS Item_Carrinho;
-DROP TABLE IF EXISTS Item_Pedido;
-DROP TABLE IF EXISTS Pedido;
-DROP TABLE IF EXISTS Carrinho;
-DROP TABLE IF EXISTS Foto_Produto;
-DROP TABLE IF EXISTS Produto;
-DROP TABLE IF EXISTS Restaurante_Forma_Pagamento;
-DROP TABLE IF EXISTS Restaurante;
-DROP TABLE IF EXISTS Usuario_Grupo;
-DROP TABLE IF EXISTS Permissao;
-DROP TABLE IF EXISTS Grupo;
-DROP TABLE IF EXISTS Usuario;
-DROP TABLE IF EXISTS FormaPagamento;
-DROP TABLE IF EXISTS Cozinha;
-DROP TABLE IF EXISTS Cidade;
-DROP TABLE IF EXISTS Estado;
+DROP TABLE IF EXISTS itens_carrinho;
+DROP TABLE IF EXISTS itens_pedido;
+DROP TABLE IF EXISTS pedidos;
+DROP TABLE IF EXISTS carrinhos;
+DROP TABLE IF EXISTS fotos_produto;
+DROP TABLE IF EXISTS produtos;
+DROP TABLE IF EXISTS restaurantes_forma_pagamento;
+DROP TABLE IF EXISTS restaurantes;
+DROP TABLE IF EXISTS usuarios_grupo;
+DROP TABLE IF EXISTS permissoes;
+DROP TABLE IF EXISTS grupos;
+DROP TABLE IF EXISTS usuarios;
+DROP TABLE IF EXISTS formas_pagamento;
+DROP TABLE IF EXISTS cozinhas;
+DROP TABLE IF EXISTS cidades;
+DROP TABLE IF EXISTS estados;
 
-CREATE TABLE IF NOT EXISTS Estado (
+CREATE TABLE IF NOT EXISTS estados (
     id INTEGER PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     sigla VARCHAR(2) NOT NULL UNIQUE
 );
 
-CREATE TABLE IF NOT EXISTS Cidade (
+CREATE TABLE IF NOT EXISTS cidades (
     id INTEGER PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     estado_id INTEGER NOT NULL,
-    FOREIGN KEY (estado_id) REFERENCES Estado(id)
+    FOREIGN KEY (estado_id) REFERENCES estados(id)
 );
 
-CREATE TABLE IF NOT EXISTS Cozinha (
+CREATE TABLE IF NOT EXISTS cozinhas (
     id INTEGER PRIMARY KEY,
     nome VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS FormaPagamento (
+CREATE TABLE IF NOT EXISTS formas_pagamento (
     id INTEGER PRIMARY KEY,
     nome VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Usuario (
+CREATE TABLE IF NOT EXISTS usuarios (
     id INTEGER PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
@@ -49,27 +49,27 @@ CREATE TABLE IF NOT EXISTS Usuario (
     telefone VARCHAR(15) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Grupo (
+CREATE TABLE IF NOT EXISTS grupos (
     id INTEGER PRIMARY KEY,
     nome VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Permissao (
+CREATE TABLE IF NOT EXISTS permissoes (
     id INTEGER PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     grupo_id INTEGER NOT NULL,
-    FOREIGN KEY (grupo_id) REFERENCES Grupo(id)
+    FOREIGN KEY (grupo_id) REFERENCES grupos(id)
 );
 
-CREATE TABLE IF NOT EXISTS Usuario_Grupo (
+CREATE TABLE IF NOT EXISTS usuarios_grupo (
     usuario_id INTEGER NOT NULL,
     grupo_id INTEGER NOT NULL,
     PRIMARY KEY (usuario_id, grupo_id),
-    FOREIGN KEY (usuario_id) REFERENCES Usuario(id),
-    FOREIGN KEY (grupo_id) REFERENCES Grupo(id)
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (grupo_id) REFERENCES grupos(id)
 );
 
-CREATE TABLE IF NOT EXISTS Restaurante (
+CREATE TABLE IF NOT EXISTS restaurantes (
     id INTEGER PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     razao_social VARCHAR(100),
@@ -86,48 +86,48 @@ CREATE TABLE IF NOT EXISTS Restaurante (
     numero VARCHAR(20),
     complemento VARCHAR(255),
     bairro VARCHAR(100),
-    FOREIGN KEY (cozinha_id) REFERENCES Cozinha(id),
-    FOREIGN KEY (cidade_id) REFERENCES Cidade(id),
-    FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
+    FOREIGN KEY (cozinha_id) REFERENCES cozinhas(id),
+    FOREIGN KEY (cidade_id) REFERENCES cidades(id),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
-CREATE TABLE IF NOT EXISTS Restaurante_Forma_Pagamento (
+CREATE TABLE IF NOT EXISTS restaurantes_forma_pagamento (
     restaurante_id INTEGER NOT NULL,
     forma_pagamento_id INTEGER NOT NULL,
     PRIMARY KEY (restaurante_id, forma_pagamento_id),
-    FOREIGN KEY (restaurante_id) REFERENCES Restaurante(id),
-    FOREIGN KEY (forma_pagamento_id) REFERENCES FormaPagamento(id)
+    FOREIGN KEY (restaurante_id) REFERENCES restaurantes(id),
+    FOREIGN KEY (forma_pagamento_id) REFERENCES formas_pagamento(id)
 );
 
-CREATE TABLE IF NOT EXISTS Produto (
+CREATE TABLE IF NOT EXISTS produtos (
     id INTEGER PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     descricao TEXT,
     preco DECIMAL(10,2) NOT NULL,
     ativo BOOLEAN,
     restaurante_id INTEGER NOT NULL,
-    FOREIGN KEY (restaurante_id) REFERENCES Restaurante(id)
+    FOREIGN KEY (restaurante_id) REFERENCES restaurantes(id)
 );
 
-CREATE TABLE IF NOT EXISTS Foto_Produto (
+CREATE TABLE IF NOT EXISTS fotos_produto (
     id INTEGER PRIMARY KEY,
     nome VARCHAR(255),
     descricao TEXT,
     content_type VARCHAR(100),
     tamanho BIGINT,
     produto_id INTEGER NOT NULL UNIQUE,
-    FOREIGN KEY (produto_id) REFERENCES Produto(id)
+    FOREIGN KEY (produto_id) REFERENCES produtos(id)
 );
 
-CREATE TABLE IF NOT EXISTS Carrinho (
+CREATE TABLE IF NOT EXISTS carrinhos (
     id INTEGER PRIMARY KEY,
     quantidade_total_itens INT,
     sub_total DECIMAL(10,2),
     usuario_id INTEGER UNIQUE,
-    FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
-CREATE TABLE IF NOT EXISTS Pedido (
+CREATE TABLE IF NOT EXISTS pedidos (
     id INTEGER PRIMARY KEY,
     codigo VARCHAR(50) NOT NULL,
     sub_total DECIMAL(10,2),
@@ -141,13 +141,13 @@ CREATE TABLE IF NOT EXISTS Pedido (
     usuario_id INTEGER NOT NULL,
     restaurante_id INTEGER,
     forma_pagamento_id INTEGER,
-    FOREIGN KEY (usuario_id) REFERENCES Usuario(id),
-    FOREIGN KEY (restaurante_id) REFERENCES Restaurante(id),
-    FOREIGN KEY (forma_pagamento_id) REFERENCES FormaPagamento(id),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (restaurante_id) REFERENCES restaurantes(id),
+    FOREIGN KEY (forma_pagamento_id) REFERENCES formas_pagamento(id),
     CHECK (status_pedido IN ('CRIADO', 'CONFIRMADO', 'ENTREGUE', 'CANCELADO'))
 );
 
-CREATE TABLE IF NOT EXISTS Item_Pedido (
+CREATE TABLE IF NOT EXISTS itens_pedido (
     pedido_id INTEGER NOT NULL,
     produto_id INTEGER NOT NULL,
     quantidade INT,
@@ -155,15 +155,15 @@ CREATE TABLE IF NOT EXISTS Item_Pedido (
     preco_total DECIMAL(10,2),
     observacao TEXT,
     PRIMARY KEY (pedido_id, produto_id),
-    FOREIGN KEY (pedido_id) REFERENCES Pedido(id),
-    FOREIGN KEY (produto_id) REFERENCES Produto(id)
+    FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
+    FOREIGN KEY (produto_id) REFERENCES produtos(id)
 );
 
-CREATE TABLE IF NOT EXISTS Item_Carrinho (
+CREATE TABLE IF NOT EXISTS itens_carrinho (
     carrinho_id INTEGER NOT NULL,
     produto_id INTEGER NOT NULL,
     quantidade INT,
     PRIMARY KEY (carrinho_id, produto_id),
-    FOREIGN KEY (carrinho_id) REFERENCES Carrinho(id),
-    FOREIGN KEY (produto_id) REFERENCES Produto(id)
+    FOREIGN KEY (carrinho_id) REFERENCES carrinhos(id),
+    FOREIGN KEY (produto_id) REFERENCES produtos(id)
 );
