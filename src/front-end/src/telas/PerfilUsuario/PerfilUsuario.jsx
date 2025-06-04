@@ -3,10 +3,12 @@ import './PerfilUsuario.css';
 
 const PerfilUsuario = () => {
   const [userData, setUserData] = useState({
-    nome: '',
-    email: '',
+    foto: null,
+    nomeCompleto: '',
     telefone: '',
+    email: '',
     endereco: '',
+    idade: '',
     dataNascimento: '',
     cpf: ''
   });
@@ -16,112 +18,159 @@ const PerfilUsuario = () => {
     setUserData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleFileChange = (e) => {
+    if (e.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setUserData(prev => ({ ...prev, foto: event.target.result }));
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Dados enviados:', userData);
-    // Aqui você adicionaria a lógica para salvar os dados
+    console.log('Dados salvos:', userData);
   };
 
   return (
-    <div className="perfil-container">
+    <div className="profile-container">
       <h1>Configuração de perfil do usuário</h1>
       
-      <form onSubmit={handleSubmit}>
-        {/* Estrutura da tabela conforme sua imagem */}
-        <div className="profile-grid">
-          {/* Linha 1 */}
-          <div className="profile-row">
-            <div className="profile-cell">
-              <label>Foto de perfil</label>
-              <div className="foto-placeholder">+</div>
-            </div>
-            <div className="profile-cell">
-              <label>Nome completo *</label>
-              <input
-                type="text"
-                name="nome"
-                value={userData.nome}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="profile-cell">
-              <label>Telefone de celular *</label>
-              <input
-                type="tel"
-                name="telefone"
-                value={userData.telefone}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
+      <form onSubmit={handleSubmit} className="profile-form">
+        <table className="profile-table">
+          <tbody>
+            {/* Linha 1 */}
+            <tr>
+              <td rowSpan="3" className="photo-cell">
+                <label>Foto de perfil</label>
+                <label htmlFor="photo-upload" className="photo-upload-btn">
+                  {userData.foto ? (
+                    <img src={userData.foto} alt="Foto do perfil" className="profile-image" />
+                  ) : (
+                    '+'
+                  )}
+                </label>
+                <input
+                  id="photo-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  style={{ display: 'none' }}
+                />
+              </td>
+              <td className="label-cell">
+                <label className="required-field">Nome completo</label>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="nomeCompleto"
+                  value={userData.nomeCompleto}
+                  onChange={handleChange}
+                  required
+                />
+              </td>
+              <td className="label-cell">
+                <label className="required-field">Telefone de celular</label>
+              </td>
+              <td>
+                <input
+                  type="tel"
+                  name="telefone"
+                  value={userData.telefone}
+                  onChange={handleChange}
+                  required
+                />
+              </td>
+            </tr>
 
-          {/* Linha 2 */}
-          <div className="profile-row">
-            <div className="profile-cell"></div>
-            <div className="profile-cell">
-              <label>E-mail *</label>
-              <input
-                type="email"
-                name="email"
-                value={userData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="profile-cell">
-              <label>Endereço *</label>
-              <input
-                type="text"
-                name="endereco"
-                value={userData.endereco}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
+            {/* Linha 2 */}
+            <tr>
+              <td className="label-cell">
+                <label className="required-field">E-mail</label>
+              </td>
+              <td colSpan="3">
+                <input
+                  type="email"
+                  name="email"
+                  value={userData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </td>
+            </tr>
 
-          {/* Linha 3 */}
-          <div className="profile-row">
-            <div className="profile-cell">
-              <label>Nome idade:</label>
-              <input
-                type="text"
-                name="idade"
-                value={userData.idade}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="profile-cell">
-              <label>Data de nascimento *</label>
-              <input
-                type="date"
-                name="dataNascimento"
-                value={userData.dataNascimento}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="profile-cell">
-              <label>CPF (Opcional)</label>
-              <input
-                type="text"
-                name="cpf"
-                value={userData.cpf}
-                onChange={handleChange}
-                placeholder="000.000.000-00"
-              />
-            </div>
-          </div>
+            {/* Linha 3 */}
+            <tr>
+              <td className="label-cell">
+                <label className="required-field">Endereço</label>
+              </td>
+              <td colSpan="3">
+                <input
+                  type="text"
+                  name="endereco"
+                  value={userData.endereco}
+                  onChange={handleChange}
+                  required
+                />
+              </td>
+            </tr>
+
+            {/* Linha 4 */}
+            <tr>
+              <td className="label-cell">
+                <label>Nome idade:</label>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="idade"
+                  value={userData.idade}
+                  onChange={handleChange}
+                />
+              </td>
+              <td className="label-cell">
+                <label className="required-field">Data de nascimento</label>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="dataNascimento"
+                  value={userData.dataNascimento}
+                  onChange={handleChange}
+                  placeholder="dd/mm/aaaa"
+                  required
+                />
+              </td>
+            </tr>
+
+            {/* Linha 5 */}
+            <tr>
+              <td className="label-cell">
+                <label>CPF (Opcional)</label>
+              </td>
+              <td colSpan="3">
+                <input
+                  type="text"
+                  name="cpf"
+                  value={userData.cpf}
+                  onChange={handleChange}
+                  placeholder="000.000.000-00"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div className="form-actions">
+          <button type="submit" className="save-button">
+            Salvar Alterações
+          </button>
         </div>
-
-        <button type="submit" className="save-button">
-          Salvar Alterações
-        </button>
       </form>
     </div>
   );
 };
 
-export default PerfilUsuario; // Esta linha é crucial!
+export default PerfilUsuario;
