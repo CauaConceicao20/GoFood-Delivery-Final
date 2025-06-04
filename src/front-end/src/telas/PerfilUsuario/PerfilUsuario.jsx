@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './PerfilUsuario.css';
 
 const PerfilUsuario = () => {
@@ -35,8 +36,14 @@ const PerfilUsuario = () => {
 
   return (
     <div className="profile-container">
-      <h1>Configuração de perfil do usuário</h1>
-      
+      <div>
+         <Link to="/main_menu" className="back-button">
+          &larr; Voltar ao Menu
+        </Link>
+        <h1>Configuração de perfil do usuário</h1>
+      </div>
+
+
       <form onSubmit={handleSubmit} className="profile-form">
         <table className="profile-table">
           <tbody>
@@ -119,17 +126,6 @@ const PerfilUsuario = () => {
 
             {/* Linha 4 */}
             <tr>
-              <td className="label-cell">
-                <label>Nome idade:</label>
-              </td>
-              <td>
-                <input
-                  type="text"
-                  name="idade"
-                  value={userData.idade}
-                  onChange={handleChange}
-                />
-              </td>
               <td className="label-cell">
                 <label className="required-field">Data de nascimento</label>
               </td>

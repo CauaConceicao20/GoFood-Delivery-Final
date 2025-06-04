@@ -130,3 +130,57 @@
     padding-bottom: 5px;
   }
 }
+
+/* botao voltar ao menu */
+
+.header-actions {
+  position: relative;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.back-button {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  color: #333;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+}
+
+.back-button:hover {
+  background-color: #e0e0e0;
+  color: #000;
+}
+
+.back-button::before {
+  content: "";
+  margin-right: 5px;
+}
+
+/* Ajuste de título para compensar o botão */
+.profile-container h1 {
+  margin: 0;
+  padding-top: 10px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .back-button {
+    position: static;
+    transform: none;
+    margin-bottom: 15px;
+    display: inline-block;
+  }
+  
+  .header-actions {
+    text-align: left;
+  }
+}
