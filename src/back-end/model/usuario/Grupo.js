@@ -1,6 +1,15 @@
 class Grupo {
-    constructor(nome) {
+    constructor(id, nome) {
+        this.id = id;
         this.nome = nome;
+    }
+
+    setId(id) {
+        this.id = id;
+    }
+
+    getId() {
+        return this.id;
     }
 
     setNome(nome) {

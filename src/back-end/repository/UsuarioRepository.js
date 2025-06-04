@@ -1,71 +1,38 @@
-/*import Connection from "../database/Connection";
-import Usuario from "../model/Usuario/Usuario";
+import Connection from "../database/Connection.js";
+import Usuario from "../model/usuario/Usuario.js";
 
 class UsuarioRepository {
+  constructor() {
+    this.connection = new Connection();
+  }
 
-    constructor() {
-        this.connection = new Connection();
-    }
-
-    async create(user) {
+  async registra(usuario) {
     try {
-      const db = await this.connection.connect();
-      const result = await db.run(
-        `INSERT INTO users (name, email) VALUES (?, ?)`,
-        [user.name, user.email]
+      const conn = await this.connection.connect();
+
+      await conn.run("BEGIN TRANSACTION");
+
+      const result = await conn.run(
+        `INSERT INTO usuarios (nome, email, senha, dataCadastro, telefone, cpf, cnpj) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [usuario.getNome(), usuario.getEmail(), usuario.getSenha(), usuario.getDataCadastro(), usuario.getTelefone(), usuario.getCpf(),
+           usuario.getCnpj()]
       );
-      user.id = result.lastID;
-      return user;
-    } catch (err) {
-      console.error('Erro ao criar usuário:', err);
-      throw err;
-    }
-  }
 
-  async findAll() {
-    try {
-      const db = await this.connection.connect();
-      const rows = await db.all(`SELECT * FROM users`);
-      return rows.map(row => new User(row.id, row.name, row.email));
-    } catch (err) {
-      console.error('Erro ao buscar usuários:', err);
-      return [];
-    }
-  }
+      if (result.changes === 0) {
+        throw new Error('Erro ao criar usuário');
+      }
 
-  async findById(id) {
-    try {
-      const db = await this.connection.connect();
-      const row = await db.get(`SELECT * FROM users WHERE id = ?`, [id]);
-      return row ? new User(row.id, row.name, row.email) : null;
-    } catch (err) {
-      console.error('Erro ao buscar usuário por ID:', err);
-      return null;
-    }
-  }
+      await conn.run('COMMIT');
 
-  async update(user) {
-    try {
-      const db = await this.connection.connect();
-      await db.run(
-        `UPDATE users SET name = ?, email = ? WHERE id = ?`,
-        [user.name, user.email, user.id]
-      );
-      return user;
-    } catch (err) {
-      console.error('Erro ao atualizar usuário:', err);
-      throw err;
-    }
-  }
+       return new Usuario(result.lastID, usuario.getNome(), usuario.getEmail(), usuario.getSenha(),
+       usuario.getDataCadastro(), usuario.getTelefone(), usuario.getCpf(), usuario.getCnpj());
 
-  async delete(id) {
-    try {
-      const db = await this.connection.connect();
-      await db.run(`DELETE FROM users WHERE id = ?`, [id]);
     } catch (err) {
-      console.error('Erro ao deletar usuário:', err);
-      throw err;
+      console.error(err);
+      await conn.run("ROLLBACK"); 
+      throw new Error(`Erro ao registrar usuário: ${err.message}`);
     }
   }
 }
-*/
+
+export default UsuarioRepository;

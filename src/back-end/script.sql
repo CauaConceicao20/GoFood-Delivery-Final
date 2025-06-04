@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
 
 CREATE TABLE IF NOT EXISTS grupos (
     id INTEGER PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL
+    nome VARCHAR(20) NOT NULL CHECK (nome IN ('ADMIN', 'CLIENTE', 'RESTAURANTE'))
 );
 
 CREATE TABLE IF NOT EXISTS permissoes (
@@ -137,14 +137,13 @@ CREATE TABLE IF NOT EXISTS pedidos (
     data_confirmacao DATETIME,
     data_entrega DATETIME,
     data_cancelamento DATETIME,
-    status_pedido VARCHAR(20) NOT NULL,
+    status_pedido VARCHAR(20) NOT NULL CHECK (status_pedido IN ('CRIADO', 'CONFIRMADO', 'ENTREGUE', 'CANCELADO')),
     usuario_id INTEGER NOT NULL,
     restaurante_id INTEGER,
     forma_pagamento_id INTEGER,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
     FOREIGN KEY (restaurante_id) REFERENCES restaurantes(id),
-    FOREIGN KEY (forma_pagamento_id) REFERENCES formas_pagamento(id),
-    CHECK (status_pedido IN ('CRIADO', 'CONFIRMADO', 'ENTREGUE', 'CANCELADO'))
+    FOREIGN KEY (forma_pagamento_id) REFERENCES formas_pagamento(id)
 );
 
 CREATE TABLE IF NOT EXISTS itens_pedido (
@@ -167,3 +166,29 @@ CREATE TABLE IF NOT EXISTS itens_carrinho (
     FOREIGN KEY (carrinho_id) REFERENCES carrinhos(id),
     FOREIGN KEY (produto_id) REFERENCES produtos(id)
 );
+
+INSERT INTO grupos (nome) VALUES ('ADMIN');
+INSERT INTO grupos (nome) VALUES ('CLIENTE');
+INSERT INTO grupos (nome) VALUES ('RESTAURANTE');
+
+INSERT INTO permissoes (nome, grupo_id) VALUES ('gerenciar_usuarios', 1);
+INSERT INTO permissoes (nome, grupo_id) VALUES ('gerenciar_grupos', 1);
+INSERT INTO permissoes (nome, grupo_id) VALUES ('gerenciar_permissoes', 1);
+INSERT INTO permissoes (nome, grupo_id) VALUES ('gerenciar_restaurantes', 1);
+INSERT INTO permissoes (nome, grupo_id) VALUES ('gerenciar_produtos', 1);
+INSERT INTO permissoes (nome, grupo_id) VALUES ('visualizar_todos_pedidos', 1);
+INSERT INTO permissoes (nome, grupo_id) VALUES ('alterar_status_pedido', 1);
+INSERT INTO permissoes (nome, grupo_id) VALUES ('remover_usuarios', 1);
+INSERT INTO permissoes (nome, grupo_id) VALUES ('remover_restaurantes', 1);
+
+INSERT INTO permissoes (nome, grupo_id) VALUES ('gerenciar_cardapio', 2);
+INSERT INTO permissoes (nome, grupo_id) VALUES ('visualizar_pedidos', 2);
+
+-- INSERT INTO permissoes (nome, grupo_id) VALUES ('alterar_status_pedido', 2);
+
+INSERT INTO permissoes (nome, grupo_id) VALUES ('fazer_pedido', 3);
+INSERT INTO permissoes (nome, grupo_id) VALUES ('gerenciar_carrinho', 3);
+INSERT INTO permissoes (nome, grupo_id) VALUES ('visualizar_cardapio', 3);
+INSERT INTO permissoes (nome, grupo_id) VALUES ('editar_perfil', 3);
+
+--INSERT INTO permissoes (nome, grupo_id) VALUES ('acompanhar_pedido', 3);

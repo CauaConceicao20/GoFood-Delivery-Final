@@ -4,11 +4,11 @@ class Carrinho {
         this.subTotal = subTotal;
     }
 
-    setQuantidadeTotalDeitems() {
+    setQuantidadeTotalDeItems() {
         return this.quantidadeTotalDeitems;
     }
 
-    getQuantidadeTotalDeitems() {
+    getQuantidadeTotalDeItems() {
         return this.quantidadeTotalDeitems;
     }
 

@@ -1,11 +1,22 @@
 class Usuario {
-    constructor(nome, email, senha, dataCadastro, cpf, cnpj) {
+
+    constructor(id, nome, email, senha, dataCadastro, telefone, cpf, cnpj) {
+        this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.dataCadastro = dataCadastro;
+        this.telefone = telefone;
         this.cpf = cpf;
         this.cnpj = cnpj;
+    }
+
+    setId(id) {
+        this.id = id;
+    }
+
+    getId() {
+        return this.id;
     }
 
     setNome(nome) {
@@ -38,6 +49,14 @@ class Usuario {
 
     getDataCadastro() {
         return this.dataCadastro;
+    }
+
+    setTelefone(telefone) {
+        this.telefone = telefone;
+    }
+
+    getTelefone() {
+        return this.telefone;
     }
 
     setCpf(cpf) {
