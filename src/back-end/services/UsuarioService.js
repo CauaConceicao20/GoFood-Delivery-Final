@@ -29,14 +29,11 @@ class UsuarioService {
                     }
                 }
             }
-
             await this.carrinhoService.registra(new Carrinho(0,0), usuarioRegistrado.getId());
-
             return usuarioRegistrado;
 
         } catch (err) {
-            console.error(err);
-            throw new Error(`${err.message}`);
+            throw err;
         }
     }
 

@@ -6,22 +6,20 @@ class GrupoService {
     constructor() {
         this.grupoRepository = new GrupoRepository();
     }
-    
+
     async buscarTodos() {
         try {
             return await this.grupoRepository.buscarTodosGrupos();
         } catch (err) {
-            console.error(err);
-            throw new Error(`Erro ao buscar grupos: ${err.message}`);
+            throw err;
         }
     }
 
     async buscarPorId(id) {
         try {
-           return await this.grupoRepository.buscarPorId(id);
-        }catch(err){
-            console.error(err);
-            throw new Error(`${err.message}`)
+            return await this.grupoRepository.buscarPorId(id);
+        } catch (err) {
+            throw err;
         }
     }
 
@@ -29,8 +27,7 @@ class GrupoService {
         try {
             return await this.grupoRepository.buscarPorNome(nomeGrupo);
         } catch (err) {
-            console.error(err);
-            throw new Error(`Erro ao buscar grupo por nome: ${err.message}`);
+            throw err;
         }
     }
 }

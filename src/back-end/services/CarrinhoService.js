@@ -10,8 +10,7 @@ class CarrinhoService {
         try {
             return await this.carrinhoRepository.registra(carrinho, idUsuario);
         } catch (err) {
-            console.error(err);
-            throw new Error(`${err.message}`);
+            throw err;
         }
     }
 }

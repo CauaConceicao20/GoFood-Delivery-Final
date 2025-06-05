@@ -1,5 +1,6 @@
 import Connection from "../database/Connection.js";
 import Grupo from "../model/usuario/Grupo.js";
+import { NotFoundError } from "../exception/GlobalExceptions.js";
 
 class GrupoRepository {
 
@@ -8,13 +9,14 @@ class GrupoRepository {
     }
 
     async buscarTodosGrupos() {
+        let conn;
         try {
-            const conn = await this.connection.connect();
+            conn = await this.connection.connect();
             await conn.run("BEGIN TRANSACTION");
             const grupos = await conn.all(`SELECT * FROM grupos`);
 
             if (grupos.length === 0) {
-                throw new Error("Nenhum grupo encontrado.");
+                throw new NotFoundError("Nenhum grupo encontrado.");
             }
 
             await conn.run('COMMIT');
@@ -22,49 +24,53 @@ class GrupoRepository {
             return grupos.map(grupo => new Grupo(grupo.id, grupo.nome));
 
         } catch (err) {
+            console.error(err);
             await conn.run('ROLLBACK');
-            throw new Error(`${err.message}`);
+            throw err;
         }
     }
 
     async buscarPorId(id) {
+        let conn;
         try {
-            const conn = await this.connection.connect();
+            conn = await this.connection.connect();
 
             await conn.run("BEGIN TRANSACTION");
 
             const grupo = await conn.get(`SELECT * FROM grupos WHERE id = ?`, [id]);
 
             if (!grupo) {
-                throw new Error(`Grupo com ID ${id} não encontrado.`);
+                throw new NotFoundError(`Grupo com ID ${id} não encontrado.`);
             }
 
             await conn.run('COMMIT');
-            
+
             return new Grupo(grupo.id, grupo.nome);
 
         } catch (err) {
+            console.error(err);
             await conn.run('ROLLBACK');
-            throw new Error(`${err.message}`);
+            throw err;
         }
     }
 
     async buscarPorNome(nomeGrupo) {
+        let conn;
         try {
-            const conn = await this.connection.connect();
+            conn = await this.connection.connect();
             await conn.run("BEGIN TRANSACTION");
             const grupo = await conn.get(`SELECT * FROM grupos WHERE nome = ?`, [nomeGrupo]);
 
             if (!grupo) {
-                throw new Error(`Grupo com ID ${id} não encontrado.`);
+                throw new NotFoundError(`Grupo com ID ${id} não encontrado.`);
             }
 
             await conn.run('COMMIT');
             return new Grupo(grupo.id, grupo.nome);
 
         } catch (err) {
-            await conn.run('ROLLBACK');
-            throw new Error(`${err.message}`);
+            await conn.run("ROLLBACK");
+            throw err;
         }
     }
 }

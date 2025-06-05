@@ -11,8 +11,9 @@ class UsuarioGrupoRepository {
     }
 
     async associaUsuarioAoGrupo(usuarioGrupo) {
+        let conn;
         try {
-            const conn = await this.connection.connect();
+            conn = await this.connection.connect();
 
             await conn.run("BEGIN TRANSACTION");
 
@@ -25,9 +26,8 @@ class UsuarioGrupoRepository {
 
             return { success: true, message: "Usuário associado ao grupo com sucesso." };
         } catch (err) {
-            console.error(err);
-            await conn.run('ROLLBACK');
-            throw new Error(`Erro ao associar usuário ao grupo: ${err.message}`);
+            await conn.run("ROLLBACK");
+            throw err;
         }
     }
 }

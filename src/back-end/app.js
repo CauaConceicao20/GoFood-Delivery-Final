@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import UsuarioController from './controller/UsuarioController.js';
 import DbInitializer from './database/DbInitializer.js';
+import ErrorHandler from './exception/ErrorHandler.js';
 
 (async () => {
   const dbInit = new DbInitializer();
@@ -14,7 +15,9 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-app.use('/usuarios', new UsuarioController().router);
+app.use('/api/v1/usuarios', new UsuarioController().router);
+
+app.use(ErrorHandler.errorHandler);
 
 app.listen(port, () => {
   console.log(`Servidor rodando na porta: ${port}`);

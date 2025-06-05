@@ -1,5 +1,6 @@
 import Connection from "../database/Connection.js";
 import Usuario from "../model/usuario/Usuario.js";
+import { BadRequestError } from "../exception/GlobalExceptions.js";
 
 class UsuarioRepository {
   constructor() {
@@ -7,30 +8,40 @@ class UsuarioRepository {
   }
 
   async registra(usuario) {
+    let conn;
     try {
-      const conn = await this.connection.connect();
+      conn = await this.connection.connect();
 
       await conn.run("BEGIN TRANSACTION");
 
       const result = await conn.run(
         `INSERT INTO usuarios (nome, email, senha, dataCadastro, telefone, cpf, cnpj) VALUES (?, ?, ?, ?, ?, ?, ?)`,
         [usuario.getNome(), usuario.getEmail(), usuario.getSenha(), usuario.getDataCadastro(), usuario.getTelefone(), usuario.getCpf(),
-           usuario.getCnpj()]
+        usuario.getCnpj()]
       );
 
-      if (result.changes === 0) {
-        throw new Error('Erro ao criar usuário');
+      if (!result.changes) {
+        throw new BadRequestError("Erro ao criar usuário");
       }
 
       await conn.run('COMMIT');
 
-       return new Usuario(result.lastID, usuario.getNome(), usuario.getEmail(), usuario.getSenha(),
-       usuario.getDataCadastro(), usuario.getTelefone(), usuario.getCpf(), usuario.getCnpj());
+      return new Usuario(result.lastID, usuario.getNome(), usuario.getEmail(), usuario.getSenha(),
+        usuario.getDataCadastro(), usuario.getTelefone(), usuario.getCpf(), usuario.getCnpj());
 
     } catch (err) {
-      console.error(err);
-      await conn.run("ROLLBACK"); 
-      throw new Error(`Erro ao registrar usuário: ${err.message}`);
+      if (conn) {
+        await conn.run("ROLLBACK");
+      }
+
+      if (err.code === 'SQLITE_CONSTRAINT' && err.message.includes('usuarios.email')) {
+        throw new BadRequestError('Email já cadastrado.');
+      }
+
+      if (err.code === 'SQLITE_CONSTRAINT' && err.message.includes('usuarios.cpf')) {
+        throw new BadRequestError('CPF já cadastrado.');
+      }
+      throw err;
     }
   }
 }

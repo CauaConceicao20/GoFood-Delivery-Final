@@ -12,8 +12,7 @@ class UsuarioGrupoService {
         try {
             await this.usuarioGrupoRepository.associaUsuarioAoGrupo(new UsuarioGrupo(idUsuario, idGrupo));
         } catch (err) {
-            console.error(err);
-            throw new Error(`${err.message}`);
+            throw err;
         }
 
     }
