@@ -7,6 +7,7 @@ import MainMenu from './telas/main_menu/MainMenu';
 import Carrinho from './telas/carrinho/Carrinho';
 import PerfilUsuario from './telas/PerfilUsuario/PerfilUsuario';
 import BomSabor from './telas/RestauranteBomSabor/RestauranteBomSabor'
+import CadastroProdutos from './telas/RestauranteBomSabor/BomSaborPedidos/CadastroProdutos';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/carrinho" element={<Carrinho />} />
         <Route path="/perfil" element={<PerfilUsuario />} />
         <Route path="/RestauranteBomSabor" element={<BomSabor />} />
+        <Route path="/cadastro-produtos" element={<CadastroProdutos />} />
 
       </Routes>
     </div>
