@@ -94,9 +94,14 @@ const Login = () => {
           </Link>
         </div>
 
-        {/* Link temporário para o menu - remover na versão final */}
+        {/* Link's temporarios - remover na versão final */}
+        {/* link temporario para menu principal */}
         <div className="temp-menu-link">
           <Link to="/main_menu" className="temp-menu-link">Acesso temporário ao Menu</Link>
+        </div>
+        {/* link temporario para menu restaurante */}
+        <div className="temp-menu-link">
+          <Link to="/RestauranteBomSabor" className="temp-menu-link">BomSabor</Link>
         </div>
 
       </div>
