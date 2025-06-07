@@ -6,7 +6,7 @@ import CadastroRestaurante from './telas/restaurante/cadastro/CadastroRestaurant
 import MainMenu from './telas/main_menu/MainMenu';
 import Carrinho from './telas/carrinho/Carrinho';
 import PerfilUsuario from './telas/PerfilUsuario/PerfilUsuario';
-import BomSabor from './telas/RestauranteMenu/RestauranteMenu';
+import PerfilRestaurante from './telas/RestauranteMenu/RestauranteMenu';
 import CadastroProdutos from './telas/RestauranteMenu/Produtos/CadastroProdutos';
 import DetalhesPedido from './telas/restaurante/pedidos/DetalhePedido';
 
@@ -24,7 +24,7 @@ function App() {
         <Route path="/main_menu" element={<MainMenu />} />
         <Route path="/carrinho" element={<Carrinho />} />
         <Route path="/perfil" element={<PerfilUsuario />} />
-        <Route path="/RestauranteBomSabor" element={<BomSabor />} />
+        <Route path="/RestaurantePerfil" element={<PerfilRestaurante />} />
         <Route path="/cadastro-produtos" element={<CadastroProdutos />} />
         <Route path="/detalhes-pedido" element={<DetalhesPedido />} />
 
