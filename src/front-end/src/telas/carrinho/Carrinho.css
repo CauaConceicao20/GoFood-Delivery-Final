@@ -271,3 +271,68 @@
   text-decoration: none;
   display: block;
 }
+
+/* Estilos para a seção de pagamento */
+.payment-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.subtotal {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-weight: bold;
+}
+
+.payment-methods {
+  flex: 1;
+  max-width: 200px;
+}
+
+.payment-methods h3 {
+  margin: 0 0 10px 0;
+  font-size: 1em;
+  color: #333;
+}
+
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.payment-options label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid #ddd;
+}
+
+.payment-options label:hover {
+  background-color: #f5f5f5;
+}
+
+.payment-options label.active {
+  border-color: #e74c3c;
+  background-color: #fdeaea;
+}
+
+.payment-options input[type="radio"] {
+  margin: 0;
+}
+
+.payment-confirmation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  font-size: 0.9em;
+}

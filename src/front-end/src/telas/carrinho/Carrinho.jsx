@@ -15,6 +15,7 @@ const Carrinho = () => {
   ]);
 
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('pix'); // Estado para forma de pagamento selecionada
 
   const calcularTotal = () => {
     return items.reduce((total, item) => total + (item.valor * item.quantidade), 0);
@@ -70,10 +71,49 @@ const Carrinho = () => {
             ))}
 
             <div className="resumo-pedido">
-              <div className="subtotal">
-                <span>Subtotal ({items.reduce((total, item) => total + item.quantidade, 0)} produtos):</span>
-                <span>R$ {calcularTotal().toFixed(2)}</span>
+              <div className="payment-section">
+                <div className="subtotal">
+                  <span>Subtotal ({items.reduce((total, item) => total + item.quantidade, 0)} produtos):</span>
+                  <span>R$ {calcularTotal().toFixed(2)}</span>
+                </div>
+                
+                <div className="payment-methods">
+                  <h3>Forma de Pagamento</h3>
+                  <div className="payment-options">
+                    <label className={paymentMethod === 'pix' ? 'active' : ''}>
+                      <input 
+                        type="radio" 
+                        name="payment" 
+                        value="pix" 
+                        checked={paymentMethod === 'pix'}
+                        onChange={() => setPaymentMethod('pix')}
+                      />
+                      PIX
+                    </label>
+                    <label className={paymentMethod === 'dinheiro' ? 'active' : ''}>
+                      <input 
+                        type="radio" 
+                        name="payment" 
+                        value="dinheiro"
+                        checked={paymentMethod === 'dinheiro'}
+                        onChange={() => setPaymentMethod('dinheiro')}
+                      />
+                      Dinheiro
+                    </label>
+                    <label className={paymentMethod === 'cartao' ? 'active' : ''}>
+                      <input 
+                        type="radio" 
+                        name="payment" 
+                        value="cartao"
+                        checked={paymentMethod === 'cartao'}
+                        onChange={() => setPaymentMethod('cartao')}
+                      />
+                      Cartão
+                    </label>
+                  </div>
+                </div>
               </div>
+              
               <button 
                 className="btn-finalizar"
                 onClick={handleFinalizarPedido}
@@ -103,6 +143,10 @@ const Carrinho = () => {
               <div className="order-total">
                 <span>Total</span>
                 <span>R$ {calcularTotal().toFixed(2)}</span>
+              </div>
+              <div className="payment-confirmation">
+                <span>Forma de pagamento:</span>
+                <span>{paymentMethod === 'pix' ? 'PIX' : paymentMethod === 'dinheiro' ? 'Dinheiro' : 'Cartão'}</span>
               </div>
             </div>
             
