@@ -14,8 +14,7 @@ const Carrinho = () => {
     // Adicione mais itens conforme necessário
   ]);
 
-  const [showAddressModal, setShowAddressModal] = useState(false);
-  const [address, setAddress] = useState('');
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   const calcularTotal = () => {
     return items.reduce((total, item) => total + (item.valor * item.quantidade), 0);
@@ -32,12 +31,7 @@ const Carrinho = () => {
   };
 
   const handleFinalizarPedido = () => {
-    if (!address) {
-      setShowAddressModal(true);
-    } else {
-      // Lógica para finalizar pedido
-      alert(`Pedido finalizado para ${address}`);
-    }
+    setShowConfirmationModal(true);
   };
 
   return (
@@ -91,23 +85,36 @@ const Carrinho = () => {
         )}
       </main>
 
-      {/* Modal de Endereço */}
-      {showAddressModal && (
+      {/* Modal de Confirmação */}
+      {showConfirmationModal && (
         <div className="modal-overlay">
-          <div className="modal-content">
-            <span className="close-modal" onClick={() => setShowAddressModal(false)}>&times;</span>
-            <h2>Insira seu endereço</h2>
-            <input
-              type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="Digite seu endereço completo"
-            />
+          <div className="confirmation-modal">
+            <div className="popup-icon">✓</div>
+            <h2 className="popup-title">Pedido Confirmado!</h2>
+            <p className="popup-message">Seu pedido foi recebido com sucesso e já está sendo preparado.</p>
+            
+            <div className="order-summary">
+              {items.map(item => (
+                <div key={item.id} className="order-item">
+                  <span>{item.nome} ×{item.quantidade}</span>
+                  <span>R$ {(item.valor * item.quantidade).toFixed(2)}</span>
+                </div>
+              ))}
+              <div className="order-total">
+                <span>Total</span>
+                <span>R$ {calcularTotal().toFixed(2)}</span>
+              </div>
+            </div>
+            
+            <Link to="/detalhes-pedido" className="btn btn-primary">
+              Ver Detalhes do Pedido
+            </Link>
+            
             <button 
-              className="btn-confirmar"
-              onClick={() => address && setShowAddressModal(false)}
+              className="btn btn-secondary"
+              onClick={() => setShowConfirmationModal(false)}
             >
-              Confirmar
+              Continuar Comprando
             </button>
           </div>
         </div>

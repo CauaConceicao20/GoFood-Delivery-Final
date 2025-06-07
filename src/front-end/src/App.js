@@ -6,8 +6,8 @@ import CadastroRestaurante from './telas/restaurante/cadastro/CadastroRestaurant
 import MainMenu from './telas/main_menu/MainMenu';
 import Carrinho from './telas/carrinho/Carrinho';
 import PerfilUsuario from './telas/PerfilUsuario/PerfilUsuario';
-import BomSabor from './telas/RestauranteBomSabor/RestauranteBomSabor'
-import CadastroProdutos from './telas/RestauranteBomSabor/BomSaborPedidos/CadastroProdutos';
+import BomSabor from './telas/RestauranteMenu/RestauranteMenu';
+import CadastroProdutos from './telas/RestauranteMenu/Produtos/CadastroProdutos';
 
 
 function App() {

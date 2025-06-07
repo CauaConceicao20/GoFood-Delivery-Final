@@ -1,5 +1,5 @@
 import React from 'react';
-import './RestauranteBomSabor.css'
+import './RestauranteMenu.css'
 import { Link } from 'react-router-dom';
 
 const Restaurante = () => {
