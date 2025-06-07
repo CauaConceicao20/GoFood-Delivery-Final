@@ -25,9 +25,8 @@ class UsuarioRepository {
       }
 
       await conn.run('COMMIT');
-
-      return new Usuario(result.lastID, usuario.getNome(), usuario.getEmail(), usuario.getSenha(),
-        usuario.getDataCadastro(), usuario.getTelefone(), usuario.getCpf(), usuario.getCnpj());
+      usuario.setId(result.lastID);
+      return usuario;
 
     } catch (err) {
       if (conn) {
@@ -41,6 +40,11 @@ class UsuarioRepository {
       if (err.code === 'SQLITE_CONSTRAINT' && err.message.includes('usuarios.cpf')) {
         throw new BadRequestError('CPF já cadastrado.');
       }
+
+      if (err.code === 'SQLITE_CONSTRAINT' && err.message.includes('usuarios.cnpj')) {
+        throw new BadRequestError('CNPJ já cadastrado.');
+      }
+
       throw err;
     }
   }

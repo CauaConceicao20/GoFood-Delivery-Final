@@ -1,13 +1,26 @@
 class Restaurante {
-    constructor(nome, razaoSocial, taxaFrete, dataCadastro, dataAtualizacao, aberto, cozinh, ativo) {
+    constructor(id, nome, descricao, razaoSocial, taxaFrete, dataCadastro, dataAtualizacao, endereco, idUsuario, idsFormaPagamento, cozinha) {
+        this.id = id;
         this.nome = nome;
+        this.descricao = descricao;
         this.razaoSocial = razaoSocial;
         this.taxaFrete = taxaFrete;
         this.dataCadastro = dataCadastro;
         this.dataAtualizacao = dataAtualizacao;
-        this.aberto = aberto;
+        this.aberto = true;
+        this.endereco = endereco;
+        this.idUsuario = idUsuario
+        this.idsFormaPagamento = idsFormaPagamento;
         this.cozinha = cozinha;
-        this.ativo = ativo;
+        this.ativo = true;
+    }
+
+    setId(id) {
+        this.id = id;
+    }
+
+    getId() {
+        return this.id;
     }
 
     setNome(nome) {
@@ -16,6 +29,14 @@ class Restaurante {
 
     getNome() {
         return this.nome;
+    }
+
+    setDescricao(descricao) {
+        this.descricao = descricao;
+    }
+
+    getDescricao() {
+        return this.descricao;
     }
 
     setRazaoSocial(razaoSocial) {
@@ -56,6 +77,30 @@ class Restaurante {
 
     getAberto() {
         return this.aberto;
+    }
+
+    setEndereco(endereco) {
+        this.endereco = endereco;
+    }
+
+    getEndereco() {
+        return this.endereco;
+    }
+
+    setIdUsuario(idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    getIdUsuario() {
+        return this.idUsuario;
+    }
+
+    setIdsFormaPagamento(idsFormaPagamento) {
+        this.idsFormaPagamento = idsFormaPagamento;
+    }
+
+    getIdsFormaPagamento() {
+        return this.idsFormaPagamento;
     }
 
     setCozinha(cozinha) {

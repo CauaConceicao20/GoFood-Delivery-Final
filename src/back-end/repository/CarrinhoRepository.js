@@ -22,8 +22,8 @@ class CarrinhoRepository {
             }
 
             await conn.run("COMMIT");
-
-            return new Carrinho(result.lastID, carrinho.getQuantidadeTotalDeItems(), carrinho.getSubTotal());
+            
+            return carrinho;
 
         } catch (err) {
             await conn.run("ROLLBACK");

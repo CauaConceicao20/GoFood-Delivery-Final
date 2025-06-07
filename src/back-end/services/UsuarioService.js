@@ -3,6 +3,7 @@ import GrupoService from "./GrupoService.js";
 import UsuarioGrupoService from "./UsuarioGrupoService.js";
 import CarrinhoService from "./CarrinhoService.js";
 import Carrinho from "../model/carrinho/Carrinho.js";
+import { GrupoNomeEnum } from "../model/usuario/enums/GrupoNomeEnum.js";
 
 class UsuarioService {
 
@@ -20,11 +21,11 @@ class UsuarioService {
 
             for (const grupo of grupos) {
                 if (usuarioRegistrado.getCnpj() != null) {
-                    if (grupo.getNome() === "RESTAURANTE" || grupo.getNome() === "CLIENTE") {
+                    if (grupo.getNome() === GrupoNomeEnum.ADMIN || grupo.getNome() === GrupoNomeEnum.RESTAURANTE) {
                         await this.associaUsuarioEGrupo(usuarioRegistrado.getId(), grupo);
                     }
                 } else {
-                    if (grupo.getNome() === "CLIENTE") {
+                    if (grupo.getNome() === GrupoNomeEnum.CLIENTE) {
                        await this.associaUsuarioEGrupo(usuarioRegistrado.getId(), grupo);
                     }
                 }
