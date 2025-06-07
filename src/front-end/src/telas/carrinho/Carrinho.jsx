@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Carrinho.css';
 
 const Carrinho = () => {
@@ -14,8 +14,9 @@ const Carrinho = () => {
     // Adicione mais itens conforme necessário
   ]);
 
+  const [paymentMethod, setPaymentMethod] = useState('pix');
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('pix'); // Estado para forma de pagamento selecionada
+  const navigate = useNavigate();
 
   const calcularTotal = () => {
     return items.reduce((total, item) => total + (item.valor * item.quantidade), 0);
@@ -33,6 +34,35 @@ const Carrinho = () => {
 
   const handleFinalizarPedido = () => {
     setShowConfirmationModal(true);
+  };
+
+  const confirmarPedido = () => {
+    const pedido = {
+      id: `#${Math.floor(Math.random() * 10000)}`,
+      cliente: "Nome do Cliente",
+      data: new Date().toLocaleDateString('pt-BR', { 
+        weekday: 'short', 
+        day: 'numeric', 
+        month: 'long', 
+        year: 'numeric' 
+      }),
+      status: 'Preparando',
+      pagamento: paymentMethod === 'pix' ? 'PIX' : 
+                paymentMethod === 'dinheiro' ? 'Dinheiro' : 'Cartão de crédito',
+      total: calcularTotal(),
+      taxaEntrega: 12.90,
+      desconto: 0,
+      items: items.map(item => ({
+        nome: item.nome,
+        quantidade: item.quantidade
+      })),
+      restaurante: {
+        nome: 'O BURGUER',
+        avaliacao: '4,6 (10% utilizado) Padrão 55.5 e lama R$31,00'
+      }
+    };
+    
+    navigate('/detalhes-pedido', { state: { pedido } });
   };
 
   return (
@@ -130,8 +160,8 @@ const Carrinho = () => {
         <div className="modal-overlay">
           <div className="confirmation-modal">
             <div className="popup-icon">✓</div>
-            <h2 className="popup-title">Pedido Confirmado!</h2>
-            <p className="popup-message">Seu pedido foi recebido com sucesso e já está sendo preparado.</p>
+            <h2 className="popup-title">Confirmar Pedido</h2>
+            <p className="popup-message">Deseja finalizar o pedido ou continuar comprando?</p>
             
             <div className="order-summary">
               {items.map(item => (
@@ -144,22 +174,23 @@ const Carrinho = () => {
                 <span>Total</span>
                 <span>R$ {calcularTotal().toFixed(2)}</span>
               </div>
-              <div className="payment-confirmation">
-                <span>Forma de pagamento:</span>
-                <span>{paymentMethod === 'pix' ? 'PIX' : paymentMethod === 'dinheiro' ? 'Dinheiro' : 'Cartão'}</span>
-              </div>
             </div>
             
-            <Link to="/detalhes-pedido" className="btn btn-primary">
-              Ver Detalhes do Pedido
-            </Link>
-            
-            <button 
-              className="btn btn-secondary"
-              onClick={() => setShowConfirmationModal(false)}
-            >
-              Continuar Comprando
-            </button>
+            <div className="modal-buttons">
+              <button 
+                className="btn btn-primary"
+                onClick={confirmarPedido}
+              >
+                Finalizar e Ver Detalhes
+              </button>
+              
+              <button 
+                className="btn btn-secondary"
+                onClick={() => setShowConfirmationModal(false)}
+              >
+                Continuar Comprando
+              </button>
+            </div>
           </div>
         </div>
       )}
