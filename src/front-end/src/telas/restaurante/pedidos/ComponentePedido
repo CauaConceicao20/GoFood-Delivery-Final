@@ -1,0 +1,35 @@
+import React from 'react';
+import PedidoItem from './PedidoItem';
+
+const ListaPedidos = () => {
+  // Dados mockados (substituir pela chamada ao back-end)
+  const pedidos = [
+    {
+      id: 1,
+      nome: "Hambúrguer Clássico",
+      descricao: "Pão, carne, queijo, alface e tomate",
+      imagem: "https://exemplo.com/burger.jpg",
+      preco: 24.90,
+      restaurante: "O BURGUER"
+    },
+    {
+      id: 2,
+      nome: "Pizza Margherita",
+      descricao: "Molho de tomate, mussarela e manjericão",
+      imagem: "https://exemplo.com/pizza.jpg",
+      preco: 39.90,
+      restaurante: "Pizzaria Bella"
+    },
+    
+  ];
+
+  return (
+    <div className="lista-pedidos">
+      {pedidos.map(pedido => (
+        <PedidoItem key={pedido.id} pedido={pedido} />
+      ))}
+    </div>
+  );
+};
+
+export default ListaPedidos;
