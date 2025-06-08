@@ -23,8 +23,8 @@ class AuthMiddleware {
             req.usuario = payload;
             next();
 
-        } catch (error) {
-            next(error);
+        } catch (err) {
+            throw err;
         }
     }
 
@@ -34,9 +34,8 @@ class AuthMiddleware {
 
             if (!gruposUsuario || !gruposUsuario.some(grupo => gruposPermitidos.includes(grupo))
             ) {
-                return next(new ForbiddenError('Acesso negado'));
+                throw new ForbiddenError('Acesso negado');
             }
-
             next();
         };
     }

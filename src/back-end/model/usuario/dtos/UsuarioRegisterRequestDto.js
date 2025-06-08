@@ -8,7 +8,7 @@ class UsuarioRegisterRequestDto {
     this.telefone = body.telefone;
     this.cpf = body.cpf;
     this.cnpj = body.cnpj;
-    
+
     this.validarCampos();
   }
 
@@ -34,7 +34,10 @@ class UsuarioRegisterRequestDto {
     if (this.cpf && this.cpf.replace(/\D/g, '').length !== 11) {
       throw new BadRequestError('CPF deve ter 11 dígitos.');
     }
-    if (this.cnpj && this.cnpj.replace(/\D/g, '').length !== 14 && this.cnpj != null) {
+    if (this.cnpj === "") {
+      throw new BadRequestError('CNPJ não pode ser vazio.');
+    }
+    if (this.cnpj !== null && this.cnpj !== undefined && this.cnpj !== "" && this.cnpj.replace(/\D/g, '').length !== 14) {
       throw new BadRequestError('CNPJ deve ter 14 dígitos.');
     }
     if (this.telefone && this.telefone.replace(/\D/g, '').length < 10) {
