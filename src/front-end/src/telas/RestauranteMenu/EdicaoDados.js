@@ -26,6 +26,9 @@ function EdicaoDados() {
     emailLegal: '',
   });
 
+  // Novo estado para controlar a visibilidade do pop-up de confirmação
+  const [showDeactivationConfirm, setShowDeactivationConfirm] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setRestaurantData((prevData) => ({
@@ -37,15 +40,33 @@ function EdicaoDados() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Dados do restaurante a serem salvos:', restaurantData);
-    // Here you would typically send the data to a backend API
+    // Aqui você normalmente enviaria os dados para uma API de backend
     alert('Dados salvos com sucesso (simulado)!');
+  };
+
+  // Função para abrir o pop-up de confirmação de desativação
+  const handleDeactivateClick = () => {
+    setShowDeactivationConfirm(true);
+  };
+
+  // Função para confirmar a desativação
+  const handleConfirmDeactivation = () => {
+    console.log('Restaurante desativado (simulado)!');
+    alert('Restaurante desativado com sucesso!'); // Simula a desativação
+    setShowDeactivationConfirm(false); // Fecha o pop-up
+    // Aqui você enviaria a requisição para desativar o restaurante no backend
+  };
+
+  // Função para cancelar a desativação
+  const handleCancelDeactivation = () => {
+    setShowDeactivationConfirm(false); // Fecha o pop-up
   };
 
   return (
     <div className="app-container">
       <div className="header">
-        <Link to="/RestaurantePerfil" className="btn-voltar">Voltar</Link>
-        
+        {/* A classe 'back-arrow' em EdicaoDados.css foi ajustada para um link */}
+        <Link to="/RestaurantePerfil" className="back-arrow">Voltar</Link> 
         <h1>Requisições</h1>
       </div>
 
@@ -245,7 +266,34 @@ function EdicaoDados() {
         <button type="submit" className="submit-button">
           Finalizar Cadastro
         </button>
+
+        {/* Novo botão "Desativar Restaurante" */}
+        <button
+          type="button" // Use type="button" para evitar submeter o formulário
+          className="deactivate-button"
+          onClick={handleDeactivateClick}
+        >
+          Desativar Restaurante
+        </button>
       </form>
+
+      {/* Pop-up de Confirmação */}
+      {showDeactivationConfirm && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Confirmar Desativação</h3>
+            <p>Tem certeza que deseja desativar o restaurante?</p>
+            <div className="modal-actions">
+              <button onClick={handleConfirmDeactivation} className="confirm-button">
+                Sim
+              </button>
+              <button onClick={handleCancelDeactivation} className="cancel-button">
+                Não
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

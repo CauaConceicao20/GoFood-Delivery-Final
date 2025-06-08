@@ -284,3 +284,98 @@ body {
     font-size: 1em;
   }
 }
+
+/* Estilos para o botão "Desativar Restaurante" */
+.deactivate-button {
+  background-color: #dc3545; /* Vermelho forte para ação destrutiva */
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
+  max-width: 300px; /* Consistente com submit-button */
+  align-self: center; /* Centraliza o botão */
+  margin-top: 15px; /* Espaço acima deste botão */
+  margin-left: auto; /* Centraliza horizontalmente */
+  margin-right: auto; /* Centraliza horizontalmente */
+}
+
+.deactivate-button:hover {
+  background-color: #c82333; /* Vermelho mais escuro ao passar o mouse */
+  transform: translateY(-2px); /* Efeito de elevação */
+}
+
+/* Estilos para o Pop-up/Modal */
+.modal-overlay {
+  position: fixed; /* Fixa o overlay na tela */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro semi-transparente */
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente o modal */
+  align-items: center; /* Centraliza verticalmente o modal */
+  z-index: 1000; /* Garante que esteja acima de outros conteúdos */
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  max-width: 400px; /* Largura máxima do modal */
+  width: 90%; /* Largura responsiva */
+  text-align: center;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  color: #333;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  color: #555;
+  font-size: 1em;
+  margin-bottom: 25px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center; /* Centraliza os botões dentro do modal */
+  gap: 20px; /* Espaço entre os botões */
+}
+
+.modal-actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-actions .confirm-button {
+  background-color: #dc3545; /* Vermelho para o botão de confirmação */
+  color: white;
+}
+
+.modal-actions .confirm-button:hover {
+  background-color: #c82333;
+}
+
+.modal-actions .cancel-button {
+  background-color: #f0f0f0; /* Cinza claro para o botão de cancelar */
+  color: #333;
+}
+
+.modal-actions .cancel-button:hover {
+  background-color: #e0e0e0;
+}
