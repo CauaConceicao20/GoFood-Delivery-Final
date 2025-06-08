@@ -5,7 +5,6 @@ import Restaurante from '../model/restaurante/Restaurante.js';
 import RestauranteRegisterRequestDto from '../model/restaurante/dtos/RestauranteRegisterRequestDto.js';
 import Endereco from '../model/Usuario/Endereco.js';
 
-
 class RestauranteController {
     constructor() {
         this.router = express.Router();
@@ -13,6 +12,9 @@ class RestauranteController {
         this.restauranteService = new RestauranteService();
         this.iniciaRotas();
         this.dataHoraAtual = new Date().toLocaleString('sv-SE', { timeZone: 'America/Sao_Paulo' }).replace(' ', 'T');
+
+       
+        
     }
 
     iniciaRotas() {
