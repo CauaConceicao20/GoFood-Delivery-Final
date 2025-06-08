@@ -1,0 +1,286 @@
+/* Reset básico e box-sizing para consistência */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif; /* Usando Inter como exemplo, ou Arial, sans-serif */
+  background-color: #f0f2f5; /* Cor de fundo geral, semelhante à imagem */
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh; /* Ocupa a altura total da viewport */
+}
+
+/* Estilização do cabeçalho */
+.header {
+  background-color: #ffffff;
+  padding: 15px 25px;
+  margin-bottom: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 960px; /* Largura máxima para o cabeçalho e formulário */
+  display: flex;
+  align-items: center;
+}
+
+.back-arrow {
+  font-size: 1.8em;
+  margin-right: 15px;
+  cursor: pointer;
+  color: #555;
+  font-weight: bold;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.6em;
+  color: #333;
+  flex-grow: 1; /* Permite que o título ocupe o espaço restante */
+  text-align: center; /* Centraliza o título */
+  transform: translateX(-15px); /* Ajusta para centralizar melhor considerando a seta */
+}
+
+/* Estilização do formulário principal */
+.restaurant-form {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 960px; /* Mesma largura máxima do cabeçalho */
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* Espaço entre as seções do formulário */
+}
+
+/* Estilização das seções do formulário */
+.form-section {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0; /* Linha divisória suave */
+}
+
+.form-section:last-child {
+  border-bottom: none; /* Remove a borda da última seção */
+  padding-bottom: 0;
+}
+
+.form-section h2 {
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.4em;
+  font-weight: 600; /* Um pouco mais encorpado */
+}
+
+/* Estilização das linhas de campos */
+.form-row {
+  display: flex;
+  gap: 20px; /* Espaço entre os campos na mesma linha */
+  margin-bottom: 15px; /* Espaço entre as linhas de campos */
+  flex-wrap: wrap; /* Permite que os campos quebrem para a próxima linha em telas menores */
+}
+
+.form-row:last-child {
+  margin-bottom: 0;
+}
+
+/* Estilização dos grupos de formulário (label + input) */
+.form-group {
+  flex: 1; /* Permite que o grupo de formulário cresça e ocupe o espaço disponível */
+  min-width: 280px; /* Garante que os campos não fiquem muito pequenos */
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.full-width {
+  flex: 0 0 100%; /* Ocupa 100% da largura disponível */
+}
+
+.form-group label {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 8px;
+  display: block;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+  color: #333;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #a0a0a0; /* Levemente mais escuro ao focar */
+  box-shadow: 0 0 0 2px rgba(160, 160, 160, 0.2);
+  outline: none;
+}
+
+.form-group textarea {
+  resize: vertical; /* Permite redimensionamento vertical */
+  min-height: 80px; /* Altura mínima para a descrição */
+}
+
+/* Estilização específica para a seção de upload do logotipo */
+.form-row:first-of-type {
+  display: grid;
+  /* Define duas colunas: uma para o logo (fixa), outra para os campos à direita (flexível) */
+  grid-template-columns: minmax(100px, 150px) 1fr;
+  /* Define duas linhas para os campos à direita */
+  grid-template-rows: auto auto;
+  gap: 20px;
+  align-items: start; /* Alinha os itens ao topo das células do grid */
+}
+
+.form-group.logo-upload {
+  grid-column: 1; /* Ocupa a primeira coluna */
+  grid-row: 1 / span 2; /* Ocupa as duas linhas para ter a altura dos dois campos ao lado */
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ocupa a altura total do seu espaço no grid */
+}
+
+.logo-placeholder {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  flex-grow: 1; /* Faz o placeholder preencher o espaço disponível */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #888;
+  font-size: 2em;
+  cursor: pointer;
+  background-color: #f9f9f9; /* Um fundo leve para o placeholder */
+}
+
+.plus-icon {
+  font-size: 3em; /* Ícone de mais um pouco maior */
+  line-height: 1; /* Remove espaçamento extra do ícone */
+}
+
+/* Posiciona "Nome do restaurante" na segunda coluna, primeira linha */
+.restaurant-form .form-row:first-of-type > .form-group:nth-of-type(2) {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+/* Posiciona "Categoria" na segunda coluna, segunda linha */
+.restaurant-form .form-row:first-of-type > .form-group:nth-of-type(3) {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+
+/* Estilização do botão de submit */
+.submit-button {
+  background-color: #ff5722; /* Laranja vibrante, semelhante à imagem */
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
+  max-width: 300px; /* Largura máxima para o botão */
+  align-self: center; /* Centraliza o botão dentro do formulário flex */
+  margin-top: 20px; /* Espaço acima do botão */
+}
+
+.submit-button:hover {
+  background-color: #e64a19; /* Laranja mais escuro ao passar o mouse */
+  transform: translateY(-2px); /* Pequeno efeito de elevação */
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  .header {
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 1.4em;
+    transform: none; /* Remove o ajuste de centralização */
+    text-align: left; /* Alinha o título à esquerda em telas menores */
+  }
+
+  .restaurant-form {
+    padding: 20px;
+  }
+
+  .form-section h2 {
+    font-size: 1.2em;
+  }
+
+  .form-row {
+    flex-direction: column; /* Pilha os campos em colunas */
+    gap: 15px; /* Ajusta o espaçamento quando empilhado */
+  }
+
+  /* Ajustes para a primeira linha (logo, nome, categoria) em telas menores */
+  .restaurant-form .form-row:first-of-type {
+    grid-template-columns: 1fr; /* Todas as colunas se tornam uma única */
+    grid-template-rows: auto auto auto; /* Três linhas separadas para cada item */
+    gap: 15px;
+  }
+
+  .restaurant-form .form-row:first-of-type > .form-group.logo-upload {
+    grid-column: 1; /* Logo na primeira coluna */
+    grid-row: 1; /* Logo na primeira linha */
+    height: auto; /* Altura flexível para o logo */
+    max-width: 150px; /* Largura máxima para o logo */
+    margin: 0 auto; /* Centraliza o logo */
+  }
+
+  /* Reposiciona "Nome do restaurante" e "Categoria" para a única coluna */
+  .restaurant-form .form-row:first-of-type > .form-group:nth-of-type(2) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .restaurant-form .form-row:first-of-type > .form-group:nth-of-type(3) {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .form-group {
+    min-width: unset; /* Remove o min-width para flexibilidade total */
+  }
+
+  .btn-voltar {
+  color: #e74c3c;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+}
+
+@media (max-width: 480px) {
+  .app-container {
+    padding: 10px;
+  }
+
+  .header,
+  .restaurant-form {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  .submit-button {
+    padding: 12px 20px;
+    font-size: 1em;
+  }
+}

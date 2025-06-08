@@ -35,7 +35,14 @@ const Restaurante = () => {
         </div>
       </div>
 
-      <Link to="/cadastro-produtos">Cadastrar Produtos</Link>    
+      <div className="links-container"> {/* Opcional: container para alinhar os botões */}
+        <Link to="/cadastro-produtos" className="link-as-button">
+          Cadastrar Produtos
+        </Link>
+        <Link to="/EdicaoRestaurante" className="link-as-button">
+          Edição Restaurante
+        </Link>
+      </div>
 
     </div>
   );

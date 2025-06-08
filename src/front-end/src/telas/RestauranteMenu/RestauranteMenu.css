@@ -56,3 +56,34 @@
   color: #666;
   margin: 0;
 }
+
+.link-as-button {
+  display: inline-block; /* Permite aplicar padding, width e height */
+  background-color: #ff5722; /* Mesma cor do botão "Finalizar Cadastro" */
+  color: white; /* Cor do texto branco */
+  padding: 15px 30px; /* Padding interno, igual ao botão */
+  border: none; /* Remove a borda */
+  border-radius: 5px; /* Bordas arredondadas */
+  font-size: 1.1em; /* Tamanho da fonte */
+  font-weight: bold; /* Texto em negrito */
+  text-decoration: none; /* Remove o sublinhado padrão dos links */
+  cursor: pointer; /* Muda o cursor para indicar que é clicável */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Transição suave para hover */
+  text-align: center; /* Centraliza o texto dentro do botão */
+  white-space: nowrap; /* Evita que o texto quebre em várias linhas */
+  min-width: 150px; /* Garante uma largura mínima para o botão, ajuste conforme necessário */
+}
+
+.link-as-button:hover {
+  background-color: #e64a19; /* Laranja mais escuro ao passar o mouse */
+  transform: translateY(-2px); /* Pequeno efeito de elevação */
+}
+
+/* Opcional: Para alinhar vários links-botão, você pode envolvê-los em um container */
+.links-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite quebrar linha em telas menores */
+  gap: 20px; /* Espaço entre os botões */
+  justify-content: center; /* Centraliza os botões no container */
+  margin-top: 30px; /* Espaço acima do grupo de botões */
+}
