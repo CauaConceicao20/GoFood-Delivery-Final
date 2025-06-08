@@ -37,7 +37,7 @@ const CadastroProdutos = () => {
             <div className="header-actions">
                 <h1>Cadastrar Novo Produto</h1>
                 <div>
-                    <Link to="/RestauranteBomSabor" className="back-button">
+                    <Link to="/RestaurantePerfil" className="back-button">
                         &larr; Voltar ao Perfil
                     </Link>
                 </div>
