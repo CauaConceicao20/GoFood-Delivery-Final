@@ -70,10 +70,6 @@ const Login = () => {
               />
               <label htmlFor="remember">Lembrar de mim</label>
             </div>
-
-            <a href="/forgot-password" className="forgot-password">
-              Esqueceu a senha?
-            </a>
           </div>
 
           <button type="submit" className="login-button">
@@ -85,13 +81,8 @@ const Login = () => {
           Não tem uma conta?
           <Link to="/cadastro" className="action-button primary-button">Cadastre-se</Link>
         </div>
-
-
-        <div className="restaurant-access">
-          <p>Acesso para restaurantes:</p>
-          <Link to="/login/restaurante" className="restaurant-button">
-            Entrar como Restaurante
-          </Link>
+        <div className="signup-link">
+          Novo restaurante?<Link to="/cadastro/restaurante" className="action-button primary-button">Cadastre-se aqui</Link>
         </div>
 
         {/* Link's temporarios - remover na versão final */}
@@ -99,10 +90,7 @@ const Login = () => {
         <div className="temp-menu-link">
           <Link to="/main_menu" className="temp-menu-link">Acesso temporário ao Menu</Link>
         </div>
-        {/* link temporario para menu restaurante */}
-        <div className="temp-menu-link">
-          <Link to="/RestauranteBomSabor" className="temp-menu-link">BomSabor</Link>
-        </div>
+
 
       </div>
     </div>
