@@ -1,5 +1,5 @@
-import React from 'react';
-import './RestauranteMenu.css'
+import React, { useState } from 'react';
+import './RestauranteMenu.css';
 import { Link } from 'react-router-dom';
 
 const Restaurante = () => {
@@ -13,14 +13,37 @@ const Restaurante = () => {
     ]
   };
 
+  const [userRating, setUserRating] = useState(0);
+  const [hasRated, setHasRated] = useState(false);
+
+  const handleRatingChange = (rating) => {
+    if (!hasRated) {
+      setUserRating(rating);
+    }
+  };
+
+  const handleSubmitRating = () => {
+    if (userRating > 0) {
+      alert(`Você avaliou o restaurante com ${userRating} estrelas!`);
+      console.log(`Avaliação do restaurante: ${userRating}`);
+      setHasRated(true);
+    } else {
+      alert("Por favor, selecione uma nota de 1 a 5 para avaliar o restaurante.");
+    }
+  };
+
   return (
     <div className="restaurante-view">
-      <Link to="/main_menu" className="back-arrow">Voltar</Link> 
+      {/* Botão de Voltar ao Menu */}
+      <Link to="/main_menu" className="back-arrow">Voltar</Link>
+
+      {/* Informações do Restaurante */}
       <div className="restaurante-info">
         <h1>{restaurante.nome}</h1>
         <p>{restaurante.descricao}</p>
       </div>
 
+      {/* Seção do Cardápio */}
       <div className="cardapio-section">
         <h2>Cardápio</h2>
         <div className="itens-cardapio">
@@ -36,7 +59,8 @@ const Restaurante = () => {
         </div>
       </div>
 
-      <div className="links-container"> {/* Opcional: container para alinhar os botões */}
+      {/* Links de Gerenciamento (mantidos como estavam) */}
+      <div className="links-container">
         <Link to="/cadastro-produtos" className="link-as-button">
           Cadastrar Produtos
         </Link>
@@ -44,6 +68,34 @@ const Restaurante = () => {
           Edição Restaurante
         </Link>
       </div>
+
+      {/* Seção de Avaliação - MOVIDA PARA DEPOIS DOS LINKS DE GERENCIAMENTO */}
+      <div>
+        <div className="rating-section">
+          <h2>Avalie o Restaurante</h2>
+          <div className="rating-stars">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <span
+                key={star}
+                className={`star ${star <= userRating ? 'selected' : ''} ${hasRated ? 'disabled' : ''}`}
+                onClick={() => handleRatingChange(star)}
+              >
+                {star}
+              </span>
+            ))}
+          </div>
+
+          {!hasRated && (
+            <button onClick={handleSubmitRating} className="submit-rating-button">
+              Enviar Avaliação
+            </button>
+          )}
+          {hasRated && (
+            <p className="rating-message">Obrigado pela sua avaliação!</p>
+          )}
+        </div>
+      </div>
+
 
     </div>
   );

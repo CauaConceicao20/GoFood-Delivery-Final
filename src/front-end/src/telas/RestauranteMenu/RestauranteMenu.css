@@ -1,97 +1,266 @@
+/* Estilos Gerais do Container */
 .restaurante-view {
-  max-width: 800px;
-  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5; /* Fundo geral da página */
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Estilo do Botão Voltar */
+.back-arrow {
+  align-self: flex-start; /* Alinha à esquerda no container flex */
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: #007bff; /* Cor de link padrão ou similar ao Edit */
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 5px;
+  background-color: #e9ecef;
+  transition: background-color 0.3s ease;
+}
+
+.back-arrow:hover {
+  background-color: #dee2e6;
+}
+
+/* Informações do Restaurante */
+.restaurante-info {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 .restaurante-info h1 {
-  color: #e74c3c;
-  margin-bottom: 15px;
+  color: #333;
+  font-size: 2.2em;
+  margin-bottom: 10px;
 }
 
 .restaurante-info p {
-  line-height: 1.6;
   color: #555;
+  font-size: 1.1em;
+  line-height: 1.6;
 }
 
+/* Seção de Avaliação (NOVO) */
+.rating-section {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 30px;
+  margin-top: 30px; /* Aumentei esta margem para afastar dos botões */
+}
+
+.rating-section h2 {
+  color: #333;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+.rating-stars {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Espaço entre os números */
+  margin-bottom: 20px;
+}
+
+.star {
+  font-size: 1.5em; /* Tamanho dos números de avaliação */
+  color: #ccc; /* Cor padrão (não selecionada) */
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.1s ease;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  min-width: 40px; /* Garante largura mínima para os números */
+  text-align: center;
+}
+
+.star:hover:not(.disabled) {
+  color: #ffc107; /* Cor ao passar o mouse */
+  border-color: #ffc107;
+  transform: translateY(-2px);
+}
+
+.star.selected {
+  color: #ffc107; /* Cor selecionada */
+  font-weight: bold;
+  background-color: #fff3cd; /* Fundo leve para a estrela selecionada */
+  border-color: #ffc107;
+}
+
+.star.disabled {
+  cursor: default; /* Cursor padrão quando desabilitado */
+  opacity: 0.7; /* Opacidade para indicar que não é interativo */
+}
+
+.submit-rating-button {
+  
+  background-color: #ff5722; /* Verde para o botão de enviar */
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-rating-button:hover {
+  background-color: #218838;
+}
+
+.rating-message {
+  color: #555;
+  font-style: italic;
+  margin-top: 15px;
+}
+
+
+/* Seção do Cardápio */
 .cardapio-section {
-  margin-top: 40px;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 30px;
 }
 
 .cardapio-section h2 {
-  border-bottom: 2px solid #eee;
-  padding-bottom: 10px;
   color: #333;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .itens-cardapio {
-  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Layout responsivo */
+  gap: 20px;
 }
 
 .item-cardapio {
-  background: #fff;
-  padding: 15px;
-  margin-bottom: 15px;
+  border: 1px solid #eee;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 15px;
+  background-color: #fcfcfc;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.item-cardapio:hover {
+  transform: translateY(-3px);
 }
 
 .item-info {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 10px;
 }
 
 .item-info h3 {
   margin: 0;
   color: #333;
+  font-size: 1.3em;
 }
 
 .item-preco {
-  color: #e74c3c;
   font-weight: bold;
+  color: #ff5722; /* Verde para preço */
+  font-size: 1.1em;
 }
 
 .item-descricao {
   color: #666;
-  margin: 0;
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+/* Links de Gerenciamento (mantidos do EdicaoDados.css) */
+.links-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
+  width: 100%;
+  max-width: 800px;
 }
 
 .link-as-button {
-  display: inline-block; /* Permite aplicar padding, width e height */
-  background-color: #ff5722; /* Mesma cor do botão "Finalizar Cadastro" */
-  color: white; /* Cor do texto branco */
-  padding: 15px 30px; /* Padding interno, igual ao botão */
-  border: none; /* Remove a borda */
-  border-radius: 5px; /* Bordas arredondadas */
-  font-size: 1.1em; /* Tamanho da fonte */
-  font-weight: bold; /* Texto em negrito */
-  text-decoration: none; /* Remove o sublinhado padrão dos links */
-  cursor: pointer; /* Muda o cursor para indicar que é clicável */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Transição suave para hover */
-  text-align: center; /* Centraliza o texto dentro do botão */
-  white-space: nowrap; /* Evita que o texto quebre em várias linhas */
-  min-width: 150px; /* Garante uma largura mínima para o botão, ajuste conforme necessário */
+  display: inline-block;
+  background-color: #ff5722;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+  white-space: nowrap;
+  min-width: 150px;
 }
 
 .link-as-button:hover {
-  background-color: #e64a19; /* Laranja mais escuro ao passar o mouse */
-  transform: translateY(-2px); /* Pequeno efeito de elevação */
+  background-color: #e64a19;
+  transform: translateY(-2px);
 }
 
-/* Opcional: Para alinhar vários links-botão, você pode envolvê-los em um container */
-.links-container {
-  display: flex;
-  flex-wrap: wrap; /* Permite quebrar linha em telas menores */
-  gap: 20px; /* Espaço entre os botões */
-  justify-content: center; /* Centraliza os botões no container */
-  margin-top: 30px; /* Espaço acima do grupo de botões */
-}
+/* Responsividade */
+@media (max-width: 768px) {
+  .restaurante-info,
+  .rating-section,
+  .cardapio-section,
+  .links-container {
+    padding: 15px;
+  }
 
-.back-arrow {
-  font-size: 1.8em;
-  margin-right: 15px;
-  cursor: pointer;
-  color: #555;
-  font-weight: bold;
+  .restaurante-info h1 {
+    font-size: 1.8em;
+  }
+
+  .rating-section h2,
+  .cardapio-section h2 {
+    font-size: 1.5em;
+  }
+
+  .rating-stars {
+    gap: 5px;
+  }
+
+  .star {
+    font-size: 1.3em;
+    padding: 3px 8px;
+    min-width: 35px;
+  }
+
+  .itens-cardapio {
+    grid-template-columns: 1fr; /* Uma coluna em telas pequenas */
+  }
+
+  .link-as-button {
+    width: 100%;
+    max-width: 250px;
+    padding: 12px 20px;
+    font-size: 1em;
+  }
 }
