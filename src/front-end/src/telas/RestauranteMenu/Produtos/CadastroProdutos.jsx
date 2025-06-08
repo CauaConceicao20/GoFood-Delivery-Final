@@ -1,138 +1,143 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Importe useNavigate
 import './CadastroProdutos.css';
 
 const CadastroProdutos = () => {
-    const [produto, setProduto] = useState({
-        foto: null,
-        nome: '',
-        preco: '',
-        endereco: '',
-        telefone: '',
-        descricao: ''
-    });
+  const [produto, setProduto] = useState({
+    foto: null,
+    nome: '',
+    preco: '',
+    categoria: '', // Novo campo para categoria
+    descricao: ''
+    // Endereço e Telefone removidos, pois geralmente são do restaurante, não do produto
+  });
 
-    const handleFileChange = (e) => {
-        if (e.target.files[0]) {
-            setProduto(prev => ({
-                ...prev,
-                foto: URL.createObjectURL(e.target.files[0])
-            }));
-        }
-    };
+  const navigate = useNavigate(); // Hook para navegação programática
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setProduto(prev => ({ ...prev, [name]: value }));
-    };
+  const handleFileChange = (e) => {
+    if (e.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setProduto(prev => ({
+          ...prev,
+          foto: event.target.result // Usar Data URL para preview
+        }));
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Produto cadastrado:', produto);
-        // Lógica para enviar os dados
-    };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProduto(prev => ({ ...prev, [name]: value }));
+  };
 
-    return (
-        <div className="cadastro-container">
-            <div className="header-actions">
-                <h1>Cadastrar Novo Produto</h1>
-                <div>
-                    <Link to="/RestaurantePerfil" className="back-button">
-                        &larr; Voltar ao Perfil
-                    </Link>
-                </div>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Produto cadastrado:', produto);
+    alert('Produto cadastrado com sucesso!');
+    navigate('/RestaurantePerfil'); // Redireciona de volta para o perfil do restaurante ou menu
+  };
+
+  return (
+    <div className="cadastro-container">
+      {/* Cabeçalho */}
+      <div className="header-cadastro-produto"> {/* Nova classe para o cabeçalho */}
+        <Link to="/RestaurantePerfil" className="back-button">
+          &larr; Voltar ao Perfil
+        </Link>
+        <h1>Cadastrar Novo Produto</h1>
+      </div>
+
+      <form onSubmit={handleSubmit} className="produto-form">
+        <div className="form-row">
+          {/* Coluna da Foto */}
+          <div className="photo-column">
+            <label>Foto do Prato (opcional)</label>
+            <label htmlFor="foto-produto" className="foto-upload">
+              {produto.foto ? (
+                <img src={produto.foto} alt="Preview do Prato" className="foto-preview" />
+              ) : (
+                <span className="plus-icon">+</span>
+              )}
+            </label>
+            <input
+              id="foto-produto"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
+            />
+          </div>
+
+          {/* Coluna dos Campos Principais */}
+          <div className="fields-column">
+            <div className="form-group">
+              <label htmlFor="nome" className="required-field">Nome do prato</label>
+              <input
+                type="text"
+                id="nome"
+                name="nome"
+                value={produto.nome}
+                onChange={handleChange}
+                required
+              />
             </div>
 
+            <div className="form-group">
+              <label htmlFor="preco" className="required-field">Preço</label>
+              <input
+                type="text"
+                id="preco"
+                name="preco"
+                value={produto.preco}
+                onChange={handleChange}
+                placeholder="R$ 00,00"
+                required
+              />
+            </div>
 
-            <form onSubmit={handleSubmit} className="produto-form">
-                {/* Foto e campos básicos */}
-                <div className="form-row">
-                    <div className="photo-column">
-                        <label>Foto (opcional)</label>
-                        <label htmlFor="foto-produto" className="foto-upload">
-                            {produto.foto ? (
-                                <img src={produto.foto} alt="Preview" className="foto-preview" />
-                            ) : (
-                                <span>+</span>
-                            )}
-                        </label>
-                        <input
-                            id="foto-produto"
-                            type="file"
-                            accept="image/*"
-                            onChange={handleFileChange}
-                            style={{ display: 'none' }}
-                        />
-                    </div>
-
-                    <div className="fields-column">
-                        <div className="form-group">
-                            <label>Nome do prato *</label>
-                            <input
-                                type="text"
-                                name="nome"
-                                value={produto.nome}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label>Preço *</label>
-                            <input
-                                type="text"
-                                name="preco"
-                                value={produto.preco}
-                                onChange={handleChange}
-                                placeholder="R$ 00,00"
-                                required
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                {/* Campos horizontais */}
-                <div className="horizontal-fields">
-                    <div className="form-group">
-                        <label className="required-field">Endereço completo</label>
-                        <input
-                            type="text"
-                            name="endereco"
-                            value={produto.endereco}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label className="required-field">Telefone de celular</label>
-                        <input
-                            type="tel"
-                            name="telefone"
-                            value={produto.telefone}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                </div>
-
-                {/* Descrição */}
-                <div className="form-group">
-                    <label>Descrição do prato</label>
-                    <textarea
-                        name="descricao"
-                        value={produto.descricao}
-                        onChange={handleChange}
-                        rows="4"
-                    />
-                </div>
-
-                <button type="submit" className="submit-button">
-                    Cadastrar Produto
-                </button>
-            </form>
+            <div className="form-group">
+              <label htmlFor="categoria" className="required-field">Categoria</label>
+              <select
+                id="categoria"
+                name="categoria"
+                value={produto.categoria}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Selecione a categoria</option>
+                <option value="lanches">Bebidas</option>
+                <option value="bebidas">Alimentos</option>
+                <option value="sobremesas">Sobremesas</option>
+                <option value="pratos-principais">Marmitas</option>
+                <option value="pratos-principais">Vegetarianos</option>
+                <option value="pratos-principais">Lanches</option>
+                <option value="vegetarianos">Vegetarianos</option>
+              </select>
+            </div>
+          </div>
         </div>
-    );
+
+        {/* Descrição (campo de largura total) */}
+        <div className="form-group">
+          <label htmlFor="descricao">Descrição do prato (opcional)</label>
+          <textarea
+            id="descricao"
+            name="descricao"
+            value={produto.descricao}
+            onChange={handleChange}
+            rows="4"
+            placeholder="Descreva seu prato, ingredientes, etc."
+          />
+        </div>
+
+        <button type="submit" className="submit-button">
+          Cadastrar Produto
+        </button>
+      </form>
+    </div>
+  );
 };
 
 export default CadastroProdutos;

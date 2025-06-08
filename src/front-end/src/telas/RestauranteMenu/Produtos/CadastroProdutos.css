@@ -1,86 +1,94 @@
-/* Reset básico e box-sizing para consistência */
-* {
-  box-sizing: border-box;
+/* Variáveis CSS para padronização */
+:root {
+  --primary-color: #ff5722;
+  --secondary-color: #007bff;
+  --cancel-color: #6c757d;
+  --text-color-dark: #333;
+  --text-color-medium: #555;
+  --text-color-light: #666;
+  --border-color: #ddd;
+  --background-light: #f0f2f5; /* Fundo geral da página */
+  --background-card: #fff; /* Fundo dos cards/formulários */
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-medium: rgba(0, 0, 0, 0.05);
+  --padding-default: 20px;
+  --border-radius-default: 8px;
+  --transition-speed: 0.3s;
 }
 
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: #f0f2f5;
-}
-
+/* Estilos Gerais do Container */
 .cadastro-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+  max-width: 800px; /* Largura ajustada para o formulário de cadastro */
+  margin: 20px auto;
+  padding: var(--padding-default);
+  background-color: var(--background-light);
+  font-family: 'Arial', sans-serif;
+  color: var(--text-color-dark);
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
 }
 
-/* Estilização do cabeçalho */
-.header-actions {
-  background-color: #ffffff;
-  padding: 15px 25px;
-  margin-bottom: 25px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  width: 100%;
-  max-width: 800px;
-  display: flex; /* Mantido como flex container */
+/* Estilos do Cabeçalho da Tela de Cadastro */
+.header-cadastro-produto { /* Nova classe para o cabeçalho específico */
+  display: flex;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  margin-bottom: 30px;
+  background-color: var(--background-card);
+  padding: 15px 25px;
+  border-radius: var(--border-radius-default);
+  box-shadow: 0 4px 10px var(--shadow-medium);
 }
 
-.back-button {
-  /* Estilos para o texto "Voltar ao Perfil" */
-  padding: 0; /* Remove padding para um look de link */
-  background-color: transparent;
-  color: #555;
-  text-decoration: none;
-  border: none;
-  font-size: 1em; /* Tamanho de fonte normal para o texto */
-  font-weight: normal; /* Peso normal para o texto */
-  cursor: pointer;
-  transition: color 0.3s ease;
-  white-space: nowrap; /* Impede que o texto quebre linha */
-  margin-right: 15px; /* Espaçamento entre o botão de voltar e o título */
-}
-
-/* Adiciona a seta usando um pseudo-elemento para que o tamanho da seta seja diferente do texto */
-.back-button::before {
-    
-    font-size: 1.5em; /* Tamanho maior para a seta */
-    margin-right: 5px; /* Espaço entre a seta e o texto */
-    vertical-align: middle; /* Alinha verticalmente a seta com o texto */
-    display: inline-block;
-    transform: translateY(-1px); /* Pequeno ajuste fino para alinhamento */
-    color: #555; /* Cor da seta */
-    font-weight: bold; /* Deixa a seta mais encorpada */
-}
-
-
-.back-button:hover {
-  color: #333; /* Escurece o texto e a seta ao passar o mouse */
-}
-
-.cadastro-container h1 {
+.header-cadastro-produto h1 {
+  font-size: 1.8em;
+  color: var(--text-color-dark);
   text-align: center;
   margin: 0;
-  padding-top: 0;
-  color: #333;
-  font-size: 1.6em;
-  font-weight: 600;
   flex-grow: 1;
-  transform: none; /* REMOVIDO: A principal correção para a sobreposição */
+  transform: translateX(-15px); /* Ajuste para centralizar o título */
+  z-index: 1;
 }
 
-/* Estilização do formulário principal (permanece como antes) */
+/* Estilos do Botão Voltar (mantido padrão) */
+.back-button {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 8px 15px;
+  background-color: #e0e0e0;
+  color: var(--text-color-dark);
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all var(--transition-speed) ease;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+
+.back-button:hover {
+  background-color: #d0d0d0;
+  color: #000;
+}
+
+.back-button::before {
+
+  margin-right: 5px;
+  font-size: 1.2em;
+}
+
+/* Estilos do Formulário Principal */
 .produto-form {
-  background: #ffffff;
+  background: var(--background-card);
   padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  border-radius: var(--border-radius-default);
+  box-shadow: 0 2px 10px var(--shadow-medium);
   width: 100%;
 }
 
@@ -88,34 +96,65 @@ body {
   display: flex;
   gap: 30px;
   margin-bottom: 20px;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Para responsividade */
 }
 
+/* Coluna da Foto */
 .photo-column {
-  flex: 0 0 150px;
+  flex: 0 0 150px; /* Largura fixa para a coluna da foto */
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 
-.fields-column {
-  flex: 1;
+.photo-column label:first-child {
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: var(--text-color-dark);
 }
 
-.horizontal-fields {
+.foto-upload {
+  width: 100px;
+  height: 100px;
+  border: 2px dashed var(--border-color);
+  border-radius: 4px; /* Retangular como nas imagens anteriores */
   display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0 auto;
+  overflow: hidden;
+  background-color: var(--background-light);
+  transition: all var(--transition-speed) ease;
 }
 
-.horizontal-fields .form-group {
-  flex: 1;
-  min-width: 200px;
+.foto-upload:hover {
+  border-color: #a0a0a0;
+  background-color: #f0f0f0;
+}
+
+.foto-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.plus-icon {
+  font-size: 2.5em;
+  color: var(--text-color-light);
+}
+
+/* Coluna dos Campos Principais */
+.fields-column {
+  flex: 1; /* Ocupa o restante do espaço */
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espaço entre os grupos de formulário */
 }
 
 .form-group {
-  margin-bottom: 15px;
   display: flex;
   flex-direction: column;
 }
@@ -124,7 +163,7 @@ body {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
-  color: #666;
+  color: var(--text-color-dark);
   font-size: 0.9em;
 }
 
@@ -134,18 +173,22 @@ body {
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select { /* Inclui select */
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1em;
-  color: #333;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  color: var(--text-color-dark); /* Cor do texto digitado */
+  background-color: var(--background-card); /* Fundo branco para inputs */
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-group select:focus {
   border-color: #a0a0a0;
   box-shadow: 0 0 0 2px rgba(160, 160, 160, 0.2);
   outline: none;
@@ -156,37 +199,9 @@ body {
   min-height: 80px;
 }
 
-/* Estilização para o upload de foto */
-.foto-upload {
-  width: 100px;
-  height: 100px;
-  border: 2px dashed #ccc;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin: 0 auto 10px;
-  overflow: hidden;
-  background-color: #f9f9f9;
-}
-
-.foto-upload span {
-  font-size: 3em;
-  color: #888;
-  line-height: 1;
-}
-
-.foto-preview {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 6px;
-}
-
-/* Estilização do botão de submit */
+/* Botão de Submissão */
 .submit-button {
-  background-color: #ff5722;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   padding: 15px 30px;
@@ -196,11 +211,9 @@ body {
   cursor: pointer;
   display: block;
   width: 100%;
-  max-width: 300px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-top: 30px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 300px; /* Largura máxima para o botão */
+  margin: 30px auto 0; /* Centraliza e adiciona margem superior */
+  transition: background-color var(--transition-speed) ease, transform 0.2s ease;
 }
 
 .submit-button:hover {
@@ -214,63 +227,53 @@ body {
     padding: 15px;
   }
 
-  .header-actions {
-    padding: 15px;
-    margin-bottom: 20px;
+  .header-cadastro-produto {
     flex-direction: column;
     align-items: flex-start;
+    padding: 15px;
+  }
+
+  .header-cadastro-produto h1 {
+    font-size: 1.5em;
+    transform: none;
+    text-align: left;
   }
 
   .back-button {
-    margin-bottom: 10px;
-    margin-right: 0;
-  }
-
-  .cadastro-container h1 {
-    text-align: left;
+    position: static;
     transform: none;
-    font-size: 1.4em;
+    margin-bottom: 15px;
+    display: inline-flex;
+    width: auto;
   }
 
   .produto-form {
-    padding: 20px;
+    padding: 15px;
   }
 
-  .form-row,
-  .horizontal-fields {
+  .form-row {
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
   }
-  
+
   .photo-column {
     flex: 1;
-    text-align: center;
-    order: -1;
+    order: -1; /* Move a foto para o topo em telas pequenas */
+    margin-bottom: 20px;
   }
 
   .foto-upload {
-    margin: 0 auto 10px;
+    margin: 0 auto; /* Centraliza a foto em mobile */
   }
 
-  .horizontal-fields .form-group {
-    min-width: unset;
+  .fields-column {
+    gap: 15px;
   }
 
   .submit-button {
-    max-width: 100%;
-    padding: 12px 24px;
+    width: 100%;
+    max-width: 100%; /* Botão ocupa a largura total em mobile */
     font-size: 1em;
-  }
-}
-
-@media (max-width: 480px) {
-  .cadastro-container {
-    padding: 10px;
-  }
-
-  .header-actions,
-  .produto-form {
-    padding: 15px;
-    margin-bottom: 15px;
+    padding: 12px 20px;
   }
 }
