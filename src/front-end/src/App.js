@@ -10,6 +10,7 @@ import PerfilRestaurante from './telas/RestauranteMenu/RestauranteMenu';
 import CadastroProdutos from './telas/RestauranteMenu/Produtos/CadastroProdutos';
 import DetalhesPedido from './telas/restaurante/pedidos/DetalhePedido';
 import EdicaoRestaurante from './telas/RestauranteMenu/EdicaoDados';
+import EdicaoUsuario from './telas/PerfilUsuario/EdicaoUsuario';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/cadastro-produtos" element={<CadastroProdutos />} />
         <Route path="/detalhes-pedido" element={<DetalhesPedido />} />
         <Route path="/EdicaoRestaurante" element={<EdicaoRestaurante />} />
+        <Route path="/EdicaoUsuario" element={<EdicaoUsuario />} />
 
       </Routes>
     </div>

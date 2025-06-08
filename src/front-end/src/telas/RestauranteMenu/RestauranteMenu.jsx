@@ -15,6 +15,7 @@ const Restaurante = () => {
 
   return (
     <div className="restaurante-view">
+      <Link to="/main_menu" className="back-arrow">Voltar</Link> 
       <div className="restaurante-info">
         <h1>{restaurante.nome}</h1>
         <p>{restaurante.descricao}</p>

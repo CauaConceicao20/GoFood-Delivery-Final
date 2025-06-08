@@ -1,170 +1,112 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'; // Importe Link
 import './PerfilUsuario.css';
 
 const PerfilUsuario = () => {
-  const [userData, setUserData] = useState({
+  const [userData] = useState({
     foto: null,
-    nomeCompleto: '',
-    telefone: '',
-    email: '',
-    endereco: '',
-    idade: '',
-    dataNascimento: '',
-    cpf: ''
+    nomeCompleto: 'João da Silva',
+    telefone: '(11) 98765-4321',
+    email: 'joao.silva@example.com',
+    endereco: 'Rua Exemplo, 123 - Centro, São Paulo',
+    dataNascimento: '01/01/1990',
+    cpf: '123.456.789-00'
   });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleFileChange = (e) => {
-    if (e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setUserData(prev => ({ ...prev, foto: event.target.result }));
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Dados salvos:', userData);
-  };
 
   return (
     <div className="profile-container">
+      {/* Cabeçalho */}
       <div>
-         <Link to="/main_menu" className="back-button">
+        <Link to="/main_menu" className="back-button">
           &larr; Voltar ao Menu
         </Link>
         <h1>Configuração de perfil do usuário</h1>
       </div>
 
-
-      <form onSubmit={handleSubmit} className="profile-form">
+      {/* Formulário (apenas para exibição) */}
+      <div className="profile-form">
         <table className="profile-table">
           <tbody>
-            {/* Linha 1 */}
+            {/* Linha 1: Foto e Nome Completo */}
             <tr>
-              <td rowSpan="3" className="photo-cell">
+              <td rowSpan="4" className="photo-cell"> {/* Aumenta rowSpan para 4, para cobrir Nome, Telefone, Email, Endereço */}
                 <label>Foto de perfil</label>
-                <label htmlFor="photo-upload" className="photo-upload-btn">
+                <div className="photo-upload-btn disabled-photo-upload">
                   {userData.foto ? (
                     <img src={userData.foto} alt="Foto do perfil" className="profile-image" />
                   ) : (
-                    '+'
+                    <span className="plus-icon"></span>
                   )}
-                </label>
-                <input
-                  id="photo-upload"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  style={{ display: 'none' }}
-                />
+                </div>
               </td>
               <td className="label-cell">
                 <label className="required-field">Nome completo</label>
               </td>
               <td>
-                <input
-                  type="text"
-                  name="nomeCompleto"
-                  value={userData.nomeCompleto}
-                  onChange={handleChange}
-                  required
-                />
+                <span className="display-value">{userData.nomeCompleto}</span>
               </td>
+              {/* Adiciona uma célula vazia para manter o layout de 4 colunas na linha */}
+              <td colSpan="2"></td>
+            </tr>
+
+            {/* Nova Linha 2: Telefone de celular */}
+            <tr>
               <td className="label-cell">
                 <label className="required-field">Telefone de celular</label>
               </td>
               <td>
-                <input
-                  type="tel"
-                  name="telefone"
-                  value={userData.telefone}
-                  onChange={handleChange}
-                  required
-                />
+                <span className="display-value">{userData.telefone}</span>
               </td>
+              {/* Adiciona uma célula vazia para manter o layout de 4 colunas na linha */}
+              <td colSpan="2"></td>
             </tr>
 
-            {/* Linha 2 */}
+            {/* Linha 3 (antiga Linha 2): E-mail */}
             <tr>
               <td className="label-cell">
                 <label className="required-field">E-mail</label>
               </td>
-              <td colSpan="3">
-                <input
-                  type="email"
-                  name="email"
-                  value={userData.email}
-                  onChange={handleChange}
-                  required
-                />
+              <td colSpan="3"> {/* Mantém colSpan="3" para ocupar o restante da linha */}
+                <span className="display-value">{userData.email}</span>
               </td>
             </tr>
 
-            {/* Linha 3 */}
+            {/* Linha 4 (antiga Linha 3): Endereço */}
             <tr>
               <td className="label-cell">
                 <label className="required-field">Endereço</label>
               </td>
-              <td colSpan="3">
-                <input
-                  type="text"
-                  name="endereco"
-                  value={userData.endereco}
-                  onChange={handleChange}
-                  required
-                />
+              <td colSpan="3"> {/* Mantém colSpan="3" para ocupar o restante da linha */}
+                <span className="display-value">{userData.endereco}</span>
               </td>
             </tr>
 
-            {/* Linha 4 */}
+            {/* Linha 5 (antiga Linha 4): Data de nascimento e CPF */}
             <tr>
+              {/* Esta célula não está mais sob a foto, então não precisa de rowSpan */}
               <td className="label-cell">
                 <label className="required-field">Data de nascimento</label>
               </td>
               <td>
-                <input
-                  type="text"
-                  name="dataNascimento"
-                  value={userData.dataNascimento}
-                  onChange={handleChange}
-                  placeholder="dd/mm/aaaa"
-                  required
-                />
+                <span className="display-value">{userData.dataNascimento}</span>
               </td>
-            </tr>
-
-            {/* Linha 5 */}
-            <tr>
               <td className="label-cell">
                 <label>CPF (Opcional)</label>
               </td>
-              <td colSpan="3">
-                <input
-                  type="text"
-                  name="cpf"
-                  value={userData.cpf}
-                  onChange={handleChange}
-                  placeholder="000.000.000-00"
-                />
+              <td>
+                <span className="display-value">{userData.cpf}</span>
               </td>
             </tr>
           </tbody>
         </table>
 
+        {/* Botão de ação - Editar Dados */}
         <div className="form-actions">
-          <button type="submit" className="save-button">
-            Salvar Alterações
-          </button>
+          <Link to="/EdicaoUsuario" className="edit-button"> {/* Use Link para navegar */}
+            Editar Dados
+          </Link>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

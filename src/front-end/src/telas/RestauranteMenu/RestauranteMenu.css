@@ -87,3 +87,11 @@
   justify-content: center; /* Centraliza os botões no container */
   margin-top: 30px; /* Espaço acima do grupo de botões */
 }
+
+.back-arrow {
+  font-size: 1.8em;
+  margin-right: 15px;
+  cursor: pointer;
+  color: #555;
+  font-weight: bold;
+}

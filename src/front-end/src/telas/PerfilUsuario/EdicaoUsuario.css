@@ -1,0 +1,324 @@
+/* EdicaoUsuario.css - Nenhuma alteração necessária aqui para o telefone */
+/* Variáveis CSS para padronização (opcional, mas recomendado para projetos maiores) */
+:root {
+  --primary-color: #ff5722; /* Cor principal, como a do botão de salvar original */
+  --secondary-color: #007bff; /* Cor para ações secundárias como 'Editar' */
+  --danger-color: #dc3545; /* Cor para ações perigosas (se houver) */
+  --cancel-color: #6c757d; /* Cor para o botão 'Cancelar' */
+  --text-color-dark: #333;
+  --text-color-medium: #555;
+  --text-color-light: #666;
+  --border-color: #ddd;
+  --background-light: #f0f2f5; /* Fundo geral da página */
+  --background-card: #fff; /* Fundo dos cards/formulários */
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-medium: rgba(0, 0, 0, 0.05);
+  --padding-default: 20px;
+  --border-radius-default: 8px;
+  --transition-speed: 0.3s;
+}
+
+/* Estilos Gerais do Container e Título */
+.edit-profile-container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: var(--padding-default);
+  background-color: var(--background-light);
+  font-family: 'Arial', sans-serif;
+  color: var(--text-color-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Ajuste do cabeçalho para alinhar o botão de voltar e o título */
+.edit-profile-container > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  margin-bottom: 30px;
+  background-color: var(--background-card);
+  padding: 15px 25px;
+  border-radius: var(--border-radius-default);
+  box-shadow: 0 4px 10px var(--shadow-medium);
+}
+
+.edit-profile-container h1 {
+  font-size: 1.8em;
+  color: var(--text-color-dark);
+  text-align: center;
+  margin: 0;
+  flex-grow: 1;
+  transform: translateX(-15px);
+  z-index: 1;
+}
+
+/* Estilos do Botão Voltar */
+.back-button {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 8px 15px;
+  background-color: #e0e0e0;
+  color: var(--text-color-dark);
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all var(--transition-speed) ease;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+
+.back-button:hover {
+  background-color: #d0d0d0;
+  color: #000;
+}
+
+.back-button::before {
+
+  margin-right: 5px;
+  font-size: 1.2em;
+}
+
+/* Estilos do Formulário */
+.edit-profile-form {
+  background: var(--background-card);
+  padding: 25px;
+  border-radius: var(--border-radius-default);
+  box-shadow: 0 2px 10px var(--shadow-medium);
+  width: 100%;
+}
+
+/* Estilos da Tabela de Perfil */
+.edit-profile-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 15px;
+  margin-bottom: 30px;
+}
+
+.edit-profile-table td {
+  padding: 0 10px;
+  vertical-align: middle;
+}
+
+.edit-profile-table td.label-cell {
+  text-align: right;
+  padding-right: 15px;
+  width: 25%;
+  white-space: nowrap;
+}
+
+.edit-profile-table label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: var(--text-color-dark);
+}
+
+.required-field::after {
+  content: " *";
+  color: #e74c3c;
+}
+
+/* Estilos da Célula da Foto de Perfil */
+.photo-cell {
+  width: 150px;
+  text-align: center;
+  padding-right: 20px;
+  vertical-align: top;
+}
+
+.photo-cell label:first-child {
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: var(--text-color-dark);
+}
+
+.photo-upload-btn {
+  width: 100px;
+  height: 100px;
+  border: 2px dashed var(--border-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0 auto;
+  overflow: hidden;
+  background-color: var(--background-light);
+  transition: all var(--transition-speed) ease;
+}
+
+.photo-upload-btn:hover {
+  border-color: #a0a0a0;
+  background-color: #f0f0f0;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.plus-icon {
+  font-size: 2.5em;
+  color: var(--text-color-light);
+}
+
+/* Estilos dos Campos de Input */
+.edit-profile-table input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.edit-profile-table input:focus {
+  border-color: #a0a0a0;
+  box-shadow: 0 0 0 2px rgba(160, 160, 160, 0.2);
+  outline: none;
+}
+
+/* Estilos para o campo de CPF não editável */
+.read-only-input {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+  border-color: #e0e0e0;
+  color: #777;
+}
+
+.read-only-input:focus {
+  box-shadow: none;
+  border-color: #e0e0e0;
+}
+
+
+/* Ações do Formulário (Botões) */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.save-button,
+.cancel-button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color var(--transition-speed) ease, transform 0.2s ease;
+  min-width: 150px;
+}
+
+.save-button {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #e64a19;
+  transform: translateY(-2px);
+}
+
+.cancel-button {
+  background-color: var(--cancel-color);
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .edit-profile-container {
+    padding: 15px;
+  }
+
+  .edit-profile-container > div:first-child {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding: 15px;
+  }
+
+  .back-button {
+    position: static;
+    transform: none;
+    margin-bottom: 15px;
+    display: inline-flex;
+  }
+
+  .edit-profile-container h1 {
+    text-align: left;
+    font-size: 1.5em;
+    transform: none;
+  }
+
+  .edit-profile-form {
+    padding: 15px;
+  }
+
+  .edit-profile-table,
+  .edit-profile-table tbody,
+  .edit-profile-table tr,
+  .edit-profile-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .edit-profile-table td {
+    padding: 5px 0;
+  }
+
+  .edit-profile-table td.label-cell {
+    text-align: left;
+    padding-right: 0;
+    width: 100%;
+  }
+
+  .photo-cell {
+    width: 100%;
+    padding-right: 0;
+    text-align: center;
+    order: -1;
+  }
+
+  .photo-cell label:first-child {
+    margin-bottom: 5px;
+  }
+
+  .photo-upload-btn {
+    margin: 0 auto 10px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .save-button,
+  .cancel-button {
+    width: 100%;
+    max-width: 250px;
+    font-size: 1em;
+    padding: 10px 20px;
+  }
+}

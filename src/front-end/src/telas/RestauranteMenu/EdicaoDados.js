@@ -65,7 +65,6 @@ function EdicaoDados() {
   return (
     <div className="app-container">
       <div className="header">
-        {/* A classe 'back-arrow' em EdicaoDados.css foi ajustada para um link */}
         <Link to="/RestaurantePerfil" className="back-arrow">Voltar</Link> 
         <h1>Requisições</h1>
       </div>
