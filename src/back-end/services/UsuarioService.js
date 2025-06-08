@@ -7,7 +7,7 @@ import { GrupoNomeEnum } from "../model/usuario/enums/GrupoNomeEnum.js";
 
 class UsuarioService {
 
-     constructor() {
+    constructor() {
         this.usuarioRepository = new UsuarioRepository();
         this.grupoService = new GrupoService();
         this.usuarioGrupoService = new UsuarioGrupoService();
@@ -26,13 +26,25 @@ class UsuarioService {
                     }
                 } else {
                     if (grupo.getNome() === GrupoNomeEnum.CLIENTE) {
-                       await this.associaUsuarioEGrupo(usuarioRegistrado.getId(), grupo);
+                        await this.associaUsuarioEGrupo(usuarioRegistrado.getId(), grupo);
                     }
                 }
             }
-            await this.carrinhoService.registra(new Carrinho(0,0), usuarioRegistrado.getId());
+            await this.carrinhoService.registra(new Carrinho(0, 0), usuarioRegistrado.getId());
             return usuarioRegistrado;
 
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async buscarPorId(id) {
+        try {
+            const usuario = await this.usuarioRepository.buscarPorId(id);
+            if (!usuario) {
+                throw new Error(`Usuário com ID ${id} não encontrado.`);
+            }
+            return usuario;
         } catch (err) {
             throw err;
         }

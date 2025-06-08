@@ -49,23 +49,38 @@ class UsuarioRepository {
     }
   }
 
+  async buscarPorId(id) {
+    let conn;
+    try {
+      conn = await this.connection.connect();
+      const usuario = await conn.get(`SELECT * FROM usuarios WHERE id = ?`, [id]);
+
+      if (!usuario) {
+        throw new BadRequestError(`Usuário com ID ${id} não encontrado.`);
+      }
+
+      return new Usuario(usuario.id, usuario.nome, usuario.email, usuario.senha, usuario.dataCadastro,
+        usuario.telefone, usuario.cpf, usuario.cnpj);
+
+    } catch (err) {
+      throw err;
+    }
+  }
+
   async buscarPorEmail(email) {
     let conn;
     try {
       conn = await this.connection.connect();
-      await conn.run("BEGIN TRANSACTION");
       const usuario = await conn.get(`SELECT * FROM usuarios WHERE email = ?`, [email]);
 
       if (!usuario) {
         throw new BadRequestError(`Usuário com email ${email} não encontrado.`);
       }
 
-      await conn.run('COMMIT');
       return new Usuario(usuario.id, usuario.nome, usuario.email, usuario.senha, usuario.dataCadastro,
-         usuario.telefone, usuario.cpf, usuario.cnpj);
+        usuario.telefone, usuario.cpf, usuario.cnpj);
 
     } catch (err) {
-      await conn.run("ROLLBACK");
       throw err;
     }
   }
