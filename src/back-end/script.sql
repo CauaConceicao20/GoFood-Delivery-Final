@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS formas_pagamento;
 DROP TABLE IF EXISTS cozinhas;
 DROP TABLE IF EXISTS cidades;
 DROP TABLE IF EXISTS estados;
+DROP TABLE IF EXISTS categorias;
 
 CREATE TABLE IF NOT EXISTS estados (
     id INTEGER PRIMARY KEY,
@@ -93,6 +94,13 @@ CREATE TABLE IF NOT EXISTS restaurantes_forma_pagamento (
     FOREIGN KEY (forma_pagamento_id) REFERENCES formas_pagamento(id)
 );
 
+CREATE TABLE IF NOT EXISTS categorias (
+    id INTEGER PRIMARY KEY,
+    nome VARCHAR(20) NOT NULL CHECK (
+        nome IN ('BEBIDAS', 'ALIMENTOS', 'SOBREMESAS', 'MARMITAS', 'VEGETARIANA', 'LANCHES')
+    )
+);
+
 CREATE TABLE IF NOT EXISTS produtos (
     id INTEGER PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
@@ -100,7 +108,9 @@ CREATE TABLE IF NOT EXISTS produtos (
     preco DECIMAL(10,2) NOT NULL,
     ativo BOOLEAN,
     restaurante_id INTEGER NOT NULL,
-    FOREIGN KEY (restaurante_id) REFERENCES restaurantes(id)
+    categoria_id INTEGER,
+    FOREIGN KEY (restaurante_id) REFERENCES restaurantes(id),
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id)
 );
 
 CREATE TABLE IF NOT EXISTS fotos_produto (
@@ -109,6 +119,7 @@ CREATE TABLE IF NOT EXISTS fotos_produto (
     descricao TEXT,
     content_type VARCHAR(100),
     tamanho BIGINT,
+    url VARCHAR(150) NOT NULL,
     produto_id INTEGER NOT NULL UNIQUE,
     FOREIGN KEY (produto_id) REFERENCES produtos(id)
 );
@@ -261,3 +272,12 @@ INSERT INTO cidades (nome, estado_id) VALUES ('Londrina', 16);
 INSERT INTO cidades (nome, estado_id) VALUES ('Maringá', 16);
 INSERT INTO cidades (nome, estado_id) VALUES ('Caxias do Sul', 21);
 INSERT INTO cidades (nome, estado_id) VALUES ('Niterói', 19);
+
+-- CATEGORIAS DE PRODUTOS
+
+INSERT INTO categorias (nome) VALUES ('BEBIDAS');
+INSERT INTO categorias (nome) VALUES ('ALIMENTOS');
+INSERT INTO categorias (nome) VALUES ('SOBREMESAS');
+INSERT INTO categorias (nome) VALUES ('MARMITAS');
+INSERT INTO categorias (nome) VALUES ('VEGETARIANA');
+INSERT INTO categorias (nome) VALUES ('LANCHES');

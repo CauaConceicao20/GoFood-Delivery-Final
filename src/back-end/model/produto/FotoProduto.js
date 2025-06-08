@@ -1,9 +1,19 @@
 class FotoProduto {
-    constructor(nome, descricao, contentType, tamanho) {
+    constructor(id, nome, descricao, contentType, url, tamanho) {
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.contentType = contentType;
+        this.url = url;
         this.tamanho = tamanho;
+    }
+
+    setId(id) {
+        this.id = id;
+    }
+    
+    getId() {
+        return this.id;
     }
 
     setNome(nome) {
@@ -28,6 +38,14 @@ class FotoProduto {
 
     getContentType() {
         return this.contentType;
+    }
+
+    setUrl(url) {
+        this.url = url;
+    }
+
+    getUrl() {
+        return this.url;
     }
 
     setTamanho(tamanho) {

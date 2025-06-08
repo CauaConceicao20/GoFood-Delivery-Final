@@ -1,5 +1,6 @@
 import Connection from "../database/Connection.js";
 import RestaurantePagamentoRepository from "./RestaurantePagamentoRepository.js";
+import Restaurante from "../model/restaurante/Restaurante.js";
 
 class RestauranteRepository {
 
@@ -36,6 +37,27 @@ class RestauranteRepository {
             await conn.run("COMMIT");
             restaurante.setId(result.lastID);
             return restaurante;
+
+        } catch (err) {
+            await conn.run("ROLLBACK");
+            throw err;
+        }
+    }
+
+    async buscaRestauranteAssociadoAUsuario(idUsuario) {
+        let conn;
+        try {
+            conn = await this.connection.connect();
+            const restaurante = await conn.get(`SELECT * FROM restaurantes WHERE usuario_id = ?`, [idUsuario]);
+
+            if (!restaurante) {
+                throw new NotFoundError(`Restaurante com ID ${id} não encontrado.`);
+            }
+
+            return new Restaurante(restaurante.id, restaurante.nome, restaurante.descricao, restaurante.razao_social, restaurante.taxa_frete,
+                restaurante.data_cadastro, restaurante.data_atualizacao, restaurante.aberto, restaurante.ativo, restaurante.cep,
+                restaurante.logradouro, restaurante.numero, restaurante.complemento, restaurante.bairro, restaurante.cidade_id,
+                restaurante.usuario_id);
 
         } catch (err) {
             await conn.run("ROLLBACK");

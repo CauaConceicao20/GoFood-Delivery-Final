@@ -17,7 +17,7 @@ class RestauranteService {
 
     async registra(restaurante) {
         try {
-            if(!await this.usuarioService.buscarPorId(restaurante.getIdUsuario())) {
+            if (!await this.usuarioService.buscarPorId(restaurante.getIdUsuario())) {
                 throw new BadRequestError(`Usuário com ID ${restaurante.getIdUsuario()} não encontrado.`);
             }
             let restauranteRegistrado = await this.restauranteRepository.registra(restaurante);
@@ -27,6 +27,18 @@ class RestauranteService {
                     new RestaurantePagamento(restauranteRegistrado.getId(), formaPagamentoEncontrada.getId()));
             }
             return restauranteRegistrado;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async buscarRestauranteAssociadoAUsuario(idUsuario) {
+        try {
+            const restaurante = await this.restauranteRepository.buscaRestauranteAssociadoAUsuario(idUsuario);
+            if(!restaurante){
+                throw new BadRequestError(`Restaurante com ID ${idUsuario} não encontrado.`);
+            }
+            return restaurante;
         } catch (err) {
             throw err;
         }

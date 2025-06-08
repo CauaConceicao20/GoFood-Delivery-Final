@@ -30,7 +30,7 @@ class TokenService {
 
     validarToken(token) {
         try {
-            return jwt.verify(token, process.env.JWT_SECRET);
+            return jwt.verify(token, process.env.TOKEN_SECRET);
         } catch (err) {
             return null;
         }

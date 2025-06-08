@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import RestauranteService from '../services/RestauranteService.js';
 import Restaurante from '../model/restaurante/Restaurante.js';
 import RestauranteRegisterRequestDto from '../model/restaurante/dtos/RestauranteRegisterRequestDto.js';
-import Endereco from '../model/Usuario/Endereco.js';
+import Endereco from '../model/usuario/Endereco.js';
 
 
 class RestauranteController {
