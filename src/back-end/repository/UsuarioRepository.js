@@ -48,6 +48,27 @@ class UsuarioRepository {
       throw err;
     }
   }
+
+  async buscarPorEmail(email) {
+    let conn;
+    try {
+      conn = await this.connection.connect();
+      await conn.run("BEGIN TRANSACTION");
+      const usuario = await conn.get(`SELECT * FROM usuarios WHERE email = ?`, [email]);
+
+      if (!usuario) {
+        throw new BadRequestError(`Usuário com email ${email} não encontrado.`);
+      }
+
+      await conn.run('COMMIT');
+      return new Usuario(usuario.id, usuario.nome, usuario.email, usuario.senha, usuario.dataCadastro,
+         usuario.telefone, usuario.cpf, usuario.cnpj);
+
+    } catch (err) {
+      await conn.run("ROLLBACK");
+      throw err;
+    }
+  }
 }
 
 export default UsuarioRepository;

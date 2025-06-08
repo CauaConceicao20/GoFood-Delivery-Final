@@ -1,17 +1,23 @@
 import jwt from 'jsonwebtoken';
-import { UnauthorizedError } from '../exception/GlobalExceptions';
+import UsuarioGrupoService from './UsuarioGrupoService.js';
+import { UnauthorizedError } from '../exception/GlobalExceptions.js';
 
 class TokenService {
 
-    gerarToken(usuario) {
+    constructor() {
+        this.usuarioGrupoService = new UsuarioGrupoService();
+    }
+
+    async gerarToken(usuario) {
         if (!usuario) {
             throw new UnauthorizedError('Usuário não encontrado');
         }
+        const grupos = await this.usuarioGrupoService.buscaGruposDoUsuario(usuario.getId());
 
-        const payload = { id: usuario.getId(), grupo: usuario.getGrupo() };
+        const payload = { id: usuario.getId(), grupo: grupos.map(grupo => grupo.getNome()) };
 
         try {
-            const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: process.env.TOKEN_EXPIRATION });
+            const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: process.env.TOKEN_EXPIRATION });
             if (!token) {
                 throw new UnauthorizedError('Erro ao gerar token');
             }

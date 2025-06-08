@@ -1,4 +1,4 @@
-import TokenService from '../services/TokenService.js';
+import TokenService from '../../services/TokenService.js';
 import { UnauthorizedError, ForbiddenError } from '../exception/GlobalExceptions.js';
 
 class AuthMiddleware {

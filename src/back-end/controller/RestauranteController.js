@@ -7,7 +7,7 @@ import Endereco from '../model/Usuario/Endereco.js';
 
 
 class RestauranteController {
-      constructor() {
+    constructor() {
         this.router = express.Router();
         this.router.use(bodyParser.json());
         this.restauranteService = new RestauranteService();
@@ -15,7 +15,7 @@ class RestauranteController {
         this.dataHoraAtual = new Date().toLocaleString('sv-SE', { timeZone: 'America/Sao_Paulo' }).replace(' ', 'T');
     }
 
-       iniciaRotas() {
+    iniciaRotas() {
         this.router.post("/register", this.registraRestaurante.bind(this));
     }
 
@@ -29,7 +29,7 @@ class RestauranteController {
             );
 
             await this.restauranteService.registra(restaurante);
-            res.status(201).json({ mensagem: "Restaurante cadastrado com sucesso"});
+            res.status(201).json({ mensagem: "Restaurante cadastrado com sucesso" });
         } catch (err) {
             throw err;
         }

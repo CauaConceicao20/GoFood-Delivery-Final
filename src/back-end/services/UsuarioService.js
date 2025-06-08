@@ -38,6 +38,19 @@ class UsuarioService {
         }
     }
 
+    async buscarPorEmail(email) {
+        try {
+            const usuario = await this.usuarioRepository.buscarPorEmail(email);
+            if (!usuario) {
+                throw new Error(`Usuário com email ${email} não encontrado.`);
+            }
+            return usuario;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+
     async associaUsuarioEGrupo(idUsuario, grupo) {
         if (!grupo) {
             throw new Error(`Grupo ${grupo} não encontrado.`);
