@@ -7,9 +7,8 @@ class FotoProdutoRepository {
     }
 
     async registrar(fotoProduto, idProduto, conn) {
-        if(!conn) conn = await this.connection.connect();
-
         try {
+            if(!conn) conn = await this.connection.connect();
             const result = await conn.run(
                 'INSERT INTO fotos_produto (nome, descricao, content_type, tamanho, url, produto_id) VALUES (?, ?, ?, ?, ?, ?)',
                 [fotoProduto.getNome(), fotoProduto.getDescricao(), fotoProduto.getContentType(), fotoProduto.getTamanho(),

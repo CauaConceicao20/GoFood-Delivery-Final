@@ -71,7 +71,7 @@ class UsuarioRepository {
     }
   }
 
-  async buscarPorId(id) {
+  async buscarPorId(id, conn) {
     try {
       if (!conn) conn = await this.connection.connect();
       const usuario = await conn.get(`SELECT * FROM usuarios WHERE id = ?`, [id]);
@@ -88,7 +88,7 @@ class UsuarioRepository {
     }
   }
 
-  async buscarPorEmail(email) {
+  async buscarPorEmail(email, conn) {
     try {
       if (!conn) conn = await this.connection.connect();
       const usuario = await conn.get(`SELECT * FROM usuarios WHERE email = ?`, [email]);

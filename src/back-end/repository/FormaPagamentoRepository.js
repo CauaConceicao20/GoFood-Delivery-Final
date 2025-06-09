@@ -7,11 +7,9 @@ class FormaPagamentoRepository {
     this.connection = new Connection();
   }
 
-  async buscarPorId(id) {
-    let conn;
+  async buscarPorId(id, conn) {
     try {
-      conn = await this.connection.connect();
-      await conn.run("BEGIN TRANSACTION");
+      if (!conn) await this.connection.connect();
 
       const formaPagamento = await conn.get(
         `SELECT * FROM formas_pagamento WHERE id = ?`,
@@ -22,12 +20,10 @@ class FormaPagamentoRepository {
         throw new Error(`Forma de pagamento com ID ${id} não encontrada.`);
       }
 
-      await conn.run("COMMIT");
       return new FormaPagamento(formaPagamento.id, formaPagamento.nome);
 
     } catch (err) {
       console.error(err);
-      await conn.run("ROLLBACK");
       throw err;
     }
   }
