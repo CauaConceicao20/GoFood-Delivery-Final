@@ -28,13 +28,18 @@ class TokenService {
 
     }
 
+    async refreshToken(usuario) {
+        return await this.gerarToken(usuario);
+    }
+
     validarToken(token) {
         try {
-            return jwt.verify(token, process.env.JWT_SECRET);
+            return jwt.verify(token, process.env.TOKEN_SECRET);
         } catch (err) {
             return null;
         }
     }
+
 }
 
 export default TokenService;

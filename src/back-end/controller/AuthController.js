@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import LoginRequestDto from '../model/usuario/dtos/LoginRequestDto.js';
 import TokenService from '../services/TokenService.js';
 import AuthService from '../services/AuthService.js';
+import { UnauthorizedError } from '../exception/GlobalExceptions.js';
 
 
 class AuthController {
@@ -24,7 +25,7 @@ class AuthController {
             let token = await this.authService.login(loginDto.email, loginDto.senha);
 
             if (!token) {
-                throw new Error('Usuário ou senha inválidos');
+                throw new UnauthorizedError('Usuário ou senha inválidos');
             }
 
               res.cookie('token', token, {

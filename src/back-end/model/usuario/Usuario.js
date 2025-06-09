@@ -1,6 +1,6 @@
 class Usuario {
 
-    constructor(id, nome, email, senha, dataCadastro, telefone, cpf, cnpj) {
+    constructor(id, nome, email, senha, dataCadastro, telefone, cpf) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -8,7 +8,6 @@ class Usuario {
         this.dataCadastro = dataCadastro;
         this.telefone = telefone;
         this.cpf = cpf;
-        this.cnpj = cnpj;
     }
 
     setId(id) {
@@ -65,14 +64,6 @@ class Usuario {
 
     getCpf() {
         return this.cpf;
-    }
-
-    setCnpj(cnpj) {
-        this.cnpj = cnpj;
-    }
-    
-    getCnpj() {
-        return this.cnpj;
     }
 }
 

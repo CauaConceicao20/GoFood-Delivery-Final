@@ -16,59 +16,56 @@ class UsuarioService {
 
     async registraUsuario(usuario) {
         try {
-            const usuarioRegistrado = await this.usuarioRepository.registra(usuario);
             const grupos = await this.grupoService.buscarTodos();
+            let gruposParaAssociar = [];
 
             for (const grupo of grupos) {
-                if (usuarioRegistrado.getCnpj() != null) {
-                    if (grupo.getNome() === GrupoNomeEnum.ADMIN || grupo.getNome() === GrupoNomeEnum.RESTAURANTE) {
-                        await this.associaUsuarioEGrupo(usuarioRegistrado.getId(), grupo);
-                    }
-                } else {
-                    if (grupo.getNome() === GrupoNomeEnum.CLIENTE) {
-                        await this.associaUsuarioEGrupo(usuarioRegistrado.getId(), grupo);
-                    }
+                if (grupo.getNome() === GrupoNomeEnum.CLIENTE) {
+                    gruposParaAssociar.push(grupo);
                 }
             }
-            await this.carrinhoService.registra(new Carrinho(0, 0), usuarioRegistrado.getId());
-            return usuarioRegistrado;
+            
+            const carrinho = new Carrinho(0, 0);
 
-        } catch (err) {
-            throw err;
-        }
+        return await this.usuarioRepository.registra(usuario, gruposParaAssociar, carrinho);
+
+    } catch(err) {
+        throw err;
     }
+}
 
     async buscarPorId(id) {
-        try {
-            const usuario = await this.usuarioRepository.buscarPorId(id);
-            if (!usuario) {
-                throw new Error(`Usuário com ID ${id} não encontrado.`);
-            }
-            return usuario;
-        } catch (err) {
-            throw err;
+    try {
+        const usuario = await this.usuarioRepository.buscarPorId(id);
+        if (!usuario) {
+            throw new Error(`Usuário com ID ${id} não encontrado.`);
         }
+        return usuario;
+    } catch (err) {
+        throw err;
     }
+}
 
     async buscarPorEmail(email) {
-        try {
-            const usuario = await this.usuarioRepository.buscarPorEmail(email);
-            if (!usuario) {
-                throw new Error(`Usuário com email ${email} não encontrado.`);
-            }
-            return usuario;
-        } catch (err) {
-            throw err;
+    try {
+        const usuario = await this.usuarioRepository.buscarPorEmail(email);
+        if (!usuario) {
+            throw new Error(`Usuário com email ${email} não encontrado.`);
         }
+        return usuario;
+    } catch (err) {
+        throw err;
     }
+}
 
-
-    async associaUsuarioEGrupo(idUsuario, grupo) {
-        if (!grupo) {
-            throw new Error(`Grupo ${grupo} não encontrado.`);
-        }
-        await this.usuarioGrupoService.associaUsuarioAoGrupo(idUsuario, grupo.getId());
+    async atualizaUsuario(usuario) {
+    try {
+        const usuarioAtualizado = await this.usuarioRepository.atualizaUsuario(usuario);
+        return usuarioAtualizado;
+    } catch (err) {
+        throw err;
     }
+}
 }
 
 export default UsuarioService;

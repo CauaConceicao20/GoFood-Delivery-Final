@@ -11,6 +11,7 @@ class RestauranteRegisterRequestDto {
             body.bairro, body.cidadeId);
         this.descricao = body.descricao;
         this.formasPagamento = body.formasPagamento;
+        this.cnpj = body.cnpj;
 
         this.validarCampos();
     }
@@ -38,6 +39,13 @@ class RestauranteRegisterRequestDto {
         }
         if (!this.formasPagamento.every(id => Number.isInteger(id) && id > 0)) {
             throw new BadRequestError("Todos os métodos de pagamento devem ser IDs válidos.");
+        }
+        if (this.cnpj === null || this.cnpj === undefined || this.cnpj === "") {
+            throw new BadRequestError("CNPJ é obrigatório.");
+        }
+
+        if (this.cnpj.replace(/\D/g, '').length !== 14) {
+            throw new BadRequestError("CNPJ deve ter 14 dígitos.");
         }
     }
 }

@@ -6,12 +6,9 @@ class RestaurantePagamentoRepository {
         this.connection = new Connection();
     }
 
-    async associaRestauranteEPagamento(restaurantePagamento) {
-        let conn;
+    async associaRestauranteEPagamento(restaurantePagamento, conn) {
         try {
-            conn = await this.connection.connect();
-
-            await conn.run("BEGIN TRANSACTION");
+            if(!conn) conn = await this.connection.connect();
 
             const result = await conn.run(
                 `INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VALUES (?, ?)`,
@@ -22,11 +19,9 @@ class RestaurantePagamentoRepository {
                 throw new Error('Erro ao associar restaurante e pagamento');
             }
 
-            await conn.run("COMMIT");
             return { success: true, message: "Usuário associado ao grupo com sucesso." };
 
         } catch (err) {
-            await conn.run("ROLLBACK");
             throw err;
         }
     }

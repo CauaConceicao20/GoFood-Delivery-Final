@@ -1,5 +1,6 @@
 class Restaurante {
-    constructor(id, nome, descricao, razaoSocial, taxaFrete, dataCadastro, dataAtualizacao, endereco, idUsuario, idsFormaPagamento, cozinha) {
+    constructor(id, nome, descricao, razaoSocial, taxaFrete, dataCadastro, dataAtualizacao,
+        endereco, idUsuario, idsFormaPagamento, cnpj) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -11,7 +12,7 @@ class Restaurante {
         this.endereco = endereco;
         this.idUsuario = idUsuario
         this.idsFormaPagamento = idsFormaPagamento;
-        this.cozinha = cozinha;
+        this.cnpj = cnpj;
         this.ativo = true;
     }
 
@@ -103,12 +104,12 @@ class Restaurante {
         return this.idsFormaPagamento;
     }
 
-    setCozinha(cozinha) {
-        this.cozinha = cozinha;
+    setCnpj(cnpj) {
+        this.cnpj = cnpj;
     }
 
-    getCozinha() {
-        return this.cozinha;
+    getCnpj() {
+        return this.cnpj;
     }
 
     setAtivo(ativo) {

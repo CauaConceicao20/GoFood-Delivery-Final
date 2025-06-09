@@ -1,5 +1,5 @@
 import TokenService from '../../services/TokenService.js';
-import { UnauthorizedError, ForbiddenError } from '../exception/GlobalExceptions.js';
+import { UnauthorizedError, ForbiddenError } from '../../exception/GlobalExceptions.js';
 
 class AuthMiddleware {
     constructor() {
@@ -23,19 +23,19 @@ class AuthMiddleware {
             req.usuario = payload;
             next();
 
-        } catch (error) {
-            next(error);
+        } catch (err) {
+            throw err;
         }
     }
 
     autorizar(gruposPermitidos) {
         return (req, res, next) => {
-            const grupoUsuario = req.usuario?.grupo;
+            const gruposUsuario = req.usuario?.grupo;
 
-            if (!grupoUsuario || !gruposPermitidos.includes(grupoUsuario)) {
-                return next(new ForbiddenError('Acesso negado'));
+            if (!gruposUsuario || !gruposUsuario.some(grupo => gruposPermitidos.includes(grupo))
+            ) {
+                throw new ForbiddenError('Acesso negado');
             }
-
             next();
         };
     }
