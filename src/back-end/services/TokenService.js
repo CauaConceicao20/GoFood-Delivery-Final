@@ -28,6 +28,10 @@ class TokenService {
 
     }
 
+    async refreshToken(usuario) {
+        return await this.gerarToken(usuario);
+    }
+
     validarToken(token) {
         try {
             return jwt.verify(token, process.env.TOKEN_SECRET);
@@ -35,6 +39,7 @@ class TokenService {
             return null;
         }
     }
+
 }
 
 export default TokenService;

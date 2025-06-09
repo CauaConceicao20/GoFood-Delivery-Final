@@ -20,48 +20,52 @@ class UsuarioService {
             let gruposParaAssociar = [];
 
             for (const grupo of grupos) {
-                if (usuario.getCnpj() != null) {
-                    if (grupo.getNome() === GrupoNomeEnum.RESTAURANTE) {
-                        gruposParaAssociar.push(grupo);
-                    }
-                } else {
-                    if (grupo.getNome() === GrupoNomeEnum.CLIENTE) {
-                        gruposParaAssociar.push(grupo);
-                    }
+                if (grupo.getNome() === GrupoNomeEnum.CLIENTE) {
+                    gruposParaAssociar.push(grupo);
                 }
             }
+            
             const carrinho = new Carrinho(0, 0);
 
-            return await this.usuarioRepository.registra(usuario, gruposParaAssociar, carrinho);
+        return await this.usuarioRepository.registra(usuario, gruposParaAssociar, carrinho);
 
-        } catch (err) {
-            throw err;
-        }
+    } catch(err) {
+        throw err;
     }
+}
 
     async buscarPorId(id) {
-        try {
-            const usuario = await this.usuarioRepository.buscarPorId(id);
-            if (!usuario) {
-                throw new Error(`Usuário com ID ${id} não encontrado.`);
-            }
-            return usuario;
-        } catch (err) {
-            throw err;
+    try {
+        const usuario = await this.usuarioRepository.buscarPorId(id);
+        if (!usuario) {
+            throw new Error(`Usuário com ID ${id} não encontrado.`);
         }
+        return usuario;
+    } catch (err) {
+        throw err;
     }
+}
 
     async buscarPorEmail(email) {
-        try {
-            const usuario = await this.usuarioRepository.buscarPorEmail(email);
-            if (!usuario) {
-                throw new Error(`Usuário com email ${email} não encontrado.`);
-            }
-            return usuario;
-        } catch (err) {
-            throw err;
+    try {
+        const usuario = await this.usuarioRepository.buscarPorEmail(email);
+        if (!usuario) {
+            throw new Error(`Usuário com email ${email} não encontrado.`);
         }
+        return usuario;
+    } catch (err) {
+        throw err;
     }
+}
+
+    async atualizaUsuario(usuario) {
+    try {
+        const usuarioAtualizado = await this.usuarioRepository.atualizaUsuario(usuario);
+        return usuarioAtualizado;
+    } catch (err) {
+        throw err;
+    }
+}
 }
 
 export default UsuarioService;

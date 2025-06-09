@@ -41,7 +41,6 @@ CREATE TABLE IF NOT EXISTS usuarios (
     senha VARCHAR(255) NOT NULL,
     dataCadastro DATETIME NOT NULL,
     cpf VARCHAR(14) NOT NULL UNIQUE,
-    cnpj VARCHAR(18) UNIQUE,
     telefone VARCHAR(15) NOT NULL
 );
 
@@ -70,6 +69,7 @@ CREATE TABLE IF NOT EXISTS restaurantes (
     nome VARCHAR(100) NOT NULL,
     descricao VARCHAR(500) NOT NULL,
     razao_social VARCHAR(100),
+    cnpj VARCHAR(18) NOT NULL UNIQUE,
     taxa_frete DECIMAL(10,2),
     data_cadastro DATETIME,
     data_atualizacao DATETIME,

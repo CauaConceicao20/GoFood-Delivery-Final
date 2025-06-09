@@ -21,7 +21,8 @@ class UsuarioRepository {
       const usuarioRegistrado = await this.create(usuario, conn);
 
       for (const grupo of grupos) {
-        await this.usuarioGrupoRepository.associaUsuarioAoGrupo(new UsuarioGrupo(usuarioRegistrado.getId(), grupo.getId()), conn);
+        await this.usuarioGrupoRepository.associaUsuarioAoGrupo(new UsuarioGrupo(usuarioRegistrado.getId(),
+         grupo.getId()), conn);
       }
 
       await this.carrinhoRepository.create(carrinho, usuarioRegistrado.getId(), conn);
@@ -42,9 +43,9 @@ class UsuarioRepository {
       if (!conn) conn = await this.connection.connect();
 
       const result = await conn.run(
-        `INSERT INTO usuarios (nome, email, senha, dataCadastro, telefone, cpf, cnpj) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-        [usuario.getNome(), usuario.getEmail(), usuario.getSenha(), usuario.getDataCadastro(), usuario.getTelefone(), usuario.getCpf(),
-        usuario.getCnpj()]
+        `INSERT INTO usuarios (nome, email, senha, dataCadastro, telefone, cpf) VALUES (?, ?, ?, ?, ?, ?)`,
+        [usuario.getNome(), usuario.getEmail(), usuario.getSenha(), usuario.getDataCadastro(), usuario.getTelefone(),
+           usuario.getCpf(),]
       );
 
       if (!result.changes) {
@@ -63,10 +64,6 @@ class UsuarioRepository {
       if (err.code === 'SQLITE_CONSTRAINT' && err.message.includes('usuarios.cpf')) {
         throw new BadRequestError('CPF já cadastrado.');
       }
-
-      if (err.code === 'SQLITE_CONSTRAINT' && err.message.includes('usuarios.cnpj')) {
-        throw new BadRequestError('CNPJ já cadastrado.');
-      }
       throw err;
     }
   }
@@ -81,7 +78,7 @@ class UsuarioRepository {
       }
 
       return new Usuario(usuario.id, usuario.nome, usuario.email, usuario.senha, usuario.dataCadastro,
-        usuario.telefone, usuario.cpf, usuario.cnpj);
+        usuario.telefone, usuario.cpf);
 
     } catch (err) {
       throw err;
@@ -98,12 +95,57 @@ class UsuarioRepository {
       }
 
       return new Usuario(usuario.id, usuario.nome, usuario.email, usuario.senha, usuario.dataCadastro,
-        usuario.telefone, usuario.cpf, usuario.cnpj);
+        usuario.telefone, usuario.cpf);
 
     } catch (err) {
       throw err;
     }
   }
+
+  async atualizaUsuario(usuario, conn) {
+    try {
+      if (!conn) conn = await this.connection.connect();
+
+      const campos = [];
+      const valores = [];
+
+      if (usuario.getNome() !== null) {
+        campos.push('nome = ?');
+        valores.push(usuario.getNome());
+      }
+      if (usuario.getEmail() !== null) {
+        campos.push('email = ?');
+        valores.push(usuario.getEmail());
+      }
+      if (usuario.getTelefone() !== null) {
+        campos.push('telefone = ?');
+        valores.push(usuario.getTelefone());
+      }
+      if (usuario.getSenha() !== null) {
+        campos.push('senha = ?');
+        valores.push(usuario.getSenha());
+      }
+      if (usuario.getCpf() !== null) {
+        campos.push('cpf = ?');
+        valores.push(usuario.getCpf());
+      }
+
+      if (campos.length === 0) {
+        throw new BadRequestError("Nenhum campo para atualizar.");
+      }
+
+      valores.push(usuario.getId());
+      const query = `UPDATE usuarios SET ${campos.join(', ')} WHERE id = ?`;
+
+      await conn.run(query, valores);
+
+      const usuarioAtualizado = await this.buscarPorId(usuario.getId(), conn);
+      return usuarioAtualizado;
+    } catch (err) {
+      throw err;
+    }
+  }
+
 }
 
 export default UsuarioRepository;
