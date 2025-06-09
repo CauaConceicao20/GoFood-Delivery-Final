@@ -16,6 +16,14 @@ class UsuarioGrupoService {
         }
 
     }
+
+    async buscaGruposDoUsuario(idUsuario) {
+        try {
+            return await this.usuarioGrupoRepository.buscaGruposDoUsuario(idUsuario);
+        } catch (err) {
+            throw err;
+        }
+    }
 }
 
 export default UsuarioGrupoService;

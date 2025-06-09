@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS formas_pagamento;
 DROP TABLE IF EXISTS cozinhas;
 DROP TABLE IF EXISTS cidades;
 DROP TABLE IF EXISTS estados;
+DROP TABLE IF EXISTS categorias;
 
 CREATE TABLE IF NOT EXISTS estados (
     id INTEGER PRIMARY KEY,
@@ -40,7 +41,6 @@ CREATE TABLE IF NOT EXISTS usuarios (
     senha VARCHAR(255) NOT NULL,
     dataCadastro DATETIME NOT NULL,
     cpf VARCHAR(14) NOT NULL UNIQUE,
-    cnpj VARCHAR(18) UNIQUE,
     telefone VARCHAR(15) NOT NULL
 );
 
@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS restaurantes (
     nome VARCHAR(100) NOT NULL,
     descricao VARCHAR(500) NOT NULL,
     razao_social VARCHAR(100),
+    cnpj VARCHAR(18) NOT NULL UNIQUE,
     taxa_frete DECIMAL(10,2),
     data_cadastro DATETIME,
     data_atualizacao DATETIME,
@@ -93,6 +94,13 @@ CREATE TABLE IF NOT EXISTS restaurantes_forma_pagamento (
     FOREIGN KEY (forma_pagamento_id) REFERENCES formas_pagamento(id)
 );
 
+CREATE TABLE IF NOT EXISTS categorias (
+    id INTEGER PRIMARY KEY,
+    nome VARCHAR(20) NOT NULL CHECK (
+        nome IN ('BEBIDAS', 'ALIMENTOS', 'SOBREMESAS', 'MARMITAS', 'VEGETARIANA', 'LANCHES')
+    )
+);
+
 CREATE TABLE IF NOT EXISTS produtos (
     id INTEGER PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
@@ -100,7 +108,9 @@ CREATE TABLE IF NOT EXISTS produtos (
     preco DECIMAL(10,2) NOT NULL,
     ativo BOOLEAN,
     restaurante_id INTEGER NOT NULL,
-    FOREIGN KEY (restaurante_id) REFERENCES restaurantes(id)
+    categoria_id INTEGER,
+    FOREIGN KEY (restaurante_id) REFERENCES restaurantes(id),
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id)
 );
 
 CREATE TABLE IF NOT EXISTS fotos_produto (
@@ -109,6 +119,7 @@ CREATE TABLE IF NOT EXISTS fotos_produto (
     descricao TEXT,
     content_type VARCHAR(100),
     tamanho BIGINT,
+    url VARCHAR(150) NOT NULL,
     produto_id INTEGER NOT NULL UNIQUE,
     FOREIGN KEY (produto_id) REFERENCES produtos(id)
 );
@@ -261,3 +272,12 @@ INSERT INTO cidades (nome, estado_id) VALUES ('Londrina', 16);
 INSERT INTO cidades (nome, estado_id) VALUES ('Maringá', 16);
 INSERT INTO cidades (nome, estado_id) VALUES ('Caxias do Sul', 21);
 INSERT INTO cidades (nome, estado_id) VALUES ('Niterói', 19);
+
+-- CATEGORIAS DE PRODUTOS
+
+INSERT INTO categorias (nome) VALUES ('BEBIDAS');
+INSERT INTO categorias (nome) VALUES ('ALIMENTOS');
+INSERT INTO categorias (nome) VALUES ('SOBREMESAS');
+INSERT INTO categorias (nome) VALUES ('MARMITAS');
+INSERT INTO categorias (nome) VALUES ('VEGETARIANA');
+INSERT INTO categorias (nome) VALUES ('LANCHES');

@@ -7,12 +7,9 @@ class CarrinhoRepository {
         this.connection = new Connection();
     }
 
-    async registra(carrinho, idUsuario) {
-        let conn;
+    async create(carrinho, idUsuario, conn) {
         try {
-            conn = await this.connection.connect();
-
-            await conn.run("BEGIN TRANSACTION");
+           if(!conn) conn = await this.connection.connect();
 
             const result = await conn.run(`INSERT INTO carrinhos (quantidade_total_itens, sub_total, usuario_id) VALUES (?, ?, ?)`,
                 [carrinho.getQuantidadeTotalDeItems(), carrinho.getSubTotal(), idUsuario]);
@@ -20,13 +17,9 @@ class CarrinhoRepository {
             if (!result.changes) {
                 throw new Error('Erro ao criar carrinho');
             }
-
-            await conn.run("COMMIT");
             
             return carrinho;
-
         } catch (err) {
-            await conn.run("ROLLBACK");
             throw err;
         }
     }

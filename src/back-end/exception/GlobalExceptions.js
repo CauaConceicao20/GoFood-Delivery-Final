@@ -18,10 +18,10 @@ class UnauthorizedError extends ErrorDetails {
   }
 }
 
-class ErrorAoCriarCarrinhoException extends ErrorDetails {
-  constructor(message = 'Erro ao criar carrinho') {
-    super(500, message);
+class ForbiddenError extends ErrorDetails {
+  constructor(message = 'Acesso proibido') {
+    super(403, message);
   }
 }
 
-export { NotFoundError, BadRequestError,  UnauthorizedError};
+export { NotFoundError, BadRequestError,  UnauthorizedError, ForbiddenError};

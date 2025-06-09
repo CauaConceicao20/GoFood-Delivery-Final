@@ -1,9 +1,20 @@
 class Produto {
-    constructor(nome, descricao, preco, ativo,) {
+    constructor(id, nome, descricao, preco, idRestaurante, idCategoria) {
+        this.id = id;
         this.nome = nome;
         this.preco = preco;
         this.descricao = descricao;
-        this.ativo = ativo;
+        this.idRestaurante = idRestaurante;
+        this.idCategoria = idCategoria;
+        this.ativo = true;
+    }
+
+    setId(id) {
+        this.id = id;
+    }
+
+    getId() {
+        return this.id;
     }
 
     setNome(nome) {
@@ -28,6 +39,22 @@ class Produto {
 
     getPreco() {
         return this.preco;
+    }
+
+    settIdRestaurante(idRestaurante) {
+        this.idRestaurante = idRestaurante;
+    }
+
+    getIdRestaurante() {
+        return this.idRestaurante;
+    }
+
+    setIdCategoria(idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    getIdCategoria() {
+        return this.idCategoria;
     }
 
     setAtivo(ativo) {
