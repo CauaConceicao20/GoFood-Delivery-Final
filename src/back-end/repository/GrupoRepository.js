@@ -8,34 +8,26 @@ class GrupoRepository {
         this.connection = new Connection();
     }
 
-    async buscarTodosGrupos() {
-        let conn;
+    async buscarTodosGrupos(conn) {
         try {
-            conn = await this.connection.connect();
-            await conn.run("BEGIN TRANSACTION");
+            if(!conn) conn = await this.connection.connect();
             const grupos = await conn.all(`SELECT * FROM grupos`);
 
             if (grupos.length === 0) {
                 throw new NotFoundError("Nenhum grupo encontrado.");
             }
 
-            await conn.run('COMMIT');
-
             return grupos.map(grupo => new Grupo(grupo.id, grupo.nome));
 
         } catch (err) {
             console.error(err);
-            await conn.run('ROLLBACK');
             throw err;
         }
     }
 
-    async buscarPorId(id) {
-        let conn;
+    async buscarPorId(id, conn) {
         try {
-            conn = await this.connection.connect();
-
-            await conn.run("BEGIN TRANSACTION");
+            if(!conn) conn = await this.connection.connect();
 
             const grupo = await conn.get(`SELECT * FROM grupos WHERE id = ?`, [id]);
 
@@ -43,33 +35,25 @@ class GrupoRepository {
                 throw new NotFoundError(`Grupo com ID ${id} não encontrado.`);
             }
 
-            await conn.run('COMMIT');
-
             return new Grupo(grupo.id, grupo.nome);
-
         } catch (err) {
             console.error(err);
-            await conn.run('ROLLBACK');
             throw err;
         }
     }
 
-    async buscarPorNome(nomeGrupo) {
-        let conn;
+    async buscarPorNome(nomeGrupo, conn) {
         try {
-            conn = await this.connection.connect();
-            await conn.run("BEGIN TRANSACTION");
+            if(!conn) conn = await this.connection.connect();
             const grupo = await conn.get(`SELECT * FROM grupos WHERE nome = ?`, [nomeGrupo]);
 
             if (!grupo) {
                 throw new NotFoundError(`Grupo com ID ${id} não encontrado.`);
             }
 
-            await conn.run('COMMIT');
             return new Grupo(grupo.id, grupo.nome);
 
         } catch (err) {
-            await conn.run("ROLLBACK");
             throw err;
         }
     }

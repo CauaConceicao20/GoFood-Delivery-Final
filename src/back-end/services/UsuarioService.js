@@ -16,22 +16,23 @@ class UsuarioService {
 
     async registraUsuario(usuario) {
         try {
-            const usuarioRegistrado = await this.usuarioRepository.registra(usuario);
             const grupos = await this.grupoService.buscarTodos();
+            let gruposParaAssociar = [];
 
             for (const grupo of grupos) {
-                if (usuarioRegistrado.getCnpj() != null) {
-                    if (grupo.getNome() === GrupoNomeEnum.ADMIN || grupo.getNome() === GrupoNomeEnum.RESTAURANTE) {
-                        await this.associaUsuarioEGrupo(usuarioRegistrado.getId(), grupo);
+                if (usuario.getCnpj() != null) {
+                    if (grupo.getNome() === GrupoNomeEnum.RESTAURANTE) {
+                        gruposParaAssociar.push(grupo);
                     }
                 } else {
                     if (grupo.getNome() === GrupoNomeEnum.CLIENTE) {
-                        await this.associaUsuarioEGrupo(usuarioRegistrado.getId(), grupo);
+                        gruposParaAssociar.push(grupo);
                     }
                 }
             }
-            await this.carrinhoService.registra(new Carrinho(0, 0), usuarioRegistrado.getId());
-            return usuarioRegistrado;
+            const carrinho = new Carrinho(0, 0);
+
+            return await this.usuarioRepository.registra(usuario, gruposParaAssociar, carrinho);
 
         } catch (err) {
             throw err;
@@ -60,14 +61,6 @@ class UsuarioService {
         } catch (err) {
             throw err;
         }
-    }
-
-
-    async associaUsuarioEGrupo(idUsuario, grupo) {
-        if (!grupo) {
-            throw new Error(`Grupo ${grupo} não encontrado.`);
-        }
-        await this.usuarioGrupoService.associaUsuarioAoGrupo(idUsuario, grupo.getId());
     }
 }
 

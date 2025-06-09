@@ -1,18 +1,45 @@
 import Connection from "../database/Connection.js";
 import Usuario from "../model/usuario/Usuario.js";
 import { BadRequestError } from "../exception/GlobalExceptions.js";
+import UsuarioGrupoRepository from "./UsuarioGrupoRepository.js";
+import CarrinhoRepository from "./CarrinhoRepository.js";
+import UsuarioGrupo from "../model/usuario/UsuarioGrupo.js";
 
 class UsuarioRepository {
   constructor() {
     this.connection = new Connection();
+    this.usuarioGrupoRepository = new UsuarioGrupoRepository();
+    this.carrinhoRepository = new CarrinhoRepository();
   }
 
-  async registra(usuario) {
+  async registra(usuario, grupos, carrinho) {
     let conn;
     try {
       conn = await this.connection.connect();
-
       await conn.run("BEGIN TRANSACTION");
+
+      const usuarioRegistrado = await this.create(usuario, conn);
+
+      for (const grupo of grupos) {
+        await this.usuarioGrupoRepository.associaUsuarioAoGrupo(new UsuarioGrupo(usuarioRegistrado.getId(), grupo.getId()), conn);
+      }
+
+      await this.carrinhoRepository.create(carrinho, usuarioRegistrado.getId(), conn);
+
+      await conn.run("COMMIT");
+
+      return usuarioRegistrado;
+    } catch (err) {
+      if (conn) {
+        await conn.run("ROLLBACK");
+      }
+      throw err;
+    }
+  }
+
+  async create(usuario, conn) {
+    try {
+      if (!conn) conn = await this.connection.connect();
 
       const result = await conn.run(
         `INSERT INTO usuarios (nome, email, senha, dataCadastro, telefone, cpf, cnpj) VALUES (?, ?, ?, ?, ?, ?, ?)`,
@@ -24,14 +51,10 @@ class UsuarioRepository {
         throw new BadRequestError("Erro ao criar usuário");
       }
 
-      await conn.run('COMMIT');
       usuario.setId(result.lastID);
       return usuario;
 
     } catch (err) {
-      if (conn) {
-        await conn.run("ROLLBACK");
-      }
 
       if (err.code === 'SQLITE_CONSTRAINT' && err.message.includes('usuarios.email')) {
         throw new BadRequestError('Email já cadastrado.');
@@ -44,15 +67,13 @@ class UsuarioRepository {
       if (err.code === 'SQLITE_CONSTRAINT' && err.message.includes('usuarios.cnpj')) {
         throw new BadRequestError('CNPJ já cadastrado.');
       }
-
       throw err;
     }
   }
 
   async buscarPorId(id) {
-    let conn;
     try {
-      conn = await this.connection.connect();
+      if (!conn) conn = await this.connection.connect();
       const usuario = await conn.get(`SELECT * FROM usuarios WHERE id = ?`, [id]);
 
       if (!usuario) {
@@ -68,9 +89,8 @@ class UsuarioRepository {
   }
 
   async buscarPorEmail(email) {
-    let conn;
     try {
-      conn = await this.connection.connect();
+      if (!conn) conn = await this.connection.connect();
       const usuario = await conn.get(`SELECT * FROM usuarios WHERE email = ?`, [email]);
 
       if (!usuario) {
