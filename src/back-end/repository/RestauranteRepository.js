@@ -6,6 +6,7 @@ import RestaurantePagamento from "../model/restaurante/RestaurantePagamento.js";
 import UsuarioGrupoRepository from "./UsuarioGrupoRepository.js";
 import { GrupoNomeEnum } from "../model/usuario/enums/GrupoNomeEnum.js";
 import UsuarioGrupo from "../model/usuario/UsuarioGrupo.js";
+import { BadRequestError, NotFoundError } from "../exception/GlobalExceptions.js";
 
 class RestauranteRepository {
 
@@ -65,7 +66,7 @@ class RestauranteRepository {
             );
 
             if (!result.changes) {
-                throw new Error('Erro ao criar restaurante');
+                throw new BadRequestError('Erro ao criar restaurante');
             }
 
             restaurante.setId(result.lastID);

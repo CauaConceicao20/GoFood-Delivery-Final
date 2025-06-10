@@ -20,6 +20,14 @@ class ProdutoService {
             throw err;
         }
     }
+
+    async buscarPorId(id) {
+        try {
+            return await this.produtoRepository.buscarPorId(id);
+        } catch (err) {
+            throw err;
+        }
+    }
 }
 
 export default ProdutoService;

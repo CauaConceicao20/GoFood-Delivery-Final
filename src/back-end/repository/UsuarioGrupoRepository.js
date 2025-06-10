@@ -34,13 +34,12 @@ class UsuarioGrupoRepository {
                 [idUsuario]
             );
 
-            let gruposObjetos = [];
-
-            for (const grupo of grupos) {
-                gruposObjetos.push(new Grupo(grupo.id, grupo.nome));
+            if(grupos.length == 0) {
+                throw new BadRequestError('Nenhum grupo encontrado para o usuário.');
             }
 
-            return gruposObjetos;
+
+            return grupos.map(grupo => new Grupo(grupo.id, grupo.nome, grupo.descricao));
 
         } catch (err) {
             throw err;

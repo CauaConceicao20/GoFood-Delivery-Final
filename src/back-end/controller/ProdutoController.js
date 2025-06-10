@@ -6,6 +6,7 @@ import ProdutoRegisterRequestDto from '../model/produto/dtos/ProdutoRegisterRequ
 import FotoProduto from '../model/produto/FotoProduto.js';
 import Produto from '../model/produto/Produto.js';
 import RestauranteService from '../services/RestauranteService.js';
+import UsuarioService from '../services/UsuarioService.js';
 
 class ProdutoController {
 
@@ -15,6 +16,7 @@ class ProdutoController {
         this.produtoService = new ProdutoService();
         this.authMiddleware = new AuthMiddleware();
         this.restauranteService = new RestauranteService();
+        this.usuarioService = new UsuarioService();
 
         this.iniciaRotas();
     }
@@ -30,6 +32,8 @@ class ProdutoController {
     async registraProduto(req, res) {
         try {
             const usuarioId = req.usuario.id;
+
+            await this.usuarioService.buscarPorId(usuarioId);
             const restaurante = await this.restauranteService.buscarRestauranteAssociadoAUsuario(usuarioId);
             const produtoDto = new ProdutoRegisterRequestDto(req.body);
 

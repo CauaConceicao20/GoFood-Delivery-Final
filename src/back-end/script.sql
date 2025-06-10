@@ -126,8 +126,8 @@ CREATE TABLE IF NOT EXISTS fotos_produto (
 
 CREATE TABLE IF NOT EXISTS carrinhos (
     id INTEGER PRIMARY KEY,
-    quantidade_total_itens INT,
-    sub_total DECIMAL(10,2),
+    quantidade_total_itens INTEGER NOT NULL,
+    sub_total DECIMAL(10,2) NOT NULL,
     usuario_id INTEGER UNIQUE,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );

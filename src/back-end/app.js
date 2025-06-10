@@ -10,6 +10,7 @@ import DbInitializer from './database/DbInitializer.js';
 import ErrorHandler from './exception/ErrorHandler.js';
 import AuthController from './controller/AuthController.js';
 import ProdutoController from './controller/ProdutoController.js';
+import CarrinhoController from './controller/CarrinhoController.js';
 
 (async () => {
   const dbInit = new DbInitializer();
@@ -32,6 +33,7 @@ app.use('/api/v1/auth', new AuthController().router);
 app.use('/api/v1/usuarios', new UsuarioController().router);
 app.use('/api/v1/restaurantes', new RestauranteController().router);
 app.use('/api/v1/produtos', new ProdutoController().router);
+app.use('/api/v1/carrinhos', new CarrinhoController().router)
 
 
 app.use(ErrorHandler.errorHandler);

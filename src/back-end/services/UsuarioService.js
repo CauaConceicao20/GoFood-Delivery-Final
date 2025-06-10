@@ -25,7 +25,7 @@ class UsuarioService {
                 }
             }
             
-            const carrinho = new Carrinho(0, 0);
+            const carrinho = new Carrinho(null, 0, 0);
 
         return await this.usuarioRepository.registra(usuario, gruposParaAssociar, carrinho);
 
