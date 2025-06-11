@@ -8,39 +8,6 @@ class ItemCarrinhoRepository {
     }
 
 
-    async associaProdutoAoCarrinho(itemCarrinho, conn) {
-        try {
-            if (!conn) await this.connection.connect();
-
-            const result = await conn.run(`INSERT INTO itens_carrinho (carrinho_id, produto_id) VALUES (?, ?)`,
-                [itemCarrinho.getCarrinhoId(), itemCarrinho.getProdutoId()]);
-
-            if (!result.changes) {
-                throw new BadRequestError('Erro ao associar item ao carrinho');
-            }
-
-            return result;
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    async atualizaQuantidadeItemCarrinho(itemCarrinho, conn) {
-        try {
-            const result = await conn.run(
-                `UPDATE itens_carrinho SET quantidade = ? WHERE carrinho_id = ? AND produto_id = ?`,
-                [itemCarrinho.getQuantidade(), itemCarrinho.getCarrinhoId(), itemCarrinho.getProdutoId()]
-            );
-            if (!result.changes) {
-                throw new BadRequestError('Erro ao atualizar item do carrinho');
-            }
-
-            return result;
-        } catch (err) {
-            throw err;
-        }
-    }
-
     async buscaTodos() {
         let conn = null;
 

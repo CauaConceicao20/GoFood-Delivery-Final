@@ -61,7 +61,7 @@ export default {
           }
         }
       },
-      "/login": {
+      "/api/v1/auth/login": {
         "post": {
           "summary": "Login de usuário",
           "description": "Endpoint para autenticar um usuário e gerar um token de acesso",
