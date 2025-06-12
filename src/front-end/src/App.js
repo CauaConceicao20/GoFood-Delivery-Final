@@ -11,13 +11,14 @@ import CadastroProdutos from './telas/RestauranteMenu/Produtos/CadastroProdutos'
 import DetalhesPedido from './telas/restaurante/pedidos/DetalhePedido';
 import EdicaoRestaurante from './telas/RestauranteMenu/EdicaoDados';
 import EdicaoUsuario from './telas/PerfilUsuario/EdicaoUsuario';
+import Header from './components/header/Header.jsx';
 
 
 function App() {
   return (
     <div className="app">
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<MainMenu />} />
         <Route path="/login" element={<Login />} />
         <Route path="/login/restaurante" element={<LoginRestaurante />} />
         <Route path="/cadastro" element={<Cadastro />} />

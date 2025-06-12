@@ -1,6 +1,10 @@
+// src/telas/main_menu/MainMenu.js
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './MainMenu.css';
+import CardItemRestaurante from '../../components/CardItemRestaurante';
+import Header from '../../components/header/Header.jsx'; // Caminho de importação CORRETO
 
 const MainMenu = () => {
   const [showSideMenu, setShowSideMenu] = useState(false);
@@ -29,7 +33,6 @@ const MainMenu = () => {
 
   const handleAddressSubmit = (e) => {
     e.preventDefault();
-    // Lógica para salvar endereço
     setShowAddressModal(false);
   };
 
@@ -40,58 +43,92 @@ const MainMenu = () => {
     });
   };
 
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
+
+
+  const itensDeExemplo = [
+    {
+      id: 'item1',
+      nomeProduto: 'Pizza Calabresa Familiar',
+      preco: 58.99,
+      descricaoProduto: 'Molho de tomate, mussarela, calabresa fatiada, cebola e orégano.',
+      imagemProduto: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item2',
+      nome: 'Sushi Combo Especial',
+      preco: 75.00,
+      descricao: '20 peças variadas de sushi e sashimi frescos.',
+      imagem: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item3',
+      nome: 'Marmita Fit Frango Grelhado',
+      preco: 29.90,
+      descricao: 'Peito de frango grelhado, arroz integral, brócolis e cenoura.',
+      imagem: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item4',
+      nome: 'Hambúrguer Artesanal Duplo',
+      preco: 42.00,
+      descricao: 'Dois hambúrgueres de 150g, queijo cheddar, bacon, cebola caramelizada e molho especial.',
+      imagem: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item5',
+      nome: 'Torta de Limão com Merengue',
+      preco: 18.50,
+      descricao: 'Fatia generosa de torta de limão com cobertura de merengue tostado.',
+      imagem: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item6',
+      nome: 'Refrigerante Cola (Lata)',
+      preco: 7.00,
+      descricao: 'Lata de 350ml de refrigerante sabor cola.',
+      imagem: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item7',
+      nome: 'Escondidinho de Carne Seca',
+      preco: 38.00,
+      descricao: 'Creme de mandioca com carne seca desfiada e queijo coalho.',
+      imagem: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item8',
+      nome: 'Cerveja Artesanal IPA',
+      preco: 25.00,
+      descricao: 'Cerveja IPA de 500ml, com notas cítricas e amargor pronunciado.',
+      imagem: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item9',
+      nome: 'Açaí com Granola e Frutas',
+      preco: 22.00,
+      descricao: 'Tigela de açaí com granola, banana e morango.',
+      imagem: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item10',
+      nome: 'Risoto de Funghi Secchi',
+      preco: 49.50,
+      descricao: 'Cremoso risoto italiano com cogumelos funghi secchi e parmesão.',
+      imagem: '../../components/cachorrquente_img.png'
+    }
+  ];
+
   return (
     <div className="main-container">
-      {/* Header */}
-      <header className="main-header">
-        <div className="container-logo">
-          <Link to="/">
-            <div id="logo-gofood">GoFood</div>
-          </Link>
-        </div>
 
-        <form className="container-busca">
-          <button type="submit" className="icone-de-busca">
-            <span role="img" aria-label="search">🔍</span>
-          </button>
-          <input
-            id="input-de-busca-do-header"
-            type="text"
-            placeholder="Busca de restaurantes e produtos"
-          />
-        </form>
-
-        <button className="btn-endereco" onClick={toggleAddressModal}>
-          Insira seu endereço
-        </button>
-
-        <button className="btn-carrinho">
-          <Link to="/carrinho">
-            <span role="img" aria-label="cart">🛒</span>
-          </Link>
-        </button>
-
-        <button className="btn-perfil" onClick={toggleSideMenu}>
-          <span role="img" aria-label="profile">👤</span>
-        </button>
-      </header>
+      <Header
+        toggleAddressModal={toggleAddressModal}
+        toggleSideMenu={toggleSideMenu}
+      />
 
       {/* Overlays e Menus Laterais */}
-      {showSideMenu && (
-        <>
-          <div className="overlay" onClick={toggleSideMenu}></div>
-          <aside className="menu-lateral">
-            <h2>Menu</h2>
-            <nav className="navegacao-menu">
-              <ul>
-                <li><Link to="/pedidos">Pedidos</Link></li>
-                <li><Link to="/perfil">Perfil</Link></li>
-                <li><Link to="/RestaurantePerfil">Perfil Restaurante</Link></li>
-              </ul>
-            </nav>
-          </aside>
-        </>
-      )}
 
       {/* Modal de Endereço */}
       {showAddressModal && (
@@ -330,28 +367,19 @@ const MainMenu = () => {
 
         <hr className="linha-de-separacao-2" />
 
+        {/* --- cards --- */}
         <section className="container-card-alimentos">
-          {[...Array(10)].map((_, index) => (
-            <article key={index} className="card-alimentos">
-              <div className="card-image-placeholder"></div>
-              <div className="descricao-do-alimento">
-                <span className="card-titulo">Cheeseburger Clássico</span>
-                <div className="card-restaurante-responsavel">
-                  <span className="card-img-restaurante"></span>
-                  <span>Burger da Rua</span>
-                  <span className="card-avaliacao">4.9</span>
-                  <span className="icon-estrela">★</span>
-                </div>
-                <div className="card-preco">
-                  <span className="rs">R$</span><span className="valor">24,90</span>
-                </div>
-                <div className="card-container-botao">
-                  <button>Adicionar ao carrinho</button>
-                </div>
-              </div>
-            </article>
+          {itensDeExemplo.map(item => (
+            <CardItemRestaurante
+              key={item.id}
+              nome={item.nomeProduto}
+              preco={item.preco}
+              descricao={item.descricaoProduto}
+              imagem={item.imagemProduto}
+            />
           ))}
         </section>
+
       </main>
 
       {/* Footer */}
