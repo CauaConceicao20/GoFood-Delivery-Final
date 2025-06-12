@@ -7,9 +7,8 @@ class CategoriaProdutoRepository {
     }
 
     async buscarPorId(id, conn) {
-        if (!conn) conn = await this.connection.connect();
-
         try {
+            if (!conn) conn = await this.connection.connect();
             const result = await conn.get(
                 'SELECT * FROM categorias WHERE id = ?',
                 [id]

@@ -1,7 +1,7 @@
 class Categoria {
-    constructor() {
-        this.id = this.id;
-        this.nome = this.nome;
+    constructor(id, nome) {
+        this.id = id;
+        this.nome = nome;
     }
 
     setId(id) {

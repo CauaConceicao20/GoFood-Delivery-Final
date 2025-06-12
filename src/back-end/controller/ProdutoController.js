@@ -8,6 +8,7 @@ import Produto from '../model/produto/Produto.js';
 import RestauranteService from '../services/RestauranteService.js';
 import UsuarioService from '../services/UsuarioService.js';
 import ProdutoResponseDto from '../model/produto/dtos/ProdutoResponseDto.js';
+import CategoriaProdutoService from '../services/CategoriaProdutoService.js';
 
 class ProdutoController {
 
@@ -18,6 +19,7 @@ class ProdutoController {
         this.authMiddleware = new AuthMiddleware();
         this.restauranteService = new RestauranteService();
         this.usuarioService = new UsuarioService();
+        this.categoriaService = new CategoriaProdutoService();
 
         this.iniciaRotas();
     }
@@ -61,9 +63,14 @@ class ProdutoController {
 
     async buscarTodosProdutos(req, res) {
         try {
-            const produtos = (await this.produtoService.buscarTodos())
-                .map(produto => new ProdutoResponseDto(produto));
-            res.status(200).json(produtos);
+            const produtos = await this.produtoService.buscarTodos();
+
+            const produtosDto = await Promise.all(produtos.map(async (produto) => {
+                const categoria = await this.categoriaService.buscarPorId(produto.getIdCategoria());
+                const restaurante = await this.restauranteService.buscarPorId(produto.getIdRestaurante());
+                return new ProdutoResponseDto(produto, categoria, restaurante);
+            }));
+            res.status(200).json(produtosDto);
         } catch (err) {
             throw err;
         }
