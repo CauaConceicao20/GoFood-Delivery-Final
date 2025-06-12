@@ -28,6 +28,21 @@ class ProdutoService {
             throw err;
         }
     }
+
+    async verificaSeProdutosPertencemAoMesmoRestaurante(produtosId) {
+        let produtos = [];
+        for (const idProduto of produtosId) {
+            let contador = 0;
+            let produto = await this.buscarPorId(idProduto);
+            produtos.push(produto);
+            if (contador > 0 && produto.getIdRestaurante() !== produtos[contador - 1].getIdRestaurante()) {
+                throw new Error("Todos os produtos devem pertencer ao mesmo restaurante");
+            }
+            contador++;
+        }
+
+        return produtos;
+    }
 }
 
 export default ProdutoService;

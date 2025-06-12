@@ -156,8 +156,7 @@ CREATE TABLE IF NOT EXISTS itens_pedido (
     produto_id INTEGER NOT NULL,
     quantidade INT,
     preco_unitario DECIMAL(10,2),
-    preco_total DECIMAL(10,2),
-    observacao TEXT,
+    observacao VARCHAR(255),
     PRIMARY KEY (pedido_id, produto_id),
     FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
     FOREIGN KEY (produto_id) REFERENCES produtos(id)

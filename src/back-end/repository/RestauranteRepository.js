@@ -6,6 +6,7 @@ import RestaurantePagamento from "../model/restaurante/RestaurantePagamento.js";
 import UsuarioGrupoRepository from "./UsuarioGrupoRepository.js";
 import { GrupoNomeEnum } from "../model/usuario/enums/GrupoNomeEnum.js";
 import UsuarioGrupo from "../model/usuario/UsuarioGrupo.js";
+import Endereco from "../model/usuario/Endereco.js";
 import { BadRequestError, NotFoundError } from "../exception/GlobalExceptions.js";
 
 class RestauranteRepository {
@@ -77,21 +78,55 @@ class RestauranteRepository {
         }
     }
 
-    async buscaRestauranteAssociadoAUsuario(idUsuario, conn) {
-        try {
-            if (!conn) await this.connection.connect();
-            conn = await this.connection.connect();
-            const restaurante = await conn.get(`SELECT * FROM restaurantes WHERE usuario_id = ?`, [idUsuario]);
+    async buscarPorId(id, conn) {
 
-            if (!restaurante) {
+        try {
+            if (!conn) conn = await this.connection.connect();
+            const restauranteEncontrado = await conn.get(`SELECT * FROM restaurantes WHERE id = ?`, [id]);
+
+            if (!restauranteEncontrado) {
                 throw new NotFoundError(`Restaurante com ID ${id} não encontrado.`);
             }
 
-            return new Restaurante(restaurante.id, restaurante.nome, restaurante.descricao, restaurante.razao_social,
-                restaurante.cnpj, restaurante.taxa_frete, restaurante.data_cadastro, restaurante.data_atualizacao,
-                restaurante.aberto, restaurante.ativo, restaurante.cep, restaurante.logradouro, restaurante.numero,
-                restaurante.complemento, restaurante.bairro, restaurante.cidade_id, restaurante.usuario_id
-            );
+           const endereco = new Endereco(restauranteEncontrado.cep, restauranteEncontrado.logradouro,
+                restauranteEncontrado.numero, restauranteEncontrado.complemento, restauranteEncontrado.bairro,
+                restauranteEncontrado.cidade_id);
+
+            const restaurante = new Restaurante(restauranteEncontrado.id, restauranteEncontrado.nome,
+                restauranteEncontrado.descricao, restauranteEncontrado.razao_social, restauranteEncontrado.taxa_frete,
+                restauranteEncontrado.data_cadastro, restauranteEncontrado.data_atualizacao, endereco,
+                restauranteEncontrado.usuario_id);
+
+            restaurante.setAberto(restauranteEncontrado.aberto);
+            restaurante.setAtivo(restauranteEncontrado.ativo);
+            return restaurante;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+
+    async buscaRestauranteAssociadoAUsuario(idUsuario, conn) {
+        try {
+            if (!conn) conn = await this.connection.connect();
+            const restauranteEncontrado = await conn.get(`SELECT * FROM restaurantes WHERE usuario_id = ?`, [idUsuario]);
+
+            if (!restauranteEncontrado) {
+                throw new NotFoundError(`Restaurante com ID ${id} não encontrado.`);
+            }
+
+            const endereco = new Endereco(restauranteEncontrado.cep, restauranteEncontrado.logradouro,
+                restauranteEncontrado.numero, restauranteEncontrado.complemento, restauranteEncontrado.bairro,
+                restauranteEncontrado.cidade_id);
+
+            const restaurante = new Restaurante(restauranteEncontrado.id, restauranteEncontrado.nome,
+                restauranteEncontrado.descricao, restauranteEncontrado.razao_social, restauranteEncontrado.taxa_frete,
+                restauranteEncontrado.data_cadastro, restauranteEncontrado.data_atualizacao, endereco,
+                restauranteEncontrado.usuario_id);
+
+            restaurante.setAberto(restauranteEncontrado.aberto);
+            restaurante.setAtivo(restauranteEncontrado.ativo);
+            return restaurante;
         } catch (err) {
             throw err;
         }

@@ -1,10 +1,9 @@
 class ItemPedido {
-    constructor(idPedido, IdProduto, quantidade, precoUnitario, precoTotal, observacao) {
+    constructor(idPedido, idProduto, quantidade, precoUnitario, observacao) {
         this.idPedido = idPedido;
-        this.IdProduto = IdProduto;
+        this.idProduto = idProduto;
         this.quantidade = quantidade;
         this.precoUnitario = precoUnitario;
-        this.precoTotal = precoTotal;
         this.observacao = observacao;
     }
 
@@ -39,14 +38,6 @@ class ItemPedido {
     getPrecoUnitario() {
         return this.precoUnitario;
     }
-
-    setPrecoTotal(precoTotal) {
-        this.precoTotal = precoTotal;
-    }
-
-    getPrecoTotal() {
-        return this.precoTotal;
-    } 
 
     setObservacao(observacao) {
         this.observacao = observacao;
