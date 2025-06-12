@@ -87,6 +87,7 @@ const MainMenu = () => {
                 <li><Link to="/pedidos">Pedidos</Link></li>
                 <li><Link to="/perfil">Perfil</Link></li>
                 <li><Link to="/RestaurantePerfil">Perfil Restaurante</Link></li>
+                <li><Link to="/login">Entrar/Cadastro</Link></li>
               </ul>
             </nav>
           </aside>
