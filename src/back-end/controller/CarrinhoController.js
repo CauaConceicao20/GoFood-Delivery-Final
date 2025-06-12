@@ -6,6 +6,7 @@ import TokenService from '../services/TokenService.js';
 import RestauranteService from '../services/RestauranteService.js';
 import ItemCarrinho from '../model/carrinho/ItemCarrinho.js';
 import CarrinhoAddItemRequestDto from '../model/carrinho/dtos/CarrinhoAddItemRequestDto.js';
+import UsuarioService from '../services/UsuarioService.js';
 
 class CarrinhoController {
     constructor() {
@@ -14,6 +15,7 @@ class CarrinhoController {
         this.carrinhoService = new CarrinhoService();
         this.restauranteService = new RestauranteService();
         this.authMiddleware = new AuthMiddleware();
+        this.usuarioService = new UsuarioService();
         this.tokenService = new TokenService();
 
         this.iniciaRotas();
@@ -30,9 +32,10 @@ class CarrinhoController {
     async adicionarProduto(req, res) {
         try {
             const itemCarinhoDto = new CarrinhoAddItemRequestDto(req.body);
-            const carrinho = await this.carrinhoService.buscarCarrinhoDoUsuario(req.usuario.id);
+            const usuario = await this.usuarioService.buscarPorId(req.usuario.id);
+            const carrinho = await this.carrinhoService.buscarCarrinhoDoUsuario(usuario.getId());
             await this.carrinhoService.adicionarProdutoAoCarrinho(new ItemCarrinho(itemCarinhoDto.produtoId,
-                 carrinho.getId(), itemCarinhoDto.quantidade), carrinho);
+                 carrinho.getId(), itemCarinhoDto.quantidade), usuario);
 
             res.status(200).json({ mensagem: "Produto adicionado ao carrinho com sucesso" });
         } catch (err) {

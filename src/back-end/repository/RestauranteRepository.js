@@ -88,7 +88,7 @@ class RestauranteRepository {
                 throw new NotFoundError(`Restaurante com ID ${id} não encontrado.`);
             }
 
-           const endereco = new Endereco(restauranteEncontrado.cep, restauranteEncontrado.logradouro,
+            const endereco = new Endereco(restauranteEncontrado.cep, restauranteEncontrado.logradouro,
                 restauranteEncontrado.numero, restauranteEncontrado.complemento, restauranteEncontrado.bairro,
                 restauranteEncontrado.cidade_id);
 
@@ -106,27 +106,30 @@ class RestauranteRepository {
     }
 
 
-    async buscaRestauranteAssociadoAUsuario(idUsuario, conn) {
+    async buscarRestaurantesAssociadosAUsuario(idUsuario, conn) {
         try {
             if (!conn) conn = await this.connection.connect();
-            const restauranteEncontrado = await conn.get(`SELECT * FROM restaurantes WHERE usuario_id = ?`, [idUsuario]);
+            const restaurantesEncontrados = await conn.all(`SELECT * FROM restaurantes WHERE usuario_id = ?`, [idUsuario]);
 
-            if (!restauranteEncontrado) {
-                throw new NotFoundError(`Restaurante com ID ${id} não encontrado.`);
+            if (!restaurantesEncontrados || restaurantesEncontrados.length === 0) {
+                throw new NotFoundError(`Nenhum restaurante encontrado para o usuário informado.`);
             }
+            return restaurantesEncontrados.map(restauranteEncontrado => {
+                const endereco = new Endereco( restauranteEncontrado.cep, restauranteEncontrado.logradouro, 
+                    restauranteEncontrado.numero, restauranteEncontrado.complemento, restauranteEncontrado.bairro,
+                    restauranteEncontrado.cidade_id
+                );
 
-            const endereco = new Endereco(restauranteEncontrado.cep, restauranteEncontrado.logradouro,
-                restauranteEncontrado.numero, restauranteEncontrado.complemento, restauranteEncontrado.bairro,
-                restauranteEncontrado.cidade_id);
+                const restaurante = new Restaurante(restauranteEncontrado.id, restauranteEncontrado.nome, 
+                    restauranteEncontrado.descricao, restauranteEncontrado.razao_social, restauranteEncontrado.taxa_frete,
+                    restauranteEncontrado.data_cadastro, restauranteEncontrado.data_atualizacao, endereco,
+                    restauranteEncontrado.usuario_id
+                );
 
-            const restaurante = new Restaurante(restauranteEncontrado.id, restauranteEncontrado.nome,
-                restauranteEncontrado.descricao, restauranteEncontrado.razao_social, restauranteEncontrado.taxa_frete,
-                restauranteEncontrado.data_cadastro, restauranteEncontrado.data_atualizacao, endereco,
-                restauranteEncontrado.usuario_id);
-
-            restaurante.setAberto(restauranteEncontrado.aberto);
-            restaurante.setAtivo(restauranteEncontrado.ativo);
-            return restaurante;
+                restaurante.setAberto(restauranteEncontrado.aberto);
+                restaurante.setAtivo(restauranteEncontrado.ativo);
+                return restaurante;
+            });
         } catch (err) {
             throw err;
         }

@@ -34,8 +34,8 @@ class ProdutoController {
             const usuarioId = req.usuario.id;
 
             await this.usuarioService.buscarPorId(usuarioId);
-            const restaurante = await this.restauranteService.buscarRestauranteAssociadoAUsuario(usuarioId);
             const produtoDto = new ProdutoRegisterRequestDto(req.body);
+            const restaurante = await this.restauranteService.buscarPorId(produtoDto.restauranteId);
 
             const fotoProduto = new FotoProduto(null, produtoDto.fotoProduto.nomeFoto, produtoDto.fotoProduto.descricaoFoto,
                 produtoDto.fotoProduto.contentType, produtoDto.fotoProduto.urlFoto, produtoDto.fotoProduto.tamanhoFoto);

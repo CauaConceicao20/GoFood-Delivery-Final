@@ -33,13 +33,15 @@ class RestauranteService {
         }
     }
 
-    async buscarRestauranteAssociadoAUsuario(idUsuario) {
+    async buscarRestaurantesAssociadosAUsuario (idUsuario) {
         try {
-            const restaurante = await this.restauranteRepository.buscaRestauranteAssociadoAUsuario(idUsuario);
-            if (!restaurante) {
-                throw new BadRequestError(`Restaurante com ID ${idUsuario} não encontrado.`);
+            const restaurantes = await this.restauranteRepository.buscarRestaurantesAssociadosAUsuario(idUsuario);
+            for(const restaurante of restaurantes) {
+                if (!restaurante) {
+                    throw new BadRequestError(`Restaurante com ID ${idUsuario} não encontrado.`);
+                }
             }
-            return restaurante;
+            return restaurantes;
         } catch (err) {
             throw err;
         }

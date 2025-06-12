@@ -1,3 +1,4 @@
+import { BadRequestError } from "../../../exception/GlobalExceptions.js";
 import FotoProdutoDto from "./FotoProdutoDto.js";
 
 class ProdutoRegisterRequestDto {
@@ -7,22 +8,26 @@ class ProdutoRegisterRequestDto {
     this.preco = body.preco;
     this.categoriaId = body.categoriaId;
     this.fotoProduto = new FotoProdutoDto(body);
+    this.restauranteId = body.restauranteId;
 
     this.validarCampos();
   }
 
   validarCampos() {
     if (!this.nome || this.nome.length < 3) {
-      throw new Error("O nome do produto deve ter pelo menos 3 caracteres.");
+      throw new BadRequestError("O nome do produto deve ter pelo menos 3 caracteres.");
     }
     if (!this.descricao || this.descricao.length < 10) {
-      throw new Error("A descrição do produto deve ter pelo menos 10 caracteres.");
+      throw new BadRequestError("A descrição do produto deve ter pelo menos 10 caracteres.");
     }
     if (isNaN(this.preco) || this.preco <= 0) {
-      throw new Error("O preço do produto deve ser um número positivo.");
+      throw new BadRequestError("O preço do produto deve ser um número positivo.");
     }
     if (!this.categoriaId) {
-      throw new Error("A categoria do produto é obrigatória.");
+      throw new BadRequestError("A categoria do produto é obrigatória.");
+    }
+    if (!this.restauranteId || this.restauranteId <= 0) {
+      throw new BadRequestError("O restaurante do produto é obrigatório.");
     }
   }
 }

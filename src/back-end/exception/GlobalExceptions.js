@@ -24,4 +24,10 @@ class ForbiddenError extends ErrorDetails {
   }
 }
 
-export { NotFoundError, BadRequestError,  UnauthorizedError, ForbiddenError};
+class ForbiddenOwnRestaurantProductError extends ErrorDetails {
+  constructor(message = 'Não é permitido adicionar produtos do seu próprio restaurante ao carrinho') {
+    super(403, message);
+  }
+}
+
+export { NotFoundError, BadRequestError,  UnauthorizedError, ForbiddenError, ForbiddenOwnRestaurantProductError };
