@@ -280,3 +280,48 @@ INSERT INTO categorias (nome) VALUES ('SOBREMESAS');
 INSERT INTO categorias (nome) VALUES ('MARMITAS');
 INSERT INTO categorias (nome) VALUES ('VEGETARIANA');
 INSERT INTO categorias (nome) VALUES ('LANCHES');
+
+-- Usuários para os restaurantes
+INSERT INTO usuarios (id, nome, email, senha, dataCadastro, cpf, telefone)
+VALUES 
+(1, 'Carlos Silva', 'carlos@exemplo.com', 'senha123', '2024-06-12T12:00:00', '123.456.789-00', '(11) 99999-1111'),
+(2, 'Maria Oliveira', 'maria@exemplo.com', 'senha123', '2024-06-12T12:00:00', '234.567.890-11', '(11) 99999-2222'),
+(3, 'João Souza', 'joao@exemplo.com', 'senha123', '2024-06-12T12:00:00', '345.678.901-22', '(48) 98888-3333');
+
+-- 3 Restaurantes completos
+INSERT INTO restaurantes (nome, descricao, razao_social, cnpj, taxa_frete, data_cadastro, data_atualizacao, aberto, ativo, cidade_id, usuario_id, cep, logradouro, numero, complemento, bairro)
+VALUES 
+('Restaurante Sabor Caseiro', 'Comida brasileira tradicional', 'Sabor Caseiro Ltda', '12.345.678/0001-11', 7.50, '2024-06-12T12:00:00', '2024-06-12T12:00:00', 1, 1, 25, 1, '01001-000', 'Rua das Flores', '100', 'Sala 1', 'Centro'),
+('Pizzaria Bella Massa', 'Pizzas artesanais e delivery', 'Bella Massa Pizzaria ME', '23.456.789/0001-22', 5.00, '2024-06-12T12:00:00', '2024-06-12T12:00:00', 1, 1, 25, 2, '11000-000', 'Av. Paulista', '2000', 'Loja 2', 'Bela Vista'),
+('Veggie Life', 'Opções vegetarianas e veganas', 'Veggie Life Alimentos Ltda', '34.567.890/0001-33', 6.00, '2024-06-12T12:00:00', '2024-06-12T12:00:00', 1, 1, 24, 3, '88000-000', 'Rua das Palmeiras', '300', '', 'Centro');
+
+INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VALUES (1, 1);
+INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VALUES (1, 2);
+INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VALUES (1, 3);
+INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VALUES (1, 4);
+
+-- Restaurante 2 aceita todas as formas de pagamento
+INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VALUES (2, 1);
+INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VALUES (2, 2);
+INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VALUES (2, 3);
+INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VALUES (2, 4);
+
+-- Restaurante 3 aceita todas as formas de pagamento
+INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VALUES (3, 1);
+INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VALUES (3, 2);
+INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VALUES (3, 3);
+INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VALUES (3, 4);
+
+-- 10 Produtos completos (sem foto)
+INSERT INTO produtos (nome, descricao, preco, ativo, restaurante_id, categoria_id)
+VALUES 
+('Feijoada Completa', 'Feijoada tradicional com acompanhamentos', 39.90, 1, 1, 2),
+('Pizza Margherita', 'Pizza com molho de tomate, mussarela e manjericão', 49.90, 1, 2, 6),
+('Pizza Calabresa', 'Pizza com calabresa, cebola e mussarela', 54.90, 1, 2, 6),
+('Hambúrguer Vegano', 'Hambúrguer de grão de bico com salada', 29.90, 1, 3, 5),
+('Suco Natural', 'Suco de laranja natural', 8.00, 1, 1, 1),
+('Refrigerante Lata', 'Refrigerante 350ml', 6.00, 1, 2, 1),
+('Salada Caesar', 'Salada Caesar com frango grelhado', 25.00, 1, 1, 2),
+('Brownie Vegano', 'Brownie de chocolate vegano', 12.00, 1, 3, 3),
+('Marmita Fitness', 'Marmita com arroz integral, frango e legumes', 22.00, 1, 1, 4),
+('Lanche Natural', 'Sanduíche natural de atum', 15.00, 1, 2, 6);
