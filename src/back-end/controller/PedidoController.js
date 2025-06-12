@@ -20,7 +20,7 @@ class PedidoController {
     iniciaRotas() {
         this.router.post("/registra",
             this.authMiddleware.autenticar.bind(this.authMiddleware),
-            this.authMiddleware.autorizar('CLIENTE, RESTAURANTE'),
+            this.authMiddleware.autorizar('CLIENTE'),
             this.registraPedido.bind(this)
         );
     }	

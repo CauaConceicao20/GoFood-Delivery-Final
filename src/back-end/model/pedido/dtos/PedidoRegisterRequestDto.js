@@ -7,7 +7,7 @@ class PedidoRegisterRequestDto {
             throw new BadRequestError('O campo produtos deve ser um array.');
         }
         this.itemsPedidoDto = body.produtos.map(
-            p => new ItemPedidoDto(p.idProduto, p.quantidade)
+            p => new ItemPedidoDto(p.idProduto, p.quantidade, p.observacao)
         );
         this.idMetodoPagamento = body.idMetodoPagamento;
 
@@ -23,10 +23,10 @@ class PedidoRegisterRequestDto {
 }
 
 class ItemPedidoDto {
-    constructor(idProduto, quantidade) {
+    constructor(idProduto, quantidade, observacao) {
         this.idProduto = idProduto;
         this.quantidade = quantidade;
-        this.observacao = body.observacao;
+        this.observacao = observacao;
 
         this.validarCampos();
     }

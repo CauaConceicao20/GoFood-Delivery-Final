@@ -21,6 +21,14 @@ class ProdutoService {
         }
     }
 
+    async buscarTodos() {
+        try {
+            return await this.produtoRepository.buscarTodos();
+        } catch (err) {
+            throw err;
+        }
+    }
+
     async buscarPorId(id) {
         try {
             return await this.produtoRepository.buscarPorId(id);

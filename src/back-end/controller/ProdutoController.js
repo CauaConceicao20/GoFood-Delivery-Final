@@ -7,6 +7,7 @@ import FotoProduto from '../model/produto/FotoProduto.js';
 import Produto from '../model/produto/Produto.js';
 import RestauranteService from '../services/RestauranteService.js';
 import UsuarioService from '../services/UsuarioService.js';
+import ProdutoResponseDto from '../model/produto/dtos/ProdutoResponseDto.js';
 
 class ProdutoController {
 
@@ -26,6 +27,12 @@ class ProdutoController {
             this.authMiddleware.autenticar.bind(this.authMiddleware),
             this.authMiddleware.autorizar('RESTAURANTE'),
             this.registraProduto.bind(this)
+        );
+
+        this.router.get("/buscarTodos",
+            this.authMiddleware.autenticar.bind(this.authMiddleware),
+            this.authMiddleware.autorizar('CLIENTE'),
+            this.buscarTodosProdutos.bind(this)
         );
     }
 
@@ -47,6 +54,16 @@ class ProdutoController {
             await this.produtoService.registrar(produto, fotoProduto);
 
             res.status(201).json({ mensagem: "Produto cadastrado com sucesso" });
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async buscarTodosProdutos(req, res) {
+        try {
+            const produtos = (await this.produtoService.buscarTodos())
+                .map(produto => new ProdutoResponseDto(produto));
+            res.status(200).json(produtos);
         } catch (err) {
             throw err;
         }

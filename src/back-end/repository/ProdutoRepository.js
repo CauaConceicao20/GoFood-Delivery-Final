@@ -50,6 +50,23 @@ class ProdutoRepository {
         }
     }
 
+    async buscarTodos() {
+        const conn = await this.connection.connect();
+        try {
+            const produtos = await conn.all('SELECT * FROM produtos');
+
+            if (!produtos || produtos.length === 0) {
+                throw new BadRequestError('Nenhum produto encontrado.');
+            }
+
+            return produtos.map(produto => new Produto(produto.id, produto.nome, produto.descricao, produto.preco,
+                produto.restaurante_id, produto.categoria_id));
+        } catch (err) {
+            throw err;
+        }
+
+    }
+
     async buscarPorId(id, conn) {
         try {
             if(!conn) conn = await this.connection.connect();
