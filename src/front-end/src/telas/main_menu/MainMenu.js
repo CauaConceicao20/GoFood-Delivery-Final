@@ -3,16 +3,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './MainMenu.css';
-import CardItemRestaurante from '../../components/CardItemRestaurante'; // Caminho de importação CORRETO
+import CardItemRestaurante from '../../components/CardItemRestaurante';
+import Header from '../../components/header/Header.jsx'; // Caminho de importação CORRETO
 
 const MainMenu = () => {
   const [showSideMenu, setShowSideMenu] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [showAddressModal, setShowAddressModal] = useState(false);
   const [address, setAddress] = useState('');
-  const [priceRange, setPriceRange] = useState(500); // Não usado neste exemplo, mas mantido
-  const [mlRange, setMlRange] = useState(1000);     // Não usado neste exemplo, mas mantido
-  const [distanceRange, setDistanceRange] = useState(10); // Não usado neste exemplo, mas mantido
+  const [priceRange, setPriceRange] = useState(500);
+  const [mlRange, setMlRange] = useState(1000);
+  const [distanceRange, setDistanceRange] = useState(10);
 
   const [filters, setFilters] = useState({
     sortByRating: false,
@@ -32,7 +33,6 @@ const MainMenu = () => {
 
   const handleAddressSubmit = (e) => {
     e.preventDefault();
-    // Lógica para salvar endereço
     setShowAddressModal(false);
   };
 
@@ -43,8 +43,10 @@ const MainMenu = () => {
     });
   };
 
-  // --- DADOS DE EXEMPLO PARA OS CARDS DE RESTAURANTE ---
-  // Geralmente, isso viria de uma API (fetch, axios, etc.)
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
+
+
   const itensDeExemplo = [
     {
       id: 'item1',
@@ -117,62 +119,16 @@ const MainMenu = () => {
       imagem: '../../components/cachorrquente_img.png'
     }
   ];
-  // --- FIM DOS DADOS DE EXEMPLO ---
-
 
   return (
     <div className="main-container">
-      {/* Header */}
-      <header className="main-header">
-        <div className="container-logo">
-          <Link to="/">
-            <div id="logo-gofood">GoFood</div>
-          </Link>
-        </div>
 
-        <form className="container-busca">
-          <button type="submit" className="icone-de-busca">
-            <span role="img" aria-label="search">🔍</span>
-          </button>
-          <input
-            id="input-de-busca-do-header"
-            type="text"
-            placeholder="Busca de restaurantes e produtos"
-          />
-        </form>
-
-        <button className="btn-endereco" onClick={toggleAddressModal}>
-          Insira seu endereço
-        </button>
-
-        <button className="btn-carrinho">
-          <Link to="/carrinho">
-            <span role="img" aria-label="cart">🛒</span>
-          </Link>
-        </button>
-
-        <button className="btn-perfil" onClick={toggleSideMenu}>
-          <span role="img" aria-label="profile">👤</span>
-        </button>
-      </header>
+      <Header
+        toggleAddressModal={toggleAddressModal}
+        toggleSideMenu={toggleSideMenu}
+      />
 
       {/* Overlays e Menus Laterais */}
-      {showSideMenu && (
-        <>
-          <div className="overlay" onClick={toggleSideMenu}></div>
-          <aside className="menu-lateral">
-            <h2>Menu</h2>
-            <nav className="navegacao-menu">
-              <ul>
-                <li><Link to="/pedidos">Pedidos</Link></li>
-                <li><Link to="/perfil">Perfil</Link></li>
-                <li><Link to="/RestaurantePerfil">Perfil Restaurante</Link></li>
-                <li><Link to="/login">Entrar/Cadastro</Link></li>
-              </ul>
-            </nav>
-          </aside>
-        </>
-      )}
 
       {/* Modal de Endereço */}
       {showAddressModal && (
@@ -415,7 +371,7 @@ const MainMenu = () => {
         <section className="container-card-alimentos">
           {itensDeExemplo.map(item => (
             <CardItemRestaurante
-              key={item.id} 
+              key={item.id}
               nome={item.nomeProduto}
               preco={item.preco}
               descricao={item.descricaoProduto}
@@ -423,7 +379,6 @@ const MainMenu = () => {
             />
           ))}
         </section>
-        {/* --- FIM DA SEÇÃO DOS CARDS --- */}
 
       </main>
 

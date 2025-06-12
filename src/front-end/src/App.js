@@ -11,6 +11,7 @@ import CadastroProdutos from './telas/RestauranteMenu/Produtos/CadastroProdutos'
 import DetalhesPedido from './telas/restaurante/pedidos/DetalhePedido';
 import EdicaoRestaurante from './telas/RestauranteMenu/EdicaoDados';
 import EdicaoUsuario from './telas/PerfilUsuario/EdicaoUsuario';
+import Header from './components/header/Header.jsx';
 
 
 function App() {

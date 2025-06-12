@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './RestauranteMenu.css';
 import { Link } from 'react-router-dom';
+import Header from '../../components/header/Header';
 
 const Restaurante = () => {
   const restaurante = {
@@ -22,6 +23,9 @@ const Restaurante = () => {
     }
   };
 
+  const handleToggleAddressModal = () => {console.log('Toggle do modal de endereço na página de Pedidos.');}
+    
+
   const handleSubmitRating = () => {
     if (userRating > 0) {
       alert(`Você avaliou o restaurante com ${userRating} estrelas!`);
@@ -32,8 +36,11 @@ const Restaurante = () => {
     }
   };
 
+  
+
   return (
     <div className="restaurante-view">
+       <Header toggleAddressModal={handleToggleAddressModal} />
       {/* Botão de Voltar ao Menu */}
       <Link to="/main_menu" className="back-arrow">Voltar</Link>
 
