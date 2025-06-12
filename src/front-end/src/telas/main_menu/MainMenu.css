@@ -193,17 +193,12 @@ main {
   margin-bottom: 10px;
 }
 
+/* 
+
 .container-card-alimentos {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-}
-
-.card-alimentos {
-  background: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .card-image-placeholder {
@@ -225,6 +220,14 @@ main {
   border-radius: 4px;
   cursor: pointer;
 }
+
+*/
+
+
+
+
+
+
 
 /* Footer */
 footer {

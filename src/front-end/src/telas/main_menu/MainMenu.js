@@ -1,15 +1,18 @@
+// src/telas/main_menu/MainMenu.js
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './MainMenu.css';
+import CardItemRestaurante from '../../components/CardItemRestaurante'; // Caminho de importação CORRETO
 
 const MainMenu = () => {
   const [showSideMenu, setShowSideMenu] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [showAddressModal, setShowAddressModal] = useState(false);
   const [address, setAddress] = useState('');
-  const [priceRange, setPriceRange] = useState(500);
-  const [mlRange, setMlRange] = useState(1000);
-  const [distanceRange, setDistanceRange] = useState(10);
+  const [priceRange, setPriceRange] = useState(500); // Não usado neste exemplo, mas mantido
+  const [mlRange, setMlRange] = useState(1000);     // Não usado neste exemplo, mas mantido
+  const [distanceRange, setDistanceRange] = useState(10); // Não usado neste exemplo, mas mantido
 
   const [filters, setFilters] = useState({
     sortByRating: false,
@@ -39,6 +42,83 @@ const MainMenu = () => {
       [filterName]: e.target.checked
     });
   };
+
+  // --- DADOS DE EXEMPLO PARA OS CARDS DE RESTAURANTE ---
+  // Geralmente, isso viria de uma API (fetch, axios, etc.)
+  const itensDeExemplo = [
+    {
+      id: 'item1',
+      nomeProduto: 'Pizza Calabresa Familiar',
+      preco: 58.99,
+      descricaoProduto: 'Molho de tomate, mussarela, calabresa fatiada, cebola e orégano.',
+      imagemProduto: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item2',
+      nome: 'Sushi Combo Especial',
+      preco: 75.00,
+      descricao: '20 peças variadas de sushi e sashimi frescos.',
+      imagem: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item3',
+      nome: 'Marmita Fit Frango Grelhado',
+      preco: 29.90,
+      descricao: 'Peito de frango grelhado, arroz integral, brócolis e cenoura.',
+      imagem: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item4',
+      nome: 'Hambúrguer Artesanal Duplo',
+      preco: 42.00,
+      descricao: 'Dois hambúrgueres de 150g, queijo cheddar, bacon, cebola caramelizada e molho especial.',
+      imagem: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item5',
+      nome: 'Torta de Limão com Merengue',
+      preco: 18.50,
+      descricao: 'Fatia generosa de torta de limão com cobertura de merengue tostado.',
+      imagem: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item6',
+      nome: 'Refrigerante Cola (Lata)',
+      preco: 7.00,
+      descricao: 'Lata de 350ml de refrigerante sabor cola.',
+      imagem: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item7',
+      nome: 'Escondidinho de Carne Seca',
+      preco: 38.00,
+      descricao: 'Creme de mandioca com carne seca desfiada e queijo coalho.',
+      imagem: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item8',
+      nome: 'Cerveja Artesanal IPA',
+      preco: 25.00,
+      descricao: 'Cerveja IPA de 500ml, com notas cítricas e amargor pronunciado.',
+      imagem: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item9',
+      nome: 'Açaí com Granola e Frutas',
+      preco: 22.00,
+      descricao: 'Tigela de açaí com granola, banana e morango.',
+      imagem: '../../components/cachorrquente_img.png'
+    },
+    {
+      id: 'item10',
+      nome: 'Risoto de Funghi Secchi',
+      preco: 49.50,
+      descricao: 'Cremoso risoto italiano com cogumelos funghi secchi e parmesão.',
+      imagem: '../../components/cachorrquente_img.png'
+    }
+  ];
+  // --- FIM DOS DADOS DE EXEMPLO ---
+
 
   return (
     <div className="main-container">
@@ -331,28 +411,20 @@ const MainMenu = () => {
 
         <hr className="linha-de-separacao-2" />
 
+        {/* --- cards --- */}
         <section className="container-card-alimentos">
-          {[...Array(10)].map((_, index) => (
-            <article key={index} className="card-alimentos">
-              <div className="card-image-placeholder"></div>
-              <div className="descricao-do-alimento">
-                <span className="card-titulo">Cheeseburger Clássico</span>
-                <div className="card-restaurante-responsavel">
-                  <span className="card-img-restaurante"></span>
-                  <span>Burger da Rua</span>
-                  <span className="card-avaliacao">4.9</span>
-                  <span className="icon-estrela">★</span>
-                </div>
-                <div className="card-preco">
-                  <span className="rs">R$</span><span className="valor">24,90</span>
-                </div>
-                <div className="card-container-botao">
-                  <button>Adicionar ao carrinho</button>
-                </div>
-              </div>
-            </article>
+          {itensDeExemplo.map(item => (
+            <CardItemRestaurante
+              key={item.id} 
+              nome={item.nomeProduto}
+              preco={item.preco}
+              descricao={item.descricaoProduto}
+              imagem={item.imagemProduto}
+            />
           ))}
         </section>
+        {/* --- FIM DA SEÇÃO DOS CARDS --- */}
+
       </main>
 
       {/* Footer */}

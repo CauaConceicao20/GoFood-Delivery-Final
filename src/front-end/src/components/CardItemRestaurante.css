@@ -1,0 +1,127 @@
+.container-card-alimentos {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Cria 5 colunas de largura igual */
+  gap: 20px; /* Espaçamento entre as colunas e linhas */
+  padding: 0 10px; /* Espaçamento nas laterais */
+}
+
+.descricao-do-alimento {
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+    padding: 0 10px 0 10px;
+}
+
+.descricao-do-alimento p {
+    margin: 0 0 10px 0;
+}
+
+.card-alimentos {
+    display: inline-block;
+    height: auto;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    break-inside: avoid;
+}
+
+.card-alimentos img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-alimentos .card-container-botao {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px;
+}
+
+.card-container-botao button {
+    background-color: #E53935;
+    color: white;
+    border: none;
+    width: 150px;
+    height: auto;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.card-alimentos img:hover,
+.card-alimentos li:hover,
+.card-alimentos p:hover,
+.card-alimentos span:hover {
+    cursor: pointer;
+}
+
+.card-container-botao button:hover {
+    background-color: #a82d2d;
+    cursor: pointer;
+}
+
+.icon-estrela {
+    list-style-type: none;
+    color: #facc01;
+    font-size: 20px;
+}
+
+.icon-estrela::before {
+    content: "\2605";
+}
+
+.card-titulo {
+    font-family: "Acme", sans-serif;
+    display: block;
+    color: #E53935;
+    font-weight: bold;
+    width: 100%;
+    padding: 10px 0 0 0;
+    font-size: clamp(20px, 2vw, 25px);
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+
+.card-titulo:hover {
+    text-shadow: #a82d2d 0px 0px 1px;
+    cursor: pointer;
+}
+
+.card-restaurante-responsavel {
+    display: flex;
+    align-items: center;
+    margin: 0 0 10px 0;
+}
+
+.card-restaurante-responsavel span {
+    margin: 0 0 0 5px;
+}
+
+.card-avaliacao {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: #facc01;
+}
+
+.card-img-restaurante img {
+    width: 20px;
+    height: 20px;
+}
+
+.rs {
+    font-family: "Inter", sans-serif;
+    font-size: 0.6em;
+    vertical-align: top;
+    margin-right: 2px;
+}
+
+.card-preco {
+    font-family: "Inter", sans-serif;
+    font-size: 22px;
+    color: black;
+    font-weight: bold;
+}
