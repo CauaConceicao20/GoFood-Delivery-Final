@@ -1,0 +1,49 @@
+.menu-inferior {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 300px;
+    background-color: white;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    border: 1px solid black;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+.menu-opcoes {
+    margin-top: 50px;
+}
+.menu-opcoes li {
+    font-size: 25px;
+    padding: 10px 0 15px 30px;
+    color: #e74c3c;
+}
+
+.menu-opcoes li:hover {
+    background-color: #f4f4f4;
+    cursor: pointer;
+}
+
+.menu-inferior.ativo {
+    transform: translateY(0);
+}
+
+.btn-fechar-menu-inferior {
+    position: absolute;
+    margin: 0 0 10px 0;
+    color: red;
+    top: 10px;
+    right: 50px;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@media (min-width: 579px) {
+    .menu-inferior {
+        display: none;
+    }
+}

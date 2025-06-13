@@ -1,4 +1,4 @@
-import Connection from "../database/Connection.js";
+    import Connection from "../database/Connection.js";
 import { BadRequestError } from "../exception/GlobalExceptions.js";
 import Carrinho from "../model/carrinho/Carrinho.js";
 

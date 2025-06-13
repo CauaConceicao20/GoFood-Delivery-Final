@@ -24,6 +24,8 @@ export default {
                     "cep": { "type": "string", "example": "01001000" },
                     "logradouro": { "type": "string", "example": "Rua das Flores" },
                     "numero": { "type": "string", "example": "123" },
+                    
+                    
                     "complemento": { "type": "string", "example": "Sala 2" },
                     "bairro": { "type": "string", "example": "Centro" },
                     "cidadeId": { "type": "integer", "example": 1 },

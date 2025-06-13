@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Carrinho.css';
+import Header from '../../components/header/Header.jsx';
 
 const Carrinho = () => {
   const [items, setItems] = useState([
@@ -67,10 +68,7 @@ const Carrinho = () => {
 
   return (
     <div className="carrinho-container">
-      <header className="carrinho-header">
-        <h1>Carrinho</h1>
-        <Link to="/main_menu" className="btn-voltar">Voltar ao Menu</Link>
-      </header>
+      <Header toggleAddressModal={() => {}} />
 
       <main className="carrinho-main">
         {items.length === 0 ? (

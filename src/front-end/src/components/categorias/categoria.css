@@ -1,0 +1,40 @@
+.img-categoria {
+    width: 100%;
+    min-width: 50px;
+    min-height: 20px;
+    margin: 20px 0 0 0;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.img-categoria:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.opcao-categoria {
+    font-size: 25px;
+    color: #E53935;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px;
+
+}
+
+.opcao-categoria.selecionada {
+    border-bottom: 3px solid #E53935;
+}
+
+.opcao-categoria h2 {
+    font-size: clamp(20px, 2vw, 25px);
+    margin: 0;
+    padding: 0;
+    color: #E53935;
+}
+
+.categorias-alimentos {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

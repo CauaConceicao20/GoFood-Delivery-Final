@@ -1,0 +1,49 @@
+.container-card-alimentos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(239px, 1fr));
+    gap: 1rem;
+    margin: 10px 10px auto 10px;
+}
+
+@media (max-width: 783px) {
+    .container-card-alimentos {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .container-card-alimentos {
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    }
+}
+
+@media (max-width: 513px) {
+    .container-card-alimentos {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 435px) {
+    .container-card-alimentos {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+}
+
+
+@media (max-width: 450px) {
+    .container-card-alimentos {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+
+    }
+}
+
+@media (max-width: 390px) {
+    .container-card-alimentos {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+
+    }
+
+    .card-titulo {
+        font-size: 30px;
+    }
+}

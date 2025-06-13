@@ -1,0 +1,22 @@
+.section-categorias {
+    width: 100%;
+}
+
+.linha-de-separacao {
+    width: 98%;
+    height: 1px;
+    border: none;
+    background-color: #dd5f5d;
+    margin: auto;
+}
+
+@media (max-width: 847px) {
+
+    .section-categorias {
+        overflow-x: scroll;
+    }
+
+    .img-categoria {
+        min-width: 150px;
+    }
+}

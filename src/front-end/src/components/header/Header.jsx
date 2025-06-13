@@ -1,30 +1,69 @@
-import React, { useState } from 'react'; // Importe useState para gerenciar o estado do menu lateral
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './Header.css'; // Importa o arquivo CSS para o componente
-import GoFoodLogo from './logo.png'; // Importa a imagem do logo
+import './header.css';
+import MenuLateral from '../menu_lateral/MenuLateral.jsx';
+import ModalEndereco from '../modal_endereco/ModalEndereco.jsx';
 
-const Header = ({ toggleAddressModal }) => { // Remova toggleSideMenu das props, pois será gerenciado internamente
+import GoFoodLogo from '../../assets/logo.png';
+import IconPesquisar from '../../assets/icon-pesquisar.png';
+import IconCarrinho from '../../assets/icon-carrinho-de-compras-.png';
+import IconConta from '../../assets/icon-conta.png';
 
-  // Estado para controlar a visibilidade do menu lateral
-  const [showSideMenu, setShowSideMenu] = useState(false);
+const Header = ({ toggleAddressModal }) => {
+  const [showMenu, setShowMenu] = useState(false);
+  const [estadoDoUsuario, setEstadoDoUsuario] = useState(0);
+  const [cep, setCep] = useState('');
 
-  // Função para alternar a visibilidade do menu lateral
-  const toggleSideMenu = () => {
-    setShowSideMenu(!showSideMenu);
+  const handlePerfilClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setShowMenu(true);
+  };
+
+  const handleOverlayClick = () => setShowMenu(false);
+
+  const [modalAberto, setModalAberto] = useState(false);
+
+  const abrirModal = () => setModalAberto(true);
+  const fecharModal = () => setModalAberto(false);
+
+  const adicionarEndereco = (novoCep) => {
+    setCep(novoCep);
+    fecharModal();
+  };
+
+  const renderMenuPerfil = () => {
+    if (estadoDoUsuario === 1) {
+      return (
+        <ul>
+          <li><Link to="/pedidos">Pedidos</Link></li>
+          <li><Link to="/perfil">Perfil</Link></li>
+          <li><Link to="/configuracoes">Configurações</Link></li>
+          <li><Link to="/sobre">Sobre</Link></li>
+        </ul>
+      );
+    } else {
+      return (
+        <ul>
+          <li><Link to="/login">Entrar</Link></li>
+          <li><Link to="/cadastro">Cadastrar</Link></li>
+        </ul>
+      );
+    }
   };
 
   return (
-    <> {/* Fragment para permitir que o componente retorne múltiplos elementos irmãos */}
-      <header className="main-header">
-        <div className="container-logo">
+    <>
+      <header>
+        <figure className="container-logo">
           <Link to="/">
-            <img src={GoFoodLogo} alt="GoFood Logo" id="logo-gofood" />
+            <img id="logo-gofood" src={GoFoodLogo} alt="Logo da empresa" />
           </Link>
-        </div>
+        </figure>
 
-        <form className="container-busca">
-          <button type="submit" className="icone-de-busca">
-            <span role="img" aria-label="search">🔍</span> {/* Adicione um ícone de lupa aqui */}
+        <form className="container-busca" action="" method="GET">
+          <button className="icone-de-busca" type="submit">
+            <img src={IconPesquisar} alt="Ícone de busca" />
           </button>
           <input
             id="input-de-busca-do-header"
@@ -33,44 +72,30 @@ const Header = ({ toggleAddressModal }) => { // Remova toggleSideMenu das props,
           />
         </form>
 
-        <button className="btn-endereco" onClick={toggleAddressModal}>
-          Insira seu endereço
+        <button className="btn-endereco" id="btnEndereco" onClick={abrirModal}>
+          {cep ? `CEP: ${cep}` : "Insira seu CEP"}
         </button>
 
-        <button className="btn-carrinho">
+        <button className="btn-carrinho" id="btnCarrinhoHeader">
           <Link to="/carrinho">
-            <span role="img" aria-label="cart">🛒</span>
+            <img src={IconCarrinho} alt="Ícone do carrinho de compras" />
           </Link>
         </button>
 
-        {/* Botão de perfil que agora chama o toggleSideMenu interno do Header */}
-        <button className="btn-perfil" onClick={toggleSideMenu}>
-          <span role="img" aria="profile">👤</span>
+        <button className="btn-perfil" id="btnPerfilHeader" onClick={handlePerfilClick}>
+          <img src={IconConta} alt="Ícone de perfil" />
         </button>
       </header>
 
-      {/* CÓDIGO DO MENU LATERAL E OVERLAY */}
-      {showSideMenu && (
-        <>
-          {/* Overlay: Fundo escuro que cobre a tela quando o menu está aberto */}
-          <div className="overlay" onClick={toggleSideMenu}></div>
-          
-          {/* Menu Lateral */}
-          <aside className="menu-lateral">
-            <h2>Menu</h2>
-            <nav className="navegacao-menu">
-              <ul>
-                <li><Link to="/pedidos" onClick={toggleSideMenu}>Pedidos</Link></li>
-                <li><Link to="/perfil" onClick={toggleSideMenu}>Perfil</Link></li>
-                <li><Link to="/RestaurantePerfil" onClick={toggleSideMenu}>Perfil Restaurante</Link></li>
-                <li><Link to="/login" onClick={toggleSideMenu}>Entrar/Cadastro</Link></li>
-              </ul>
-            </nav>
-            {/* Opcional: Um botão de fechar dentro do menu lateral */}
-            {/* <button className="btn-fechar-menu" onClick={toggleSideMenu}>X</button> */}
-          </aside>
-        </>
-      )}
+      <ModalEndereco
+        aberto={modalAberto}
+        onClose={fecharModal}
+        onAddEndereco={adicionarEndereco}
+      />
+
+      <MenuLateral onClose={handleOverlayClick} ativo={showMenu}>
+        {renderMenuPerfil()}
+      </MenuLateral>
     </>
   );
 };

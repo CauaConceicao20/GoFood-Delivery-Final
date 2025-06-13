@@ -1,0 +1,120 @@
+.section-ultimos-pedidos-conteudo {
+    width: 700px;
+    margin: 10px auto auto 10px;
+    border: 1px solid #ddd;
+    padding: 20px;
+}
+
+.titulo-secao-utlimos-pedidos {
+    display: flex;
+    align-items: center;
+}
+
+.titulo-secao-utlimos-pedidos h1 {
+    font-size: clamp(20px, 4vw, 30px);
+    color: black;
+    padding: 10px;
+    margin: 0;
+    padding-bottom: 0;
+}
+
+.titulo-secao-utlimos-pedidos span {
+    padding-top: 15px;
+}
+
+.area-ultimos-pedidos {
+    display: flex;
+    justify-content: start;
+    padding: 0 0 10px 10px;
+}
+
+.ultimos-pedidos {
+    max-width: 400px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 18px 4px 0 15px;
+    margin-top: 18px;
+    margin-right: 4px;
+}
+
+.titulo-ultimos-pedidos {
+    font-size: clamp(18px, 1vw, 20px);
+    padding: 10px;
+    padding-top: 1px;
+    padding-left: 0;
+    margin: 0 0 10px 0;
+    padding-bottom: 0;
+}
+
+.btn-repetir-pedido {
+    margin: 10px;
+    margin-left: 0;
+    margin-bottom: 0;
+    background-color: #E53935;
+    color: white;
+    border: none;
+    max-width: 150px;
+    height: auto;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-repetir-pedido:hover {
+    background-color: #a82d2d;
+    cursor: pointer;
+}
+
+
+@media (max-width: 847px) {
+
+    .section-ultimos-pedidos-conteudo {
+        width: 93%;
+        overflow-x: none;
+    }
+
+    .area-ultimos-pedidos {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(236px, 1fr));
+    }
+
+}
+
+@media (max-width: 759px) {
+    .ultimos-pedidos {
+        padding: 10px;
+        margin: 18px 4px 0 0;
+
+    }
+}
+
+@media (max-width: 541px) {
+    .area-ultimos-pedidos {
+        margin: auto;
+        padding: 0;
+    }
+
+    .ultimos-pedidos {
+        margin: 18px 4px auto auto;
+
+    }
+}
+
+@media (max-width: 579px) {
+
+    .section-ultimos-pedidos-conteudo {
+       border: none;
+    }
+
+    .section-ultimos-pedidos-conteudo {
+        padding: 2px;
+    }
+}
+
+@media (max-width: 522px) {
+
+    .ultimos-pedidos {
+        margin-left: 0;
+    }
+}
