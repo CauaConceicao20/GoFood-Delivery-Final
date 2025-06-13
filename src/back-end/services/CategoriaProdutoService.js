@@ -1,13 +1,13 @@
-import CategoriaProdutoRepository from '../repository/CategoriaProdutoRepository.js';
+import CategoriaProdutoRepository from "../repository/CategoriaProdutoRepository.js";
 
 class CategoriaProdutoService {
     constructor() {
         this.categoriaProdutoRepository = new CategoriaProdutoRepository();
     }
 
-    async buscarPorId(id) {
+    async buscarPorId(id, conn) {
         try {
-            return await this.categoriaProdutoRepository.buscarPorId(id);
+            return await this.categoriaProdutoRepository.buscarPorId(id, conn);
         } catch (err) {
             throw err;
         }

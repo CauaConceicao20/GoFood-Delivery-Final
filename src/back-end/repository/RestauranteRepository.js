@@ -111,9 +111,6 @@ class RestauranteRepository {
             if (!conn) conn = await this.connection.connect();
             const restaurantesEncontrados = await conn.all(`SELECT * FROM restaurantes WHERE usuario_id = ?`, [idUsuario]);
 
-            if (!restaurantesEncontrados || restaurantesEncontrados.length === 0) {
-                throw new NotFoundError(`Nenhum restaurante encontrado para o usuário informado.`);
-            }
             return restaurantesEncontrados.map(restauranteEncontrado => {
                 const endereco = new Endereco( restauranteEncontrado.cep, restauranteEncontrado.logradouro, 
                     restauranteEncontrado.numero, restauranteEncontrado.complemento, restauranteEncontrado.bairro,

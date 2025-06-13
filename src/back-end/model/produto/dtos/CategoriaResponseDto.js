@@ -4,4 +4,5 @@ class CategoriaResponseDto {
     this.nome = categoria.getNome();
   }
 }
+
 export default CategoriaResponseDto;

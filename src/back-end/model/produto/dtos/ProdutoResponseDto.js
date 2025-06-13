@@ -6,7 +6,7 @@ class ProdutoResponseDto {
         this.nome = produto.getNome();
         this.preco = produto.getPreco();
         this.descricao = produto.getDescricao();
-        this.categoria = new CategoriaResponseDto(categoria);
+        this.categoria = new CategoriaResponseDto(categoria);   
         this.restaurante = new RestauranteIdNomeDto(restaurante);
         this.ativo = produto.getAtivo();
     }
