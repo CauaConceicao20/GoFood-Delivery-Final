@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './header.css';
+import './Header.css';
 import ModalEndereco from '../modal_endereco/ModalEndereco.jsx';
 import MenuPerfil from '../menu_perfil/MenuPerfil.jsx';
 
@@ -11,7 +11,7 @@ import IconConta from '../../assets/icon-conta.png';
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [estadoDoUsuario, setEstadoDoUsuario] = useState(0);
+  const [modalAberto, setModalAberto] = useState(false);
   const [cep, setCep] = useState('');
 
   const perfilRef = useRef(null);
