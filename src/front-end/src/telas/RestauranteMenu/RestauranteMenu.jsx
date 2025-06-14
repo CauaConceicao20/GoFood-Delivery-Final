@@ -40,7 +40,8 @@ const Restaurante = () => {
 
 
   return (
-    <div className="restaurante-view">
+    <>
+    <main className="restaurante-view">
       <Header toggleAddressModal={handleToggleAddressModal} />
       {/* Botão de Voltar ao Menu */}
       <Link to="/main_menu" className="back-arrow">Voltar</Link>
@@ -104,8 +105,10 @@ const Restaurante = () => {
         </div>
       </div>
 
-      <Footer />
-    </div>
+      
+    </main>
+    <Footer />
+    </>
   );
 };
 

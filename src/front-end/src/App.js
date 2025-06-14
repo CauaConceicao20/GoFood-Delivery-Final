@@ -12,6 +12,8 @@ import DetalhesPedido from './telas/restaurante/pedidos/DetalhePedido';
 import EdicaoRestaurante from './telas/RestauranteMenu/EdicaoDados';
 import EdicaoUsuario from './telas/PerfilUsuario/EdicaoUsuario';
 import Header from './components/header/Header.jsx';
+import AboutScreen from './telas/aboutScreen/AboutScreen.jsx';
+
 
 
 function App() {
@@ -32,6 +34,7 @@ function App() {
         <Route path="/detalhes-pedido" element={<DetalhesPedido />} />
         <Route path="/EdicaoRestaurante" element={<EdicaoRestaurante />} />
         <Route path="/EdicaoUsuario" element={<EdicaoUsuario />} />
+        <Route path="/sobre" element={<AboutScreen />} />
 
       </Routes>
     </div>
