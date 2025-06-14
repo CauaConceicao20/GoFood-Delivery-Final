@@ -8,6 +8,7 @@ import { UnauthorizedError } from '../exception/GlobalExceptions.js';
 import UsuarioService from '../services/UsuarioService.js';
 import UsuarioResponseDto from '../model/usuario/dtos/UsuarioResponseDto.js';
 import UsuarioGrupoService from '../services/UsuarioGrupoService.js';
+import cookieParser from 'cookie-parser';
 
 
 class AuthController {
@@ -25,6 +26,7 @@ class AuthController {
   iniciaRotas() {
     this.router.post("/login", this.login.bind(this));
     this.router.get("/me", this.authMiddleware.autenticar.bind(this.authMiddleware),
+      this.authMiddleware.autorizar('CLIENTE'),
       this.buscaUsuarioLogado.bind(this));
   }
 
@@ -50,7 +52,7 @@ class AuthController {
     }
   }
 
- async buscaUsuarioLogado(req, res) {
+  async buscaUsuarioLogado(req, res) {
     try {
       const usuario = await this.usuarioService.buscarPorId(req.usuario.id);
       const grupos = await this.UsuarioGrupoService.buscaGruposDoUsuario(usuario.getId());

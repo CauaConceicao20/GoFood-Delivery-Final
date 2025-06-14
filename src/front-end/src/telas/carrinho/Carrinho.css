@@ -6,23 +6,19 @@
     width: 100%; 
     max-width: none; 
     margin: 0; 
-    background-color: #fff; /* Fundo branco para o container principal */
-    /* Remover box-shadow e border-radius se o design for de tela cheia sem "cartão" */
-    box-shadow: none; /* <--- ALTERADO: Removendo sombra para um visual de tela cheia */
-    border-radius: 0; /* <--- ALTERADO: Removendo cantos arredondados */ /* Mantém o padding interno para o conteúdo não colar nas bordas da tela */
-    box-sizing: border-box; /* Garante que padding não aumente o tamanho total */
+    background-color: #fff;
+    box-shadow: none;
+    border-radius: 0;
+    box-sizing: border-box; 
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-/* O restante do seu Carrinho.css (itens, resumo de pagamento, etc.) permanece o mesmo,
-   pois os ajustes anteriores já organizaram esses elementos verticalmente. */
-
 .carrinho-main {
     display: flex;
-    flex-direction: column; /* Faz com que os itens e o resumo se empilhem */
-    gap: 20px; /* Espaçamento entre os itens e o resumo */
+    flex-direction: column;
+    gap: 20px;
 }
 
 .carrinho-vazio {
@@ -149,7 +145,7 @@
     margin-top: 10px;
     padding: 20px;
     background: #f9f9f9;
-    border-radius: 8px; /* Mantém os cantos arredondados e sombra interna para o resumo */
+    border-radius: 8px;
     box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
@@ -159,21 +155,21 @@
 .subtotal {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 0; /* Ajustado de 20px */
+    margin-bottom: 0;
     font-size: 1.1rem;
     font-weight: bold;
     color: #333;
-    padding-bottom: 10px; /* Adicionado padding-bottom */
-    border-bottom: 1px dashed #eee; /* Adicionado borda inferior */
-    flex-direction: row; /* Alterado de 'column' para 'row' para Subtotal (X produtos) e R$ XXX.XX */
-    gap: 5px; /* Mantido para espaçamento entre elementos do subtotal se o design pedir */
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #eee;
+    flex-direction: row;
+    gap: 5px;
 }
 
-.payment-section { /* Esta classe foi envolvida na classe resumo-pedido. Remova gap: 20px. */
+.payment-section {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Espaçamento entre subtotal e payment-methods */
-    margin-bottom: 0; /* Ajustado de 20px */
+    gap: 15px;
+    margin-bottom: 0;
 }
 
 .payment-methods {
@@ -201,7 +197,7 @@
     cursor: pointer;
     transition: all 0.2s;
     border: 1px solid #ddd;
-    background-color: #fff; /* Adicionado fundo branco para as opções */
+    background-color: #fff;
     font-size: 0.95em;
     color: #333;
 }
@@ -223,7 +219,7 @@
     transform: scale(1.1);
 }
 
-.payment-confirmation { /* Esta classe parece ser para o modal, não para o fluxo principal */
+.payment-confirmation {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
@@ -239,7 +235,7 @@
     color: white;
     border: none;
     border-radius: 30px;
-    font-size: 1.1rem; /* Ajustado de 1rem para 1.1rem para ser mais proeminente */
+    font-size: 1.1rem;
     cursor: pointer;
     transition: background 0.3s;
     font-weight: bold;
@@ -250,28 +246,26 @@
     background: #ff5252;
 }
 
-/* Estilos do Modal (mantidos do seu CSS anterior) */
-/* ... (Seus estilos de modal aqui) ... */
-.modal-overlay { /* */
-    position: fixed; /* */
-    top: 0; /* */
-    left: 0; /* */
-    right: 0; /* */
-    bottom: 0; /* */
-    background: rgba(0, 0, 0, 0.5); /* */
-    display: flex; /* */
-    justify-content: center; /* */
-    align-items: center; /* */
-    z-index: 1000; /* */
+.modal-overlay { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    z-index: 1000; 
 }
 
-.modal-content { /* */
-    background: white; /* */
-    padding: 30px; /* */
-    border-radius: 8px; /* */
-    width: 90%; /* */
-    max-width: 500px; /* */
-    position: relative; /* */
+.modal-content { 
+    background: white; 
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px; 
+    position: relative;
 }
 
 .close-modal { /* */

@@ -1,28 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './header.css';
-import MenuLateral from '../menu_lateral/MenuLateral.jsx';
 import ModalEndereco from '../modal_endereco/ModalEndereco.jsx';
+import MenuPerfil from '../menu_perfil/MenuPerfil.jsx';
 
 import GoFoodLogo from '../../assets/logo.png';
 import IconPesquisar from '../../assets/icon-pesquisar.png';
 import IconCarrinho from '../../assets/icon-carrinho-de-compras-.png';
 import IconConta from '../../assets/icon-conta.png';
 
-const Header = ({ toggleAddressModal }) => {
+const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [estadoDoUsuario, setEstadoDoUsuario] = useState(0);
+  const [modalAberto, setModalAberto] = useState(false);
   const [cep, setCep] = useState('');
 
-  const handlePerfilClick = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setShowMenu(true);
-  };
-
-  const handleOverlayClick = () => setShowMenu(false);
-
-  const [modalAberto, setModalAberto] = useState(false);
+  const perfilRef = useRef(null);
 
   const abrirModal = () => setModalAberto(true);
   const fecharModal = () => setModalAberto(false);
@@ -32,26 +24,23 @@ const Header = ({ toggleAddressModal }) => {
     fecharModal();
   };
 
-  const renderMenuPerfil = () => {
-    if (estadoDoUsuario === 1) {
-      return (
-        <ul>
-          <li><Link to="/perfil">Perfil</Link></li>
-          <li><Link to="/configuracoes">Configurações</Link></li>
-          <li><Link to="/sobre">Sobre</Link></li>
-          <li><Link to="/cadastro/restaurante">Cadastrar Restaurante</Link></li>
-          <li><Link to="/RestaurantePerfil">Restaurante</Link></li>
-        </ul>
-      );
-    } else {
-      return (
-        <ul>
-          <li><Link to="/login">Entrar</Link></li>
-          <li><Link to="/cadastro">Cadastrar</Link></li>
-        </ul>
-      );
-    }
+  const handlePerfilClick = (event) => {
+    event.stopPropagation();
+    setShowMenu((prev) => !prev);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (perfilRef.current && !perfilRef.current.contains(event.target)) {
+        setShowMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -74,7 +63,7 @@ const Header = ({ toggleAddressModal }) => {
         </form>
 
         <button className="btn-endereco" id="btnEndereco" onClick={abrirModal}>
-          {cep ? `CEP: ${cep}` : "Insira seu CEP"}
+          {cep ? `CEP: ${cep}` : 'Insira seu CEP'}
         </button>
 
         <button className="btn-carrinho" id="btnCarrinhoHeader">
@@ -83,9 +72,18 @@ const Header = ({ toggleAddressModal }) => {
           </Link>
         </button>
 
-        <button className="btn-perfil" id="btnPerfilHeader" onClick={handlePerfilClick}>
-          <img src={IconConta} alt="Ícone de perfil" />
-        </button>
+        <div className="perfil-wrapper" ref={perfilRef}>
+          <button
+            type="button"
+            className="btn-perfil"
+            id="btnPerfilHeader"
+            onClick={handlePerfilClick}
+          >
+            <img src={IconConta} alt="Ícone de perfil" />
+          </button>
+
+          {showMenu && <MenuPerfil ativo={showMenu} />}
+        </div>
       </header>
 
       <ModalEndereco
@@ -93,10 +91,6 @@ const Header = ({ toggleAddressModal }) => {
         onClose={fecharModal}
         onAddEndereco={adicionarEndereco}
       />
-
-      <MenuLateral onClose={handleOverlayClick} ativo={showMenu}>
-        {renderMenuPerfil()}
-      </MenuLateral>
     </>
   );
 };

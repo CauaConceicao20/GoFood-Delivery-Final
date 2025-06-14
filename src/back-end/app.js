@@ -12,6 +12,7 @@ import AuthController from './controller/AuthController.js';
 import ProdutoController from './controller/ProdutoController.js';
 import CarrinhoController from './controller/CarrinhoController.js';
 import PedidoController from './controller/PedidoController.js';
+import cookieParser from 'cookie-parser';
 
 (async () => {
   const dbInit = new DbInitializer();
@@ -26,6 +27,7 @@ app.use(cors({
   credentials: true
 }));
 
+app.use(cookieParser());
 app.use(express.json());
 
 
