@@ -1,381 +1,223 @@
-/* Reset básico e box-sizing para consistência */
-* {
-  box-sizing: border-box;
+
+:root {
+  font-family: "Inter", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif; /* Usando Inter como exemplo, ou Arial, sans-serif */
-  background-color: #f0f2f5; /* Cor de fundo geral, semelhante à imagem */
-}
+
 
 .app-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 20px;
-  min-height: 100vh; /* Ocupa a altura total da viewport */
-}
-
-/* Estilização do cabeçalho */
-.header {
-  background-color: #ffffff;
-  padding: 15px 25px;
-  margin-bottom: 25px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  width: 100%;
-  max-width: 960px; /* Largura máxima para o cabeçalho e formulário */
-  display: flex;
-  align-items: center;
-}
-
-.back-arrow {
-  font-size: 1.8em;
-  margin-right: 15px;
-  cursor: pointer;
-  color: #555;
-  font-weight: bold;
-}
-
-.header h1 {
-  margin: 0;
-  font-size: 1.6em;
-  color: #333;
-  flex-grow: 1; /* Permite que o título ocupe o espaço restante */
-  text-align: center; /* Centraliza o título */
-  transform: translateX(-15px); /* Ajusta para centralizar melhor considerando a seta */
-}
-
-/* Estilização do formulário principal */
-.restaurant-form {
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  width: 100%;
-  max-width: 960px; /* Mesma largura máxima do cabeçalho */
-  display: flex;
-  flex-direction: column;
-  gap: 30px; /* Espaço entre as seções do formulário */
-}
-
-/* Estilização das seções do formulário */
-.form-section {
-  padding-bottom: 20px;
-  border-bottom: 1px solid #e0e0e0; /* Linha divisória suave */
-}
-
-.form-section:last-child {
-  border-bottom: none; /* Remove a borda da última seção */
-  padding-bottom: 0;
-}
-
-.form-section h2 {
-  color: #333;
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 1.4em;
-  font-weight: 600; /* Um pouco mais encorpado */
-}
-
-/* Estilização das linhas de campos */
-.form-row {
-  display: flex;
-  gap: 20px; /* Espaço entre os campos na mesma linha */
-  margin-bottom: 15px; /* Espaço entre as linhas de campos */
-  flex-wrap: wrap; /* Permite que os campos quebrem para a próxima linha em telas menores */
-}
-
-.form-row:last-child {
-  margin-bottom: 0;
-}
-
-/* Estilização dos grupos de formulário (label + input) */
-.form-group {
-  flex: 1; /* Permite que o grupo de formulário cresça e ocupe o espaço disponível */
-  min-width: 280px; /* Garante que os campos não fiquem muito pequenos */
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group.full-width {
-  flex: 0 0 100%; /* Ocupa 100% da largura disponível */
-}
-
-.form-group label {
-  font-size: 0.9em;
-  color: #666;
-  margin-bottom: 8px;
-  display: block;
-  font-weight: 500;
-}
-
-.form-group input,
-.form-group textarea {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1em;
-  color: #333;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  border-color: #a0a0a0; /* Levemente mais escuro ao focar */
-  box-shadow: 0 0 0 2px rgba(160, 160, 160, 0.2);
-  outline: none;
-}
-
-.form-group textarea {
-  resize: vertical; /* Permite redimensionamento vertical */
-  min-height: 80px; /* Altura mínima para a descrição */
-}
-
-/* Estilização específica para a seção de upload do logotipo */
-.form-row:first-of-type {
-  display: grid;
-  /* Define duas colunas: uma para o logo (fixa), outra para os campos à direita (flexível) */
-  grid-template-columns: minmax(100px, 150px) 1fr;
-  /* Define duas linhas para os campos à direita */
-  grid-template-rows: auto auto;
-  gap: 20px;
-  align-items: start; /* Alinha os itens ao topo das células do grid */
-}
-
-.form-group.logo-upload {
-  grid-column: 1; /* Ocupa a primeira coluna */
-  grid-row: 1 / span 2; /* Ocupa as duas linhas para ter a altura dos dois campos ao lado */
-  display: flex;
-  flex-direction: column;
-  height: 100%; /* Ocupa a altura total do seu espaço no grid */
-}
-
-.logo-placeholder {
-  border: 2px dashed #ccc;
-  border-radius: 8px;
-  flex-grow: 1; /* Faz o placeholder preencher o espaço disponível */
-  display: flex;
   justify-content: center;
-  align-items: center;
-  color: #888;
-  font-size: 2em;
+  padding: 1rem;
+  min-height: 100vh;
+  margin-top: 80px;
+}
+
+/* Wrapper do formulário */
+.form-wrapper {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 42rem; /* Limita a largura máxima do formulário */
+}
+
+/* Cabeçalho */
+.headerED {
+  display: flex;
+  align-items: center; /* Alinha os itens ao centro verticalmente */
+  justify-content: space-between; /* Distribui o espaço entre os itens para centralizar o título */
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.back-button {
+  color: #e53935;
+  font-weight: 600;
+  font-size: 1.125rem;
+  background-color: #ffffff; /* Cor de fundo suave para o botão */
+  border: 1px solid; /* Borda sutil */
+  border-radius: 0.375rem; /* Cantos arredondados */
   cursor: pointer;
-  background-color: #f9f9f9; /* Um fundo leve para o placeholder */
+  padding: 0.5rem 1rem; /* Espaçamento interno do botão */
+  transition: all 0.2s ease-in-out; /* Transição suave para hover */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para o botão */
+}
+
+.back-button:hover {
+  background-color: #c7d2fe; /* Cor de fundo mais escura no hover */
+  color: #e53935;
+  border-color: #818cf8;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.page-title {
+  text-align: center;
+  flex-grow: 1; /* Permite que o título ocupe o espaço restante */
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 1rem; /* Adiciona margem lateral para que o título não fique muito próximo dos botões */
+}
+
+/* Formulário do restaurante */
+.restaurant-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Espaçamento entre as seções do formulário */
+}
+
+/* Seções do formulário */
+.form-section {
+  background-color: #f9fafb;
+  padding: 1.5rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+/* Grid para layouts de 2 colunas */
+.form-grid-2-cols {
+  display: grid;
+  grid-template-columns: 1fr; /* Padrão de 1 coluna para telas pequenas */
+  gap: 1rem;
+}
+
+/* Responsividade para telas maiores (a partir de 768px) */
+@media (min-width: 768px) {
+  .form-grid-2-cols {
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas */
+  }
+  .form-group.full-width {
+    grid-column: span 2 / span 2; /* Ocupa as 2 colunas */
+  }
+}
+
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  margin-top: 0.25rem;
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  box-sizing: border-box; /* Garante que o padding não aumente a largura do elemento */
+}
+
+/* Estilos de foco para inputs, textareas e selects */
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #3b82f6; /* Borda azul ao focar */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* Anel azul ao focar */
+}
+
+.form-textarea {
+  resize: vertical; /* Permite redimensionamento vertical */
+}
+
+/* Estilização específica para o select */
+.form-select {
+  appearance: none; /* Remove a seta padrão do select */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%236B7280'%3e%3cpath d='M7 7l3-3 3 3m0 6l-3 3-3-3'/%3e%3c/svg%3e"); /* Seta customizada em SVG */
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem; /* Espaço para a seta */
+}
+
+/* Grupo de upload de foto */
+.photo-upload-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #d1d5db;
+  border-radius: 0.375rem;
+  padding: 1.5rem;
+  height: 12rem; /* Altura fixa */
+  position: relative;
+  overflow: hidden; /* Garante que a pré-visualização da imagem não transborde */
+}
+
+.photo-input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.photo-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.375rem;
 }
 
 .plus-icon {
-  font-size: 3em; /* Ícone de mais um pouco maior */
-  line-height: 1; /* Remove espaçamento extra do ícone */
+  font-size: 3.125rem; /* 50px */
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
 }
 
-/* Posiciona "Nome do restaurante" na segunda coluna, primeira linha */
-.restaurant-form .form-row:first-of-type > .form-group:nth-of-type(2) {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-/* Posiciona "Categoria" na segunda coluna, segunda linha */
-.restaurant-form .form-row:first-of-type > .form-group:nth-of-type(3) {
-  grid-column: 2;
-  grid-row: 2;
-}
-
-
-/* Estilização do botão de submit */
-.submit-button {
-  background-color: #ff5722; /* Laranja vibrante, semelhante à imagem */
-  color: white;
-  padding: 15px 30px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1.1em;
-  font-weight: bold;
+.photo-label {
+  color: #4b5563;
+  font-size: 0.875rem;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Botão de envio */
+.submit-button {
   width: 100%;
-  max-width: 300px; /* Largura máxima para o botão */
-  align-self: center; /* Centraliza o botão dentro do formulário flex */
-  margin-top: 20px; /* Espaço acima do botão */
+  background-color: #e53935;
+  color: #fff;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  transition: background-color 0.3s ease-in-out;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: none;
+  cursor: pointer;
 }
 
 .submit-button:hover {
-  background-color: #e64a19; /* Laranja mais escuro ao passar o mouse */
-  transform: translateY(-2px); /* Pequeno efeito de elevação */
-}
-
-/* Responsividade para telas menores */
-@media (max-width: 768px) {
-  .header {
-    padding: 15px;
-  }
-
-  .header h1 {
-    font-size: 1.4em;
-    transform: none; /* Remove o ajuste de centralização */
-    text-align: left; /* Alinha o título à esquerda em telas menores */
-  }
-
-  .restaurant-form {
-    padding: 20px;
-  }
-
-  .form-section h2 {
-    font-size: 1.2em;
-  }
-
-  .form-row {
-    flex-direction: column; /* Pilha os campos em colunas */
-    gap: 15px; /* Ajusta o espaçamento quando empilhado */
-  }
-
-  /* Ajustes para a primeira linha (logo, nome, categoria) em telas menores */
-  .restaurant-form .form-row:first-of-type {
-    grid-template-columns: 1fr; /* Todas as colunas se tornam uma única */
-    grid-template-rows: auto auto auto; /* Três linhas separadas para cada item */
-    gap: 15px;
-  }
-
-  .restaurant-form .form-row:first-of-type > .form-group.logo-upload {
-    grid-column: 1; /* Logo na primeira coluna */
-    grid-row: 1; /* Logo na primeira linha */
-    height: auto; /* Altura flexível para o logo */
-    max-width: 150px; /* Largura máxima para o logo */
-    margin: 0 auto; /* Centraliza o logo */
-  }
-
-  /* Reposiciona "Nome do restaurante" e "Categoria" para a única coluna */
-  .restaurant-form .form-row:first-of-type > .form-group:nth-of-type(2) {
-    grid-column: 1;
-    grid-row: 2;
-  }
-
-  .restaurant-form .form-row:first-of-type > .form-group:nth-of-type(3) {
-    grid-column: 1;
-    grid-row: 3;
-  }
-
-  .form-group {
-    min-width: unset; /* Remove o min-width para flexibilidade total */
-  }
-
-  .btn-voltar {
-  color: #e74c3c;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-}
-
-@media (max-width: 480px) {
-  .app-container {
-    padding: 10px;
-  }
-
-  .header,
-  .restaurant-form {
-    padding: 15px;
-    margin-bottom: 15px;
-  }
-
-  .submit-button {
-    padding: 12px 20px;
-    font-size: 1em;
-  }
-}
-
-/* Estilos para o botão "Desativar Restaurante" */
-.deactivate-button {
-  background-color: #dc3545; /* Vermelho forte para ação destrutiva */
-  color: white;
-  padding: 15px 30px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1.1em;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  width: 100%;
-  max-width: 300px; /* Consistente com submit-button */
-  align-self: center; /* Centraliza o botão */
-  margin-top: 15px; /* Espaço acima deste botão */
-  margin-left: auto; /* Centraliza horizontalmente */
-  margin-right: auto; /* Centraliza horizontalmente */
-}
-
-.deactivate-button:hover {
-  background-color: #c82333; /* Vermelho mais escuro ao passar o mouse */
-  transform: translateY(-2px); /* Efeito de elevação */
-}
-
-/* Estilos para o Pop-up/Modal */
-.modal-overlay {
-  position: fixed; /* Fixa o overlay na tela */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro semi-transparente */
-  display: flex;
-  justify-content: center; /* Centraliza horizontalmente o modal */
-  align-items: center; /* Centraliza verticalmente o modal */
-  z-index: 1000; /* Garante que esteja acima de outros conteúdos */
-}
-
-.modal-content {
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  max-width: 400px; /* Largura máxima do modal */
-  width: 90%; /* Largura responsiva */
-  text-align: center;
-}
-
-.modal-content h3 {
-  margin-top: 0;
-  color: #333;
-  font-size: 1.5em;
-  margin-bottom: 15px;
-}
-
-.modal-content p {
-  color: #555;
-  font-size: 1em;
-  margin-bottom: 25px;
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: center; /* Centraliza os botões dentro do modal */
-  gap: 20px; /* Espaço entre os botões */
-}
-
-.modal-actions button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1em;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.modal-actions .confirm-button {
-  background-color: #dc3545; /* Vermelho para o botão de confirmação */
-  color: white;
-}
-
-.modal-actions .confirm-button:hover {
-  background-color: #c82333;
-}
-
-.modal-actions .cancel-button {
-  background-color: #f0f0f0; /* Cinza claro para o botão de cancelar */
-  color: #333;
-}
-
-.modal-actions .cancel-button:hover {
-  background-color: #e0e0e0;
+  background-color: #1d4ed8;
 }

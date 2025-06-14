@@ -20,15 +20,8 @@ const PerfilUsuario = () => {
     <Header toggleAddressModal={() => { }} />
       <main className="profile-container">
 
-
-        <div>
-          
-          
-        </div>
-
-        {/* Formulário (apenas para exibição) */}
         <h1>Configuração de perfil do usuário</h1>
-        <main className="profile-form">
+        <div className="profile-form">
           <table className="profile-table">
             <tbody>
               {/* Linha 1: Nome Completo */}
@@ -93,7 +86,7 @@ const PerfilUsuario = () => {
               </tr>
             </tbody>
           </table>
-        </main>
+        </div>
         <div className="form-actions">
             <Link to="/EdicaoUsuario" className="edit-button"> {/* Use Link para navegar */}
               Editar Dados

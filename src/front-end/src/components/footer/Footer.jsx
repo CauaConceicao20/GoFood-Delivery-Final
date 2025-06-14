@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './footer.css';
 import MenuInferior from '../menu_inferior/MenuInferior';
 import IconeInicio from '../../assets/index/mobile/icons8-home-50.png';
@@ -6,7 +7,7 @@ import IconeHamburguer from '../../assets/index/mobile/icons8-cardápio-50.png';
 import IconeCarrinho from '../../assets/icon-carrinho-de-compras-.png';
 import IconePerfil from '../../assets/icon-conta.png';
 
-function Footer () {
+function Footer() {
   const [menuAtivo, setMenuAtivo] = useState(false);
 
   const abrirMenuInferior = () => setMenuAtivo(true);
@@ -22,9 +23,9 @@ function Footer () {
         <nav className="bottom-bar">
           <div className="opcao-footer" id="btnInicio" onClick={abrirMenuInferior}>
             <div className="area-opcao-bottom-bar">
-              <a href="">
+              <Link to="/">
                 <img src={IconeInicio} alt="icone de inicio" />
-              </a>
+              </Link>
               <div><span>Início</span></div>
             </div>
           </div>
@@ -33,7 +34,10 @@ function Footer () {
 
           <div className="opcao-footer" id="btnPerfilFooter" onClick={abrirMenuInferior}>
             <div className="area-opcao-bottom-bar">
-              <img src={IconePerfil} alt="icone de perfil" />
+              
+              <Link to="/perfil">
+                <img src={IconePerfil} alt="icone de perfil" />
+              </Link>
               <div><span>Perfil</span></div>
             </div>
           </div>
@@ -42,10 +46,13 @@ function Footer () {
 
           <div className="opcao-footer" id="btnCarrinhoFooter" onClick={abrirMenuInferior}>
             <div className="area-opcao-bottom-bar">
-              <a href="/src/carrinho.html">
+              <Link to="/carrinho">
                 <img src={IconeCarrinho} alt="icone de carrinho" />
-              </a>
-              <div><span>Carrinho</span></div>
+              </Link>
+
+              <div>
+                <link rel="stylesheet" href="" />
+                <span>Carrinho</span></div>
             </div>
           </div>
 
@@ -61,10 +68,12 @@ function Footer () {
       </footer>
 
       {/* MenuInferior aparece quando menuAtivo for true */}
-       <MenuInferior onClose={fecharMenuInferior} ativo={menuAtivo}>
-        <li>Opção 1</li>
-        <li>Opção 2</li>
-        <li>Opção 3</li>
+      <MenuInferior onClose={fecharMenuInferior} ativo={menuAtivo}>
+        <li><Link to="/perfil">Perfil</Link></li>
+        <li><Link to="/configuracoes">Configurações</Link></li>
+        <li><Link to="/sobre">Sobre</Link></li>
+        <li><Link to="/cadastro/restaurante">Cadastrar Restaurante</Link></li>
+        <li><Link to="/RestaurantePerfil">Restaurante</Link></li>
         {/* Adicione as opções reais do seu menu aqui */}
       </MenuInferior>
     </>
