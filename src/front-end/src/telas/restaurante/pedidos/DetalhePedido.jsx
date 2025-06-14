@@ -1,44 +1,71 @@
 import React from 'react';
-import { useLocation, Link } from 'react-router-dom';
 import './DetalhePedido.css';
+import { Link, useNavigate } from 'react-router-dom';
+import Header from '../../../components/header/Header.jsx';
+import Footer from '../../../components/footer/Footer.jsx';
 
-const DetalhesPedido = () => {
-  const location = useLocation();
-  const { pedido } = location.state || {};
 
-  if (!pedido) {
-    return (
-      <div className="detalhes-pedido-container">
-        <h1>Nenhum pedido encontrado</h1>
-        <Link to="/" className="btn-voltar">Voltar</Link>
-      </div>
-    );
-  }
+const OrderDetails = () => {
+  // Função para o botão de voltar, similar ao history.back()
+  const handleGoBack = () => {
+    window.history.back();
+  };
 
-  const formatarMoeda = (valor) => {
-    return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  const handleCancelOrder = () => {
+    alert('Funcionalidade "Cancelar pedido" em desenvolvimento!');
+    // Aqui você faria a lógica para cancelar o pedido, como uma chamada de API
   };
 
   return (
-    <div className="detalhes-pedido-container">
-      <header className="detalhes-header">
-        <h1>Detalhes do pedido</h1>
-        <Link to="/carrinho" className="btn-voltar">Voltar</Link>
-      </header>
+    <>
+      <Header toggleAddressModal={() => { }} />
+      <main>
+        <div className="OD-container">
+          <h1 className="OD-page-title">Detalhes do pedido</h1>
+          <div>
+            <Link to="/carrinho" className="back-buton">
+              &larr; Voltar ao Carrinho
+            </Link>
 
-      <main className="detalhes-main">
-        <section className="info-pedido">
-          <div className="info-row">
-            <span>Solicitante:</span>
-            <span>{pedido.cliente}</span>
           </div>
-          {/* Adicione o resto das informações conforme seu layout */}
-        </section>
 
-        {/* Adicione as outras seções conforme necessário */}
+          <div className="OD-order-details-card">
+            <div className="OD-detail-group">
+              <p><strong>Solicitante:</strong> Ronaldo Gomes da Silva</p>
+              <p><strong>Data do pedido:</strong> Dom 23 março 2025</p>
+              <p><strong>Número do pedido:</strong> #2930</p>
+              <p><strong>Status do pedido:</strong> Concluído</p>
+            </div>
+            <div className="OD-detail-group">
+              <p><strong>Forma de pagamento:</strong> Cartão de crédito</p>
+              <p><strong>Valor total do pedido:</strong> R$64,98</p>
+              <p><strong>Taxa de entrega:</strong> R$12,90</p>
+              <p><strong>Desconto:</strong> R$9,99</p>
+            </div>
+          </div>
+
+          <div className="OD-order-item-card">
+            <div className="OD-item-image-container">
+              <img src="https://via.placeholder.com/100x100?text=BURGUER" alt="Cheesburguer de costela" className="OD-item-image" />
+            </div>
+            <div className="OD-item-details">
+              <p>1x Chessburguer de costela</p>
+              <p>1x Refrigerante 1Lv</p>
+              <p>1x Batata média</p>
+            </div>
+            <div className="OD-restaurant-info">
+              <h3 className="OD-restaurant-name">O BURGUER</h3>
+              <p className="OD-rating">⭐ 4,6 <span className="OD-review-count">(197 avaliações)</span></p>
+              <p className="OD-delivery-time">Pedido 15-45 min • R$5,00</p>
+              <button className="OD-cancel-button" onClick={handleCancelOrder}>Cancelar pedido</button>
+            </div>
+          </div>
+        </div>
       </main>
-    </div>
+
+      <Footer />
+    </>
   );
 };
 
-export default DetalhesPedido;
+export default OrderDetails;
