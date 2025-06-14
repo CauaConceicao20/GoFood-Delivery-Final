@@ -1,16 +1,22 @@
 /* EdicaoUsuario.css - Nenhuma alteração necessária aqui para o telefone */
 /* Variáveis CSS para padronização (opcional, mas recomendado para projetos maiores) */
 :root {
-  --primary-color: #ff5722; /* Cor principal, como a do botão de salvar original */
-  --secondary-color: #007bff; /* Cor para ações secundárias como 'Editar' */
-  --danger-color: #dc3545; /* Cor para ações perigosas (se houver) */
-  --cancel-color: #6c757d; /* Cor para o botão 'Cancelar' */
+  --primary-color: #ff5722;
+  /* Cor principal, como a do botão de salvar original */
+  --secondary-color: #007bff;
+  /* Cor para ações secundárias como 'Editar' */
+  --danger-color: #dc3545;
+  /* Cor para ações perigosas (se houver) */
+  --cancel-color: #6c757d;
+  /* Cor para o botão 'Cancelar' */
   --text-color-dark: #333;
   --text-color-medium: #555;
   --text-color-light: #666;
   --border-color: #ddd;
-  --background-light: #f0f2f5; /* Fundo geral da página */
-  --background-card: #fff; /* Fundo dos cards/formulários */
+  --background-light: #f0f2f5;
+  /* Fundo geral da página */
+  --background-card: #fff;
+  /* Fundo dos cards/formulários */
   --shadow-light: rgba(0, 0, 0, 0.1);
   --shadow-medium: rgba(0, 0, 0, 0.05);
   --padding-default: 20px;
@@ -33,7 +39,7 @@
 }
 
 /* Ajuste do cabeçalho para alinhar o botão de voltar e o título */
-.edit-profile-container > div:first-child {
+.edit-profile-container>div:first-child {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,19 +62,17 @@
   z-index: 1;
 }
 
-/* Estilos do Botão Voltar */
-.back-button {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
+
+.back-buton {
   padding: 8px 15px;
-  background-color: #e0e0e0;
-  color: var(--text-color-dark);
+  background-color: transparent;
+  color: var(--text-color-medium);
   text-decoration: none;
+  border: none;
   border-radius: 4px;
   font-size: 14px;
-  transition: all var(--transition-speed) ease;
+  cursor: pointer;
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
   display: flex;
   align-items: center;
   z-index: 2;
@@ -251,7 +255,7 @@
     padding: 15px;
   }
 
-  .edit-profile-container > div:first-child {
+  .edit-profile-container>div:first-child {
     flex-direction: column;
     align-items: flex-start;
     margin-bottom: 20px;

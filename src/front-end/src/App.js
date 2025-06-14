@@ -13,6 +13,7 @@ import EdicaoRestaurante from './telas/RestauranteMenu/EdicaoDados';
 import EdicaoUsuario from './telas/PerfilUsuario/EdicaoUsuario';
 import Header from './components/header/Header.jsx';
 import AboutScreen from './telas/aboutScreen/AboutScreen.jsx';
+import SettingsScreen from './telas/SettingsScreen/SettingsScreen.jsx'
 
 
 
@@ -35,6 +36,7 @@ function App() {
         <Route path="/EdicaoRestaurante" element={<EdicaoRestaurante />} />
         <Route path="/EdicaoUsuario" element={<EdicaoUsuario />} />
         <Route path="/sobre" element={<AboutScreen />} />
+        <Route path="/configuracoes" element={<SettingsScreen />} />
 
       </Routes>
     </div>
