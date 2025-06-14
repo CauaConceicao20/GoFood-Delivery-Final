@@ -9,8 +9,7 @@
     background-color: #fff; /* Fundo branco para o container principal */
     /* Remover box-shadow e border-radius se o design for de tela cheia sem "cartão" */
     box-shadow: none; /* <--- ALTERADO: Removendo sombra para um visual de tela cheia */
-    border-radius: 0; /* <--- ALTERADO: Removendo cantos arredondados */
-    padding: 20px; /* Mantém o padding interno para o conteúdo não colar nas bordas da tela */
+    border-radius: 0; /* <--- ALTERADO: Removendo cantos arredondados */ /* Mantém o padding interno para o conteúdo não colar nas bordas da tela */
     box-sizing: border-box; /* Garante que padding não aumente o tamanho total */
     display: flex;
     flex-direction: column;
