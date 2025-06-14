@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Carrinho.css';
 import Header from '../../components/header/Header.jsx';
+import Footer from '../../components/footer/Footer.jsx';
 
 const Carrinho = () => {
   const [items, setItems] = useState([
@@ -192,7 +193,9 @@ const Carrinho = () => {
           </div>
         </div>
       )}
+    <Footer />
     </div>
+    
   );
 };
 

@@ -81,16 +81,10 @@ const Login = () => {
           Não tem uma conta?
           <Link to="/cadastro" className="action-button primary-button">Cadastre-se</Link>
         </div>
-        <div className="signup-link">
-          Novo restaurante?<Link to="/cadastro/restaurante" className="action-button primary-button">Cadastre-se aqui</Link>
-        </div>
 
-        {/* Link's temporarios - remover na versão final */}
-        {/* link temporario para menu principal */}
         <div className="temp-menu-link">
           <Link to="/main_menu" className="temp-menu-link">Acesso temporário ao Menu</Link>
         </div>
-
 
       </div>
     </div>

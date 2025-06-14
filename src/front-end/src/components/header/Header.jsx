@@ -39,6 +39,8 @@ const Header = ({ toggleAddressModal }) => {
           <li><Link to="/perfil">Perfil</Link></li>
           <li><Link to="/configuracoes">Configurações</Link></li>
           <li><Link to="/sobre">Sobre</Link></li>
+          <li><Link to="/cadastro/restaurante">Cadastrar Restaurante</Link></li>
+          <li><Link to="/RestaurantePerfil">Restaurante</Link></li>
         </ul>
       );
     } else {

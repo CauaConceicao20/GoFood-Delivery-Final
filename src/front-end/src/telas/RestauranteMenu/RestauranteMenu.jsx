@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './RestauranteMenu.css';
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header.jsx';
+import Footer from '../../components/footer/Footer.jsx';
 
 const Restaurante = () => {
   const restaurante = {
@@ -23,8 +24,8 @@ const Restaurante = () => {
     }
   };
 
-  const handleToggleAddressModal = () => {console.log('Toggle do modal de endereço na página de Pedidos.');}
-    
+  const handleToggleAddressModal = () => { console.log('Toggle do modal de endereço na página de Pedidos.'); }
+
 
   const handleSubmitRating = () => {
     if (userRating > 0) {
@@ -36,11 +37,11 @@ const Restaurante = () => {
     }
   };
 
-  
+
 
   return (
     <div className="restaurante-view">
-       <Header toggleAddressModal={handleToggleAddressModal} />
+      <Header toggleAddressModal={handleToggleAddressModal} />
       {/* Botão de Voltar ao Menu */}
       <Link to="/main_menu" className="back-arrow">Voltar</Link>
 
@@ -103,7 +104,7 @@ const Restaurante = () => {
         </div>
       </div>
 
-
+      <Footer />
     </div>
   );
 };
