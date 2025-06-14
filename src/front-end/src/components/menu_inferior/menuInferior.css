@@ -1,49 +1,97 @@
+/* Refatoração do menu-inferior baseado no menu-lateral */
+
 .menu-inferior {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
+    /* Altura ajustada. 300px é bastante. Se for só para algumas opções, pode ser menor. */
+    /* Mantenho para a refatoração, mas considere ajustar se for muito grande. */
     height: 300px;
-    background-color: white;
-    transform: translateY(100%);
-    transition: transform 0.3s ease-in-out;
-    border: 1px solid black;
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
+    background-color: #fff; /* Fundo branco como o menu-lateral */
+    /* Bordas arredondadas apenas na parte superior */
+    border-top-left-radius: 12px; /* Baseado no border-radius do menu-lateral */
+    border-top-right-radius: 12px; /* Baseado no border-radius do menu-lateral */
+    
+    /* Sombra mais suave e moderna, similar ao menu-lateral */
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.18), 0 -1.5px 4px rgba(0,0,0,0.10);
+    
+    z-index: 1000; /* Z-index alto para ficar acima de outros elementos */
+
+    /* Animação de entrada/saída mais elegante */
+    transform: translateY(100%); /* Escondido inicialmente */
+    opacity: 0; /* Começa invisível */
+    pointer-events: none; /* Não interage quando invisível */
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Transição para ambos */
+
+    /* Garante que o menu ocupe toda a largura */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* Estica os itens para preencher a largura */
 }
+
+/* Estado ativo: menu visível */
+.menu-inferior.ativo {
+    transform: translateY(0); /* Desliza para cima */
+    opacity: 1; /* Torna-se visível */
+    pointer-events: auto; /* Torna-se interativo */
+}
+
+/* Estilos para as opções do menu (ul) */
 .menu-opcoes {
-    margin-top: 50px;
+    list-style: none; /* Remove marcadores de lista */
+    margin: 0; /* Remove margem padrão */
+    padding: 0; /* Remove padding padrão */
+    margin-top: 50px; /* Mantém o espaçamento do botão de fechar, ajuste se o botão fechar mudar */
 }
+
+/* Estilos para cada item da lista (li) - pode ser <a> se forem links */
 .menu-opcoes li {
-    font-size: 25px;
-    padding: 10px 0 15px 30px;
-    color: #e74c3c;
+    font-family: "Arial", sans-serif; /* Usando Arial como fallback, ajuste se tiver Inter */
+    display: block; /* Garante que o padding e hover preencham a linha */
+    color: #333; /* Cor de texto mais escura para melhor contraste */
+    text-decoration: none; /* Remove sublinhado se for <a> */
+    padding: 12px 16px; /* Padding similar ao do menu-lateral */
+    border-radius: 6px; /* Borda arredondada para os itens no hover */
+    font-size: 1.1rem; /* Tamanho da fonte mais padronizado */
+    transition: background 0.15s, color 0.15s; /* Transição para hover */
+    font-weight: 500; /* Levemente mais pesado que o padrão */
 }
 
 .menu-opcoes li:hover {
-    background-color: #f4f4f4;
+    background-color: #f4f4f4; /* Fundo suave no hover */
+    color: #e53935; /* Cor do texto no hover, similar ao menu-lateral (vermelho) */
     cursor: pointer;
 }
 
-.menu-inferior.ativo {
-    transform: translateY(0);
-}
-
+/* Botão de fechar */
 .btn-fechar-menu-inferior {
     position: absolute;
-    margin: 0 0 10px 0;
-    color: red;
-    top: 10px;
-    right: 50px;
-    font-size: 35px;
+    top: 15px; /* Ajustado para ficar um pouco mais visível */
+    right: 25px; /* Ajustado para não ficar muito na borda */
+    color: var(--primary-red, #da291c); /* Usando a variável ou um fallback para o vermelho do GoFood */
+    font-size: 30px; /* Levemente menor para harmonia */
     font-weight: bold;
     cursor: pointer;
+    background: transparent; /* Certifica-se de que não tem fundo */
+    border: none; /* Remove qualquer borda */
+    padding: 5px; /* Pequeno padding para facilitar o clique */
+    z-index: 1001; /* Fica acima do conteúdo do menu */
 }
 
+/* Regra para esconder o menu em telas maiores */
 @media (min-width: 579px) {
     .menu-inferior {
         display: none;
     }
 }
+
+/* Você pode adicionar uma media query para telas menores para ajustar a altura
+   ou largura do menu inferior se necessário. Por exemplo: */
+/*
+@media (max-width: 480px) {
+    .menu-inferior {
+        height: 250px; // Altura um pouco menor para telas muito pequenas
+    }
+}
+*/

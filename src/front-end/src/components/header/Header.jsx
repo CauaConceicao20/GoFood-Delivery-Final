@@ -11,7 +11,7 @@ import IconConta from '../../assets/icon-conta.png';
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [modalAberto, setModalAberto] = useState(false);
+  const [estadoDoUsuario, setEstadoDoUsuario] = useState(0);
   const [cep, setCep] = useState('');
 
   const perfilRef = useRef(null);

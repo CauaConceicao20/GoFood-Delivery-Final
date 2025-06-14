@@ -1,300 +1,272 @@
 import React, { useState } from 'react';
 import './EdicaoDados.css';
 import { Link } from 'react-router-dom';
+import Header from '../../components/header/Header.jsx';
+import Footer from '../../components/footer/Footer.jsx';
+// Não há necessidade de importar './EdicaoDados.css' aqui, será carregado no HTML ou de forma global
 
-function EdicaoDados() {
+// Componente principal da aplicação
+function App() {
+  // Estado para armazenar os dados do restaurante
   const [restaurantData, setRestaurantData] = useState({
-    // Informações do restaurante
-    restaurantName: '',
-    fullAddress: '',
-    openingHours: '',
-    category: '',
-    mobilePhone: '',
-    landlinePhone: '',
-    description: '',
-
-    // Informações da empresa
-    corporateName: '',
-    activeCNPJ: '',
-    stateRegistration: '',
-    fantasyName: '',
-
-    // Responsável legal
-    fullNameLegal: '',
-    cpf: '',
-    mobilePhoneLegal: '',
-    emailLegal: '',
+    nome: '', // Nome do restaurante
+    desc: '', // Descrição
+    foto: null, // URL da pré-visualização da foto
+    cep: '', // CEP
+    logradouro: '', // Logradouro
+    numero: '', // Número
+    complemento: '', // Complemento
+    bairro: '', // Bairro (agora um select)
+    cidade: '', // Cidade (agora um input de texto)
+    razaoSocial: '', // Razão Social
   });
 
-  // Novo estado para controlar a visibilidade do pop-up de confirmação
-  const [showDeactivationConfirm, setShowDeactivationConfirm] = useState(false);
+  // Array vazio para as opções do select de 'bairro', conforme solicitado
+  const bairroOptions = [];
 
+  // Lida com as mudanças nos campos de entrada
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setRestaurantData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    const { name, value, files } = e.target;
+    if (name === 'foto' && files && files[0]) {
+      // Se for um input de arquivo, cria uma URL para pré-visualização
+      setRestaurantData((prevData) => ({
+        ...prevData,
+        [name]: URL.createObjectURL(files[0]),
+      }));
+    } else {
+      // Para outros inputs de texto e select
+      setRestaurantData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
+  // Lida com o envio do formulário
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Dados do restaurante a serem salvos:', restaurantData);
-    // Aqui você normalmente enviaria os dados para uma API de backend
-    alert('Dados salvos com sucesso (simulado)!');
-  };
-
-  // Função para abrir o pop-up de confirmação de desativação
-  const handleDeactivateClick = () => {
-    setShowDeactivationConfirm(true);
-  };
-
-  // Função para confirmar a desativação
-  const handleConfirmDeactivation = () => {
-    console.log('Restaurante desativado (simulado)!');
-    alert('Restaurante desativado com sucesso!'); // Simula a desativação
-    setShowDeactivationConfirm(false); // Fecha o pop-up
-    // Aqui você enviaria a requisição para desativar o restaurante no backend
-  };
-
-  // Função para cancelar a desativação
-  const handleCancelDeactivation = () => {
-    setShowDeactivationConfirm(false); // Fecha o pop-up
+    // Exibe os dados no console (simulando um salvamento)
+    console.log('Dados a serem salvos:', restaurantData);
+    // Em uma aplicação real, você enviaria esses dados para um servidor.
   };
 
   return (
-    <div className="app-container">
-      <div className="header">
-        <Link to="/RestaurantePerfil" className="back-arrow">Voltar</Link> 
-        <h1>Requisições</h1>
-      </div>
+    <>
+          <Header toggleAddressModal={() => { }} />
 
-      <form onSubmit={handleSubmit} className="restaurant-form">
-        {/* Informações do restaurante */}
-        <section className="form-section">
-          <h2>Informações do restaurante</h2>
-          <div className="form-row">
-            <div className="form-group logo-upload">
-              <label>Logotipo do restaurante</label>
-              <div className="logo-placeholder">
-                <span className="plus-icon">+</span>
+      <div className="app-container">
+        <div className="form-wrapper">
+          {/* Seção de Cabeçalho */}
+          <div className="headerED">
+            <Link to="/">
+              <button className="back-button"> Voltar</button>
+            </Link>
+
+            <h1 className="page-title">Requisições</h1>
+          </div>
+
+
+          <form onSubmit={handleSubmit} className="restaurant-form">
+            {/* Seção de Informações do Restaurante */}
+            <section className="form-section">
+              <h2 className="section-title">Informações do Restaurante</h2>
+              <div className="form-grid-2-cols">
+                {/* Upload de Foto */}
+                <div className="photo-upload-group">
+                  <input
+                    type="file"
+                    id="foto"
+                    name="foto"
+                    accept="image/*"
+                    onChange={handleChange}
+                    className="photo-input"
+                  />
+                  {restaurantData.foto ? (
+                    <img src={restaurantData.foto} alt="Pré-visualização da foto" className="photo-preview" />
+                  ) : (
+                    <>
+                      <span className="plus-icon">+</span>
+                      <label htmlFor="foto" className="photo-label">
+                        Logotipo do restaurante
+                      </label>
+                    </>
+                  )}
+                </div>
+
+                {/* Nome do Restaurante */}
+                <div className="form-group">
+                  <label htmlFor="nome" className="form-label">
+                    Nome do Restaurante *
+                  </label>
+                  <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    value={restaurantData.nome}
+                    onChange={handleChange}
+                    required
+                    className="form-input"
+                  />
+                </div>
+
+                {/* Descrição do Restaurante */}
+                <div className="form-group full-width">
+                  <label htmlFor="desc" className="form-label">
+                    Faça uma breve descrição do seu restaurante
+                  </label>
+                  <textarea
+                    id="desc"
+                    name="desc"
+                    value={restaurantData.desc}
+                    onChange={handleChange}
+                    rows="4"
+                    className="form-textarea"
+                  ></textarea>
+                </div>
               </div>
-            </div>
-            <div className="form-group">
-              <label htmlFor="restaurantName">Nome do restaurante *</label>
-              <input
-                type="text"
-                id="restaurantName"
-                name="restaurantName"
-                value={restaurantData.restaurantName}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="category">
-                Categoria (ex: hamburgueria, pizzaria, etc.) *
-              </label>
-              <input
-                type="text"
-                id="category"
-                name="category"
-                value={restaurantData.category}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="fullAddress">Endereço completo *</label>
-              <input
-                type="text"
-                id="fullAddress"
-                name="fullAddress"
-                value={restaurantData.fullAddress}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="mobilePhone">Telefone de celular *</label>
-              <input
-                type="tel"
-                id="mobilePhone"
-                name="mobilePhone"
-                value={restaurantData.mobilePhone}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="openingHours">Horário de funcionamento *</label>
-              <input
-                type="text"
-                id="openingHours"
-                name="openingHours"
-                value={restaurantData.openingHours}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="landlinePhone">Telefone de fixo (opcional)</label>
-              <input
-                type="tel"
-                id="landlinePhone"
-                name="landlinePhone"
-                value={restaurantData.landlinePhone}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div className="form-group full-width">
-            <label htmlFor="description">Faça uma breve descrição do seu restaurante</label>
-            <textarea
-              id="description"
-              name="description"
-              value={restaurantData.description}
-              onChange={handleChange}
-              rows="4"
-            ></textarea>
-          </div>
-        </section>
+            </section>
 
-        {/* Informações da empresa */}
-        <section className="form-section">
-          <h2>Informações da empresa</h2>
-          <div className="form-group">
-            <label htmlFor="corporateName">Razão social *</label>
-            <input
-              type="text"
-              id="corporateName"
-              name="corporateName"
-              value={restaurantData.corporateName}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="activeCNPJ">CNPJ ativo *</label>
-            <input
-              type="text"
-              id="activeCNPJ"
-              name="activeCNPJ"
-              value={restaurantData.activeCNPJ}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="stateRegistration">Inscrição estadual (se aplicável) *</label>
-            <input
-              type="text"
-              id="stateRegistration"
-              name="stateRegistration"
-              value={restaurantData.stateRegistration}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="fantasyName">Nome fantasia *</label>
-            <input
-              type="text"
-              id="fantasyName"
-              name="fantasyName"
-              value={restaurantData.fantasyName}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        </section>
+            {/* Seção de Informações de Endereço */}
+            <section className="form-section">
+              <h2 className="section-title">Endereço</h2>
+              <div className="form-grid-2-cols">
+                {/* CEP */}
+                <div className="form-group">
+                  <label htmlFor="cep" className="form-label">
+                    CEP *
+                  </label>
+                  <input
+                    type="text"
+                    id="cep"
+                    name="cep"
+                    value={restaurantData.cep}
+                    onChange={handleChange}
+                    required
+                    className="form-input"
+                    placeholder="Ex: 00000-000"
+                  />
+                </div>
 
-        {/* Responsável legal */}
-        <section className="form-section">
-          <h2>Responsável legal</h2>
-          <div className="form-group">
-            <label htmlFor="fullNameLegal">Nome completo *</label>
-            <input
-              type="text"
-              id="fullNameLegal"
-              name="fullNameLegal"
-              value={restaurantData.fullNameLegal}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="cpf">CPF *</label>
-            <input
-              type="text"
-              id="cpf"
-              name="cpf"
-              value={restaurantData.cpf}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="mobilePhoneLegal">Telefone celular *</label>
-            <input
-              type="tel"
-              id="mobilePhoneLegal"
-              name="mobilePhoneLegal"
-              value={restaurantData.mobilePhoneLegal}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="emailLegal">E-mail válido *</label>
-            <input
-              type="email"
-              id="emailLegal"
-              name="emailLegal"
-              value={restaurantData.emailLegal}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        </section>
+                {/* Logradouro */}
+                <div className="form-group">
+                  <label htmlFor="logradouro" className="form-label">
+                    Logradouro *
+                  </label>
+                  <input
+                    type="text"
+                    id="logradouro"
+                    name="logradouro"
+                    value={restaurantData.logradouro}
+                    onChange={handleChange}
+                    required
+                    className="form-input"
+                  />
+                </div>
 
-        <button type="submit" className="submit-button">
-          Finalizar Cadastro
-        </button>
+                {/* Número */}
+                <div className="form-group">
+                  <label htmlFor="numero" className="form-label">
+                    Número *
+                  </label>
+                  <input
+                    type="text"
+                    id="numero"
+                    name="numero"
+                    value={restaurantData.numero}
+                    onChange={handleChange}
+                    required
+                    className="form-input"
+                  />
+                </div>
 
-        {/* Novo botão "Desativar Restaurante" */}
-        <button
-          type="button" // Use type="button" para evitar submeter o formulário
-          className="deactivate-button"
-          onClick={handleDeactivateClick}
-        >
-          Desativar Restaurante
-        </button>
-      </form>
+                {/* Complemento */}
+                <div className="form-group">
+                  <label htmlFor="complemento" className="form-label">
+                    Complemento
+                  </label>
+                  <input
+                    type="text"
+                    id="complemento"
+                    name="complemento"
+                    value={restaurantData.complemento}
+                    onChange={handleChange}
+                    className="form-input"
+                  />
+                </div>
 
-      {/* Pop-up de Confirmação */}
-      {showDeactivationConfirm && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h3>Confirmar Desativação</h3>
-            <p>Tem certeza que deseja desativar o restaurante?</p>
-            <div className="modal-actions">
-              <button onClick={handleConfirmDeactivation} className="confirm-button">
-                Sim
-              </button>
-              <button onClick={handleCancelDeactivation} className="cancel-button">
-                Não
-              </button>
-            </div>
-          </div>
+                {/* Bairro (Select) - Agora sem opções pré-definidas */}
+                <div className="form-group">
+                  <label htmlFor="bairro" className="form-label">
+                    Bairro *
+                  </label>
+                  <select
+                    id="bairro"
+                    name="bairro"
+                    value={restaurantData.bairro}
+                    onChange={handleChange}
+                    required
+                    className="form-select"
+                  >
+                    {/* Opção padrão para garantir que o select não esteja completamente vazio visualmente */}
+                    <option value="">Selecione o Bairro</option>
+                    {bairroOptions.map((option, index) => (
+                      <option key={index} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Cidade (Input de Texto) */}
+                <div className="form-group">
+                  <label htmlFor="cidade" className="form-label">
+                    Cidade *
+                  </label>
+                  <input
+                    type="text"
+                    id="cidade"
+                    name="cidade"
+                    value={restaurantData.cidade}
+                    onChange={handleChange}
+                    required
+                    className="form-input"
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* Seção de Informações da Empresa */}
+            <section className="form-section">
+              <h2 className="section-title">Informações da Empresa</h2>
+              <div className="form-group">
+                <label htmlFor="razaoSocial" className="form-label">
+                  Razão Social *
+                </label>
+                <input
+                  type="text"
+                  id="razaoSocial"
+                  name="razaoSocial"
+                  value={restaurantData.razaoSocial}
+                  onChange={handleChange}
+                  required
+                  className="form-input"
+                />
+              </div>
+            </section>
+
+            {/* Botão de Envio */}
+            <button
+              type="submit"
+              className="submit-button"
+            >
+              Finalizar Cadastro
+            </button>
+          </form>
         </div>
-      )}
-    </div>
+      </div>
+      <Footer />
+    </>
   );
 }
 
-export default EdicaoDados;
+export default App;
