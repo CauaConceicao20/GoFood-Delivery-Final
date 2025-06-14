@@ -53,83 +53,85 @@
   line-height: 1.6;
 }
 
-/* Seção de Avaliação (NOVO) */
 .rating-section {
-  background-color: #ffffff;
-  padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 800px;
-  margin-bottom: 30px;
-  margin-top: 30px; /* Aumentei esta margem para afastar dos botões */
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 30px;
+    margin-top: 30px;
 }
 
 .rating-section h2 {
-  color: #333;
-  font-size: 1.8em;
-  margin-bottom: 20px;
+    color: #333;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    text-align: center; /* Adicionado para centralizar o texto "Avalie o Restaurante" */
 }
 
 .rating-stars {
-  display: flex;
-  justify-content: center;
-  gap: 10px; /* Espaço entre os números */
-  margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
 .star {
-  font-size: 1.5em; /* Tamanho dos números de avaliação */
-  color: #ccc; /* Cor padrão (não selecionada) */
-  cursor: pointer;
-  transition: color 0.2s ease, transform 0.1s ease;
-  padding: 5px 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  min-width: 40px; /* Garante largura mínima para os números */
-  text-align: center;
+    font-size: 1.5em;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.1s ease;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    min-width: 40px;
+    text-align: center;
 }
 
 .star:hover:not(.disabled) {
-  color: #ffc107; /* Cor ao passar o mouse */
-  border-color: #ffc107;
-  transform: translateY(-2px);
+    color: #ffc107;
+    border-color: #ffc107;
+    transform: translateY(-2px);
 }
 
 .star.selected {
-  color: #ffc107; /* Cor selecionada */
-  font-weight: bold;
-  background-color: #fff3cd; /* Fundo leve para a estrela selecionada */
-  border-color: #ffc107;
+    color: #ffc107;
+    font-weight: bold;
+    background-color: #fff3cd;
+    border-color: #ffc107;
 }
 
 .star.disabled {
-  cursor: default; /* Cursor padrão quando desabilitado */
-  opacity: 0.7; /* Opacidade para indicar que não é interativo */
+    cursor: default;
+    opacity: 0.7;
 }
 
 .submit-rating-button {
-  
-  background-color: #ff5722; /* Verde para o botão de enviar */
-  color: white;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1.1em;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+    background-color: #ff5722;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 0 auto;
 }
 
 .submit-rating-button:hover {
-  background-color: #218838;
+    background-color: #c62828;
 }
 
 .rating-message {
-  color: #555;
-  font-style: italic;
-  margin-top: 15px;
+    color: #555;
+    font-style: italic;
+    margin-top: 15px;
+    text-align: center;
 }
 
 

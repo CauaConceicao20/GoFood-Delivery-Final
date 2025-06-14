@@ -1,223 +1,246 @@
-
+/* Variáveis CSS para padronização */
 :root {
-  font-family: "Inter", sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    /* Fundo geral da página (usado por EDR-app-container) */
+    --background-light: #ffffff;
+    --background-card: #fff; /* Fundo dos cards/formulários */
+
+    /* Propriedades de fonte movidas para :root */
+    font-family: "Inter", sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
+/* Base Root Styling (do seu CSS) */
+/* As propriedades de fonte agora estão no :root */
 
-
-.app-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  min-height: 100vh;
-  margin-top: 80px;
+.EDR-app-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    min-height: 100vh; /* Garante que o container ocupe toda a altura da viewport */
+    margin-top: 80px; /* Mantém o espaçamento superior */
+    background-color: var(--background-light); /* Usa a variável para o fundo branco */
 }
 
 /* Wrapper do formulário */
-.form-wrapper {
-  background-color: #fff;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  width: 100%;
-  max-width: 42rem; /* Limita a largura máxima do formulário */
+.EDR-form-wrapper {
+    background-color: var(--background-card); /* Usa a variável para o fundo branco do card */
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 42rem; /* Limita a largura máxima do formulário */
 }
 
 /* Cabeçalho */
-.headerED {
-  display: flex;
-  align-items: center; /* Alinha os itens ao centro verticalmente */
-  justify-content: space-between; /* Distribui o espaço entre os itens para centralizar o título */
-  margin-bottom: 1.5rem;
-  position: relative;
+.EDR-headerED {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding: 1rem 0;
+    border-radius: 0.5rem;
+    background-color: var(--background-card); /* Garante que o cabeçalho seja branco */
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.back-button {
-  color: #e53935;
-  font-weight: 600;
-  font-size: 1.125rem;
-  background-color: #ffffff; /* Cor de fundo suave para o botão */
-  border: 1px solid; /* Borda sutil */
-  border-radius: 0.375rem; /* Cantos arredondados */
-  cursor: pointer;
-  padding: 0.5rem 1rem; /* Espaçamento interno do botão */
-  transition: all 0.2s ease-in-out; /* Transição suave para hover */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para o botão */
+.EDR-back-button {
+    color: #e53935;
+    font-weight: 600;
+    font-size: 1.125rem;
+    background-color: #ffffff;
+    border: 1px solid #e53935;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-left: 1rem;
 }
 
-.back-button:hover {
-  background-color: #c7d2fe; /* Cor de fundo mais escura no hover */
-  color: #e53935;
-  border-color: #818cf8;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+.EDR-back-button:hover {
+    background-color: #fcebeb;
+    color: #e53935;
+    border-color: #e53935;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.page-title {
-  text-align: center;
-  flex-grow: 1; /* Permite que o título ocupe o espaço restante */
-  font-size: 1.875rem;
-  font-weight: 700;
-  color: #1f2937;
-  margin: 0 1rem; /* Adiciona margem lateral para que o título não fique muito próximo dos botões */
+.EDR-page-title {
+    text-align: center;
+    flex-grow: 1;
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 1rem;
 }
 
 /* Formulário do restaurante */
-.restaurant-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem; /* Espaçamento entre as seções do formulário */
+.EDR-restaurant-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 /* Seções do formulário */
-.form-section {
-  background-color: #f9fafb;
-  padding: 1.5rem;
-  border-radius: 0.375rem;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+.EDR-form-section {
+    background-color: var(--background-card); /* Usa a variável para o fundo branco */
+    padding: 1.5rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.section-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #374151;
-  margin-bottom: 1rem;
+.EDR-section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 1rem;
 }
 
 /* Grid para layouts de 2 colunas */
-.form-grid-2-cols {
-  display: grid;
-  grid-template-columns: 1fr; /* Padrão de 1 coluna para telas pequenas */
-  gap: 1rem;
+.EDR-form-grid-2-cols {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
 }
 
 /* Responsividade para telas maiores (a partir de 768px) */
 @media (min-width: 768px) {
-  .form-grid-2-cols {
-    grid-template-columns: repeat(2, 1fr); /* 2 colunas */
-  }
-  .form-group.full-width {
-    grid-column: span 2 / span 2; /* Ocupa as 2 colunas */
-  }
+    .EDR-form-grid-2-cols {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .EDR-form-group.EDR-full-width {
+        grid-column: span 2 / span 2;
+    }
 }
 
-
-.form-group {
-  display: flex;
-  flex-direction: column;
+.EDR-form-group {
+    display: flex;
+    flex-direction: column;
 }
 
-.form-label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #374151;
-  margin-bottom: 0.25rem;
+.EDR-form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.25rem;
 }
 
-.form-input,
-.form-textarea,
-.form-select {
-  margin-top: 0.25rem;
-  display: block;
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.375rem;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  box-sizing: border-box; /* Garante que o padding não aumente a largura do elemento */
+.EDR-form-input,
+.EDR-form-textarea,
+.EDR-form-select {
+    margin-top: 0.25rem;
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    color: #1f2937;
 }
 
 /* Estilos de foco para inputs, textareas e selects */
-.form-input:focus,
-.form-textarea:focus,
-.form-select:focus {
-  outline: none;
-  border-color: #3b82f6; /* Borda azul ao focar */
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* Anel azul ao focar */
+.EDR-form-input:focus,
+.EDR-form-textarea:focus,
+.EDR-form-select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
 }
 
-.form-textarea {
-  resize: vertical; /* Permite redimensionamento vertical */
+.EDR-form-textarea {
+    resize: vertical;
 }
 
 /* Estilização específica para o select */
-.form-select {
-  appearance: none; /* Remove a seta padrão do select */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%236B7280'%3e%3cpath d='M7 7l3-3 3 3m0 6l-3 3-3-3'/%3e%3c/svg%3e"); /* Seta customizada em SVG */
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  background-size: 1.5em 1.5em;
-  padding-right: 2.5rem; /* Espaço para a seta */
+.EDR-form-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%236B7280'%3e%3cpath d='M7 7l3-3 3 3m0 6l-3 3-3-3'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
 }
 
 /* Grupo de upload de foto */
-.photo-upload-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 2px dashed #d1d5db;
-  border-radius: 0.375rem;
-  padding: 1.5rem;
-  height: 12rem; /* Altura fixa */
-  position: relative;
-  overflow: hidden; /* Garante que a pré-visualização da imagem não transborde */
+.EDR-photo-upload-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #d1d5db;
+    border-radius: 0.375rem;
+    padding: 1.5rem;
+    height: 12rem;
+    position: relative;
+    overflow: hidden;
+    background-color: #f9fafb; /* Fundo cinza bem claro para o upload, como na imagem */
 }
 
-.photo-input {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
+.EDR-photo-input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
 }
 
-.photo-preview {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0.375rem;
+.EDR-photo-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.375rem;
 }
 
-.plus-icon {
-  font-size: 3.125rem; /* 50px */
-  color: #9ca3af;
-  margin-bottom: 0.5rem;
+.EDR-plus-icon {
+    font-size: 3.125rem;
+    color: #9ca3af;
+    margin-bottom: 0.5rem;
 }
 
-.photo-label {
-  color: #4b5563;
-  font-size: 0.875rem;
-  cursor: pointer;
+.EDR-photo-label {
+    color: #4b5563;
+    font-size: 0.875rem;
+    cursor: pointer;
 }
 
 /* Botão de envio */
-.submit-button {
-  width: 100%;
-  background-color: #e53935;
-  color: #fff;
-  font-weight: 700;
-  padding: 0.75rem 1rem;
-  border-radius: 0.375rem;
-  transition: background-color 0.3s ease-in-out;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border: none;
-  cursor: pointer;
+.EDR-submit-button {
+    width: 100%;
+    background-color: #e53935;
+    color: #fff;
+    font-weight: 700;
+    padding: 0.75rem 1rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.3s ease-in-out;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: none;
+    cursor: pointer;
 }
 
-.submit-button:hover {
-  background-color: #1d4ed8;
+.EDR-submit-button:hover {
+    background-color: #c62828;
+}
+
+/* Responsividade */
+@media (min-width: 768px) {
+    .EDR-form-grid-2-cols {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .EDR-form-group.EDR-full-width {
+        grid-column: span 2 / span 2;
+    }
 }

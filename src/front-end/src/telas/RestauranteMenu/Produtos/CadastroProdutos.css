@@ -1,3 +1,11 @@
+/* Definição do fundo global da página */
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff; /* Fundo branco para toda a página */
+    height: 100%; /* Garante que o html/body ocupe 100% da altura da viewport */
+}
+
 /* Variáveis CSS para padronização */
 :root {
   --primary-color: #ff5722;
@@ -7,7 +15,7 @@
   --text-color-medium: #555;
   --text-color-light: #666;
   --border-color: #ddd;
-  --background-light: #f0f2f5; /* Fundo geral da página */
+  --background-light: #ffffff; /* Mantido como branco, mas agora o body/html garante o fundo principal */
   --background-card: #fff; /* Fundo dos cards/formulários */
   --shadow-light: rgba(0, 0, 0, 0.1);
   --shadow-medium: rgba(0, 0, 0, 0.05);
@@ -18,16 +26,18 @@
 
 /* Estilos Gerais do Container */
 .cadastro-container {
-  max-width: 800px; /* Largura ajustada para o formulário de cadastro */
+  max-width: 800px;
   margin: 20px auto;
   padding: var(--padding-default);
-  background-color: var(--background-light);
+  /* Esta linha pode ser mantida, mas agora o fundo branco virá do html/body */
+  background-color: var(--background-light); /* Isso garantirá que o container em si seja branco */
   font-family: 'Arial', sans-serif;
   color: var(--text-color-dark);
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
+  /* Mudei min-height para auto ou pode remover se o conteúdo for grande, para evitar rolagem desnecessária no container se o body já tiver 100vh */
+  min-height: auto; /* Ou remova esta linha se preferir que o height seja dinâmico */
 }
 
 /* Estilos do Cabeçalho da Tela de Cadastro */
@@ -78,7 +88,8 @@
 }
 
 .back-button::before {
-
+  /* Se você estiver usando um ícone com before/after, certifique-se de que o content está definido no HTML ou JS */
+  /* content: '←'; */ /* Exemplo, se for um caractere unicode */
   margin-right: 5px;
   font-size: 1.2em;
 }
@@ -125,7 +136,7 @@
   cursor: pointer;
   margin: 0 auto;
   overflow: hidden;
-  background-color: var(--background-light);
+  background-color: var(--background-light); /* Agora será branco */
   transition: all var(--transition-speed) ease;
 }
 
