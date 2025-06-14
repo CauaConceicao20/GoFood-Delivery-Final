@@ -68,8 +68,9 @@ const Carrinho = () => {
   };
 
   return (
+    <>
+       <Header toggleAddressModal={() => {}} />
     <div className="carrinho-container">
-      <Header toggleAddressModal={() => {}} />
 
       <main className="carrinho-main">
         {items.length === 0 ? (
@@ -154,7 +155,6 @@ const Carrinho = () => {
         )}
       </main>
 
-      {/* Modal de Confirmação */}
       {showConfirmationModal && (
         <div className="modal-overlay">
           <div className="confirmation-modal">
@@ -195,6 +195,7 @@ const Carrinho = () => {
       )}
     <Footer />
     </div>
+    </>
     
   );
 };
