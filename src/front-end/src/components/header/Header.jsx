@@ -11,7 +11,7 @@ import IconConta from '../../assets/icon-conta.png';
 
 const Header = ({ toggleAddressModal }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [estadoDoUsuario, setEstadoDoUsuario] = useState(0);
+  const [estadoDoUsuario, setEstadoDoUsuario] = useState(1);
   const [cep, setCep] = useState('');
 
   const handlePerfilClick = (event) => {
@@ -36,7 +36,6 @@ const Header = ({ toggleAddressModal }) => {
     if (estadoDoUsuario === 1) {
       return (
         <ul>
-          <li><Link to="/pedidos">Pedidos</Link></li>
           <li><Link to="/perfil">Perfil</Link></li>
           <li><Link to="/configuracoes">Configurações</Link></li>
           <li><Link to="/sobre">Sobre</Link></li>

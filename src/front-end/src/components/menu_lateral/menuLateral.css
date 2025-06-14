@@ -67,3 +67,9 @@
         min-width: 160px;
     }
 }
+
+@media (max-width: 579px) {
+    .menu-lateral{
+        display: none;
+    }
+}

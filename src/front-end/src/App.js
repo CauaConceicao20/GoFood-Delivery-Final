@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Login from './telas/login/Login';
-import Cadastro from './telas/cadastro/Cadastro.jsx';
+import Cadastro from './telas/cadastro/Cadastro';
 import LoginRestaurante from './telas/restaurante/login/LoginRestaurante';
 import CadastroRestaurante from './telas/restaurante/cadastro/CadastroRestaurante';
 import MainMenu from './telas/main_menu/MainMenu';

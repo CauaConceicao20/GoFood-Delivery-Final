@@ -64,25 +64,9 @@ const EdicaoUsuario = () => {
       <form onSubmit={handleSubmit} className="edit-profile-form">
         <table className="edit-profile-table">
           <tbody>
-            {/* Linha 1: Foto, Nome Completo */}
+            {/* Linha 1: Nome Completo */}
             <tr>
-              <td rowSpan="4" className="photo-cell"> {/* Aumenta rowSpan para 4, para cobrir Nome, Telefone, Email, Endereço */}
-                <label>Foto de perfil</label>
-                <label htmlFor="photo-upload" className="photo-upload-btn">
-                  {userData.foto ? (
-                    <img src={userData.foto} alt="Foto do perfil" className="profile-image" />
-                  ) : (
-                    <span className="plus-icon">+</span>
-                  )}
-                </label>
-                <input
-                  id="photo-upload"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  style={{ display: 'none' }}
-                />
-              </td>
+
               <td className="label-cell">
                 <label htmlFor="nomeCompleto" className="required-field">Nome completo</label>
               </td>
@@ -203,4 +187,3 @@ const EdicaoUsuario = () => {
 };
 
 export default EdicaoUsuario;
- 

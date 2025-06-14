@@ -27,18 +27,8 @@ const PerfilUsuario = () => {
       <div className="profile-form">
         <table className="profile-table">
           <tbody>
-            {/* Linha 1: Foto e Nome Completo */}
+            {/* Linha 1: Nome Completo */}
             <tr>
-              <td rowSpan="4" className="photo-cell"> {/* Aumenta rowSpan para 4, para cobrir Nome, Telefone, Email, Endereço */}
-                <label>Foto de perfil</label>
-                <div className="photo-upload-btn disabled-photo-upload">
-                  {userData.foto ? (
-                    <img src={userData.foto} alt="Foto do perfil" className="profile-image" />
-                  ) : (
-                    <span className="plus-icon"></span>
-                  )}
-                </div>
-              </td>
               <td className="label-cell">
                 <label className="required-field">Nome completo</label>
               </td>
