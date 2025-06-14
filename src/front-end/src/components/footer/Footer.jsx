@@ -34,7 +34,7 @@ function Footer() {
 
           <div className="opcao-footer" id="btnPerfilFooter" onClick={abrirMenuInferior}>
             <div className="area-opcao-bottom-bar">
-              
+
               <Link to="/perfil">
                 <img src={IconePerfil} alt="icone de perfil" />
               </Link>
@@ -67,15 +67,15 @@ function Footer() {
         </nav>
       </footer>
 
-      {/* MenuInferior aparece quando menuAtivo for true */}
-      <MenuInferior onClose={fecharMenuInferior} ativo={menuAtivo}>
-        <li><Link to="/perfil">Perfil</Link></li>
-        <li><Link to="/configuracoes">Configurações</Link></li>
-        <li><Link to="/sobre">Sobre</Link></li>
-        <li><Link to="/cadastro/restaurante">Cadastrar Restaurante</Link></li>
-        <li><Link to="/RestaurantePerfil">Restaurante</Link></li>
-        {/* Adicione as opções reais do seu menu aqui */}
-      </MenuInferior>
+
+      <div className='lista-inferior'>
+        <MenuInferior onClose={fecharMenuInferior} ativo={menuAtivo}>
+          <li><Link to="/configuracoes">Configurações</Link></li>
+          <li><Link to="/sobre">Sobre</Link></li>
+          <li><Link to="/cadastro/restaurante">Cadastrar Restaurante</Link></li>
+          <li><Link to="/RestaurantePerfil">Restaurante</Link></li>
+        </MenuInferior>
+      </div>
     </>
   );
 };

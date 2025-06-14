@@ -5,29 +5,23 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    /* Altura ajustada. 300px é bastante. Se for só para algumas opções, pode ser menor. */
-    /* Mantenho para a refatoração, mas considere ajustar se for muito grande. */
     height: 300px;
-    background-color: #fff; /* Fundo branco como o menu-lateral */
-    /* Bordas arredondadas apenas na parte superior */
-    border-top-left-radius: 12px; /* Baseado no border-radius do menu-lateral */
-    border-top-right-radius: 12px; /* Baseado no border-radius do menu-lateral */
-    
-    /* Sombra mais suave e moderna, similar ao menu-lateral */
+    background-color: #fff;
+
+    border-top-left-radius: 12px; 
+    border-top-right-radius: 12px; 
     box-shadow: 0 -8px 32px rgba(0,0,0,0.18), 0 -1.5px 4px rgba(0,0,0,0.10);
     
-    z-index: 1000; /* Z-index alto para ficar acima de outros elementos */
+    z-index: 1000; 
 
-    /* Animação de entrada/saída mais elegante */
-    transform: translateY(100%); /* Escondido inicialmente */
-    opacity: 0; /* Começa invisível */
-    pointer-events: none; /* Não interage quando invisível */
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Transição para ambos */
+    transform: translateY(100%); 
+    opacity: 0; 
+    pointer-events: none; 
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out; 
 
-    /* Garante que o menu ocupe toda a largura */
     display: flex;
     flex-direction: column;
-    align-items: stretch; /* Estica os itens para preencher a largura */
+    align-items: stretch;
 }
 
 /* Estado ativo: menu visível */
@@ -54,44 +48,34 @@
     padding: 12px 16px; /* Padding similar ao do menu-lateral */
     border-radius: 6px; /* Borda arredondada para os itens no hover */
     font-size: 1.1rem; /* Tamanho da fonte mais padronizado */
-    transition: background 0.15s, color 0.15s; /* Transição para hover */
-    font-weight: 500; /* Levemente mais pesado que o padrão */
+    transition: background 0.15s, color 0.15s;  
+    font-weight: 500; 
 }
 
 .menu-opcoes li:hover {
-    background-color: #f4f4f4; /* Fundo suave no hover */
-    color: #e53935; /* Cor do texto no hover, similar ao menu-lateral (vermelho) */
+    background-color: #f4f4f4; 
+    color: #e53935; 
     cursor: pointer;
 }
 
-/* Botão de fechar */
+
 .btn-fechar-menu-inferior {
     position: absolute;
-    top: 15px; /* Ajustado para ficar um pouco mais visível */
-    right: 25px; /* Ajustado para não ficar muito na borda */
-    color: var(--primary-red, #da291c); /* Usando a variável ou um fallback para o vermelho do GoFood */
-    font-size: 30px; /* Levemente menor para harmonia */
+    top: 15px; 
+    right: 25px; 
+    color: var(--primary-red, #da291c); 
+    font-size: 30px; 
     font-weight: bold;
     cursor: pointer;
-    background: transparent; /* Certifica-se de que não tem fundo */
-    border: none; /* Remove qualquer borda */
-    padding: 5px; /* Pequeno padding para facilitar o clique */
-    z-index: 1001; /* Fica acima do conteúdo do menu */
+    background: transparent; 
+    border: none; 
+    padding: 5px; 
+    z-index: 1001; 
 }
 
-/* Regra para esconder o menu em telas maiores */
+
 @media (min-width: 579px) {
     .menu-inferior {
         display: none;
     }
 }
-
-/* Você pode adicionar uma media query para telas menores para ajustar a altura
-   ou largura do menu inferior se necessário. Por exemplo: */
-/*
-@media (max-width: 480px) {
-    .menu-inferior {
-        height: 250px; // Altura um pouco menor para telas muito pequenas
-    }
-}
-*/

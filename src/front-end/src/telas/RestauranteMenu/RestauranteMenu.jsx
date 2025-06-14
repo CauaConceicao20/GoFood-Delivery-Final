@@ -43,7 +43,7 @@ const Restaurante = () => {
     <>
     <main className="restaurante-view">
       <Header toggleAddressModal={handleToggleAddressModal} />
-      {/* Botão de Voltar ao Menu */}
+
 
 
       {/* Informações do Restaurante */}
@@ -76,6 +76,7 @@ const Restaurante = () => {
         <Link to="/EdicaoRestaurante" className="link-as-button">
           Edição Restaurante
         </Link>
+         <li><Link to="/ProdutoDetails">details</Link></li>
       </div>
 
       {/* Seção de Avaliação - MOVIDA PARA DEPOIS DOS LINKS DE GERENCIAMENTO */}

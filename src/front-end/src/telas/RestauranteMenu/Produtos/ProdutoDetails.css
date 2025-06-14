@@ -1,0 +1,247 @@
+.PD-container {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.PD-header {
+    width: 100%;
+    max-width: 960px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.PD-back-arrow {
+    font-size: 28px;
+    cursor: pointer;
+    color: #333;
+}
+
+.PD-restaurant-info {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 960px;
+    width: 100%;
+}
+
+.PD-restaurant-logo-container {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.PD-restaurant-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.PD-restaurant-details h1 {
+    margin-top: 0;
+    color: #333;
+}
+
+.PD-restaurant-description {
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.PD-rating-order {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.PD-rating {
+    color: #ffc107;
+    font-size: 16px;
+    margin-right: 15px;
+}
+
+.PD-review-count {
+    color: #777;
+    font-size: 14px;
+}
+
+.PD-order-button {
+    background-color: #e53935;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.PD-order-button:hover {
+    background-color: #c62828;
+}
+
+.PD-delivery-info {
+    color: #777;
+    font-size: 14px;
+}
+
+.PD-product-detail {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 960px;
+    width: 100%;
+}
+
+.PD-product-image-container {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.PD-product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.PD-product-info h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.PD-product-description {
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.PD-product-price {
+    color: #e53935;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.PD-add-to-cart-button {
+    background-color: #ffca28;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.PD-add-to-cart-button:hover {
+    background-color: #f7b801;
+}
+
+.PD-suggestions {
+    max-width: 960px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+.PD-suggestions h3 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.PD-suggestions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+.PD-suggestion-item {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+}
+
+.PD-suggestion-image {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.PD-suggestion-name {
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.PD-suggestion-price {
+    color: #e53935;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.PD-suggestion-button {
+    background-color: #ffca28;
+    color: #333;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.PD-suggestion-button:hover {
+    background-color: #f7b801;
+}
+
+/* Estilos para telas menores */
+@media (max-width: 768px) {
+    .PD-restaurant-info {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .PD-rating-order {
+        flex-direction: column;
+    }
+
+    .PD-rating {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .PD-product-detail {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}

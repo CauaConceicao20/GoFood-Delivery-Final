@@ -3,38 +3,37 @@ import './EdicaoDados.css';
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header.jsx';
 import Footer from '../../components/footer/Footer.jsx';
-// Não há necessidade de importar './EdicaoDados.css' aqui, será carregado no HTML ou de forma global
 
-// Componente principal da aplicação
+
 function App() {
-  // Estado para armazenar os dados do restaurante
+
   const [restaurantData, setRestaurantData] = useState({
-    nome: '', // Nome do restaurante
-    desc: '', // Descrição
-    foto: null, // URL da pré-visualização da foto
-    cep: '', // CEP
-    logradouro: '', // Logradouro
-    numero: '', // Número
-    complemento: '', // Complemento
-    bairro: '', // Bairro (agora um select)
-    cidade: '', // Cidade (agora um input de texto)
-    razaoSocial: '', // Razão Social
+    nome: '',
+    desc: '',
+    foto: null,
+    cep: '',
+    logradouro: '',
+    numero: '',
+    complemento: '',
+    bairro: '',
+    cidade: '',
+    razaoSocial: '',
   });
 
-  // Array vazio para as opções do select de 'bairro', conforme solicitado
-  const bairroOptions = [];
 
-  // Lida com as mudanças nos campos de entrada
+  const [cidadeOptions, setCidadeOptions] = useState([]);
+
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'foto' && files && files[0]) {
-      // Se for um input de arquivo, cria uma URL para pré-visualização
+
       setRestaurantData((prevData) => ({
         ...prevData,
         [name]: URL.createObjectURL(files[0]),
       }));
     } else {
-      // Para outros inputs de texto e select
+
       setRestaurantData((prevData) => ({
         ...prevData,
         [name]: value,
@@ -42,32 +41,30 @@ function App() {
     }
   };
 
-  // Lida com o envio do formulário
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Exibe os dados no console (simulando um salvamento)
+
     console.log('Dados a serem salvos:', restaurantData);
-    // Em uma aplicação real, você enviaria esses dados para um servidor.
+
   };
 
   return (
     <>
-          <Header toggleAddressModal={() => { }} />
+      <Header toggleAddressModal={() => { }} />
 
       <div className="app-container">
         <div className="form-wrapper">
-          {/* Seção de Cabeçalho */}
+
           <div className="headerED">
-            <Link to="/">
+            <Link to="/RestaurantePerfil">
               <button className="back-button"> Voltar</button>
             </Link>
 
-            <h1 className="page-title">Requisições</h1>
+            <h1 className="page-title">Informações</h1>
           </div>
 
 
           <form onSubmit={handleSubmit} className="restaurant-form">
-            {/* Seção de Informações do Restaurante */}
             <section className="form-section">
               <h2 className="section-title">Informações do Restaurante</h2>
               <div className="form-grid-2-cols">
@@ -93,7 +90,6 @@ function App() {
                   )}
                 </div>
 
-                {/* Nome do Restaurante */}
                 <div className="form-group">
                   <label htmlFor="nome" className="form-label">
                     Nome do Restaurante *
@@ -109,7 +105,6 @@ function App() {
                   />
                 </div>
 
-                {/* Descrição do Restaurante */}
                 <div className="form-group full-width">
                   <label htmlFor="desc" className="form-label">
                     Faça uma breve descrição do seu restaurante
@@ -126,11 +121,9 @@ function App() {
               </div>
             </section>
 
-            {/* Seção de Informações de Endereço */}
             <section className="form-section">
               <h2 className="section-title">Endereço</h2>
               <div className="form-grid-2-cols">
-                {/* CEP */}
                 <div className="form-group">
                   <label htmlFor="cep" className="form-label">
                     CEP *
@@ -147,7 +140,6 @@ function App() {
                   />
                 </div>
 
-                {/* Logradouro */}
                 <div className="form-group">
                   <label htmlFor="logradouro" className="form-label">
                     Logradouro *
@@ -163,7 +155,6 @@ function App() {
                   />
                 </div>
 
-                {/* Número */}
                 <div className="form-group">
                   <label htmlFor="numero" className="form-label">
                     Número *
@@ -179,7 +170,6 @@ function App() {
                   />
                 </div>
 
-                {/* Complemento */}
                 <div className="form-group">
                   <label htmlFor="complemento" className="form-label">
                     Complemento
@@ -194,48 +184,45 @@ function App() {
                   />
                 </div>
 
-                {/* Bairro (Select) - Agora sem opções pré-definidas */}
                 <div className="form-group">
                   <label htmlFor="bairro" className="form-label">
                     Bairro *
                   </label>
-                  <select
+                  <input
+                    type="text"
                     id="bairro"
                     name="bairro"
                     value={restaurantData.bairro}
                     onChange={handleChange}
                     required
-                    className="form-select"
-                  >
-                    {/* Opção padrão para garantir que o select não esteja completamente vazio visualmente */}
-                    <option value="">Selecione o Bairro</option>
-                    {bairroOptions.map((option, index) => (
-                      <option key={index} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
+                    className="form-input"
+                  />
                 </div>
 
-                {/* Cidade (Input de Texto) */}
+
                 <div className="form-group">
                   <label htmlFor="cidade" className="form-label">
                     Cidade *
                   </label>
-                  <input
-                    type="text"
+                  <select
                     id="cidade"
                     name="cidade"
                     value={restaurantData.cidade}
                     onChange={handleChange}
                     required
-                    className="form-input"
-                  />
+                    className="form-select"
+                  >
+                    <option value="">Selecione a Cidade</option>
+                    {cidadeOptions.map((cidade, index) => (
+                      <option key={cidade.id || index} value={cidade.nome}>
+                        {cidade.nome}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
             </section>
 
-            {/* Seção de Informações da Empresa */}
             <section className="form-section">
               <h2 className="section-title">Informações da Empresa</h2>
               <div className="form-group">
@@ -254,7 +241,6 @@ function App() {
               </div>
             </section>
 
-            {/* Botão de Envio */}
             <button
               type="submit"
               className="submit-button"
