@@ -19,7 +19,6 @@
 /* O restante do seu Carrinho.css (itens, resumo de pagamento, etc.) permanece o mesmo,
    pois os ajustes anteriores já organizaram esses elementos verticalmente. */
 
-
 .carrinho-main {
     display: flex;
     flex-direction: column; /* Faz com que os itens e o resumo se empilhem */

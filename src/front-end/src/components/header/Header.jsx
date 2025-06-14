@@ -11,7 +11,7 @@ import IconConta from '../../assets/icon-conta.png';
 
 const Header = ({ toggleAddressModal }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [estadoDoUsuario, setEstadoDoUsuario] = useState(1);
+  const [estadoDoUsuario, setEstadoDoUsuario] = useState(0);
   const [cep, setCep] = useState('');
 
   const handlePerfilClick = (event) => {

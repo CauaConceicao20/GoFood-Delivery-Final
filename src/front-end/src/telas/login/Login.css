@@ -1,3 +1,19 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.section-login {
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  
+}
+
 .login-container {
   justify-content: center;
   align-items: center;
@@ -6,7 +22,7 @@
   padding: 20px;
   gap: 40px;
   width: 100%;
-  margin: 10;
+  margin: auto;
 }
 
 
@@ -14,24 +30,20 @@
   flex: 1;
   display: flex;
   justify-content: center;
-  /* Alinha o formulário à esquerda */
   align-items: center;
   padding: 4rem;
-
+  background: white;
 }
 
 .login-box {
   width: 100%;
-  max-width: 400px;
-  /* Largura máxima do formulário */
+  max-width: 500px;
   background: white;
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
-  /* Centraliza horizontalmente */
+  margin: auto;
 }
-
 
 .login-header {
   text-align: center;
@@ -110,10 +122,10 @@
   text-decoration: underline;
 }
 
-.login-button {
+.btn-login {
   width: 100%;
   padding: 12px;
-  background-color: #c72f1f;
+  background-color: #E53935;
   color: white;
   border: none;
   border-radius: 5px;
@@ -123,8 +135,8 @@
   transition: background-color 0.3s;
 }
 
-.login-button:hover {
-  background-color: #2980b9;
+.btn-login:hover {
+  background-color: #a82d2d;
 }
 
 .signup-link {
@@ -185,23 +197,4 @@
 
 .restaurant-button:hover {
   background-color: #e67e22;
-}
-
-/* estilo link temporario para menu */
-.temp-menu-link {
-  text-align: center;
-  margin-top: 30px;
-  padding-top: 15px;
-  border-top: 1px dashed #ccc;
-}
-
-.temp-menu-link a {
-  color: #666;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.temp-menu-link a:hover {
-  text-decoration: underline;
-  color: #333;
 }
