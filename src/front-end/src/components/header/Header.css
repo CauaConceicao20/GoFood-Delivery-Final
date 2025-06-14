@@ -4,14 +4,15 @@ header {
     top: 0;
     background-color: #e53935;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    box-shadow: black 0px 0px 10px;
+    box-shadow: rgb(102, 52, 52) 0px 0px 10px;
     z-index: 1000;
+    
 }
 
 header figure {
-    margin: auto 100px 0 20px;
+    margin: auto 100px 0 0;
 }
 
 .btn-perfil,
@@ -26,7 +27,7 @@ header figure {
     color: white;
     font-weight: bold;
     border: none;
-    margin: 0 15px 0 15px;
+    margin: 0 15px;
     height: 50px;
     padding: 10px;
 }
@@ -59,13 +60,15 @@ header div {
 #logo-gofood {
     width: 150px;
     height: auto;
-    margin: 0 0 0 0;
+    margin: 0;
 }
 
 
 .container-busca {
     display: flex;
-    width: 1300px;
+    width: 100%;
+    max-width: 800px;
+    flex-grow: 1;
 }
 
 .icone-de-busca {
@@ -109,7 +112,7 @@ header div {
 
 @media (max-width: 1229px) {
     header figure {
-        margin: auto 10px 0 20px;
+        margin: auto 10px 0 0px;
     }
 
     #logo-gofood {
