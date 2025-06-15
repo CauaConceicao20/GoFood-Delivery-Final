@@ -24,10 +24,8 @@ function App() {
       <Routes>
         <Route path="/" element={<MainMenu />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/login/restaurante" element={<LoginRestaurante />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/cadastro/restaurante" element={<CadastroRestaurante />} />
-        <Route path="/login/restaurante" element={<LoginRestaurante />} />
         <Route path="/main_menu" element={<MainMenu />} />
         <Route path="/carrinho" element={<Carrinho />} />
         <Route path="/perfil" element={<PerfilUsuario />} />

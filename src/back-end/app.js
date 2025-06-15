@@ -13,6 +13,7 @@ import ProdutoController from './controller/ProdutoController.js';
 import CarrinhoController from './controller/CarrinhoController.js';
 import PedidoController from './controller/PedidoController.js';
 import UploadController from './controller/UploadController.js';
+import EnderecoController from './controller/EnderecoController.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -46,6 +47,7 @@ app.use('/api/v1/produtos', new ProdutoController().router);
 app.use('/api/v1/carrinhos', new CarrinhoController().router);
 app.use('/api/v1/pedidos', new PedidoController().router);
 app.use('/api/v1/uploads', new UploadController().router);
+app.use('/api/v1/endereco', new EnderecoController().router);
 
 app.use(ErrorHandler.errorHandler);
 
