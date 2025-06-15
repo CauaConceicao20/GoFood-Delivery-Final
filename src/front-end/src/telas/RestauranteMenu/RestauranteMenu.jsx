@@ -41,73 +41,68 @@ const Restaurante = () => {
 
   return (
     <>
-    <main className="restaurante-view">
       <Header toggleAddressModal={handleToggleAddressModal} />
-      {/* Botão de Voltar ao Menu */}
-
-
-      {/* Informações do Restaurante */}
-      <div className="restaurante-info">
-        <h1>{restaurante.nome}</h1>
-        <p>{restaurante.descricao}</p>
-      </div>
-
-      {/* Seção do Cardápio */}
-      <div className="cardapio-section">
-        <h2>Cardápio</h2>
-        <div className="itens-cardapio">
-          {restaurante.cardapio.map(item => (
-            <div key={item.id} className="item-cardapio">
-              <div className="item-info">
-                <h3>{item.nome}</h3>
-                <span className="item-preco">{item.preco}</span>
-              </div>
-              <p className="item-descricao">{item.descricao}</p>
-            </div>
-          ))}
+      <main className="restaurante-view">
+        <div className="restaurante-info">
+          <h1>{restaurante.nome}</h1>
+          <p>{restaurante.descricao}</p>
         </div>
-      </div>
 
-      {/* Links de Gerenciamento (mantidos como estavam) */}
-      <div className="links-container">
-        <Link to="/cadastro-produtos" className="link-as-button">
-          Cadastrar Produtos
-        </Link>
-        <Link to="/EdicaoRestaurante" className="link-as-button">
-          Edição Restaurante
-        </Link>
-      </div>
-
-      {/* Seção de Avaliação - MOVIDA PARA DEPOIS DOS LINKS DE GERENCIAMENTO */}
-      <div>
-        <div className="rating-section">
-          <h2>Avalie o Restaurante</h2>
-          <div className="rating-stars">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <span
-                key={star}
-                className={`star ${star <= userRating ? 'selected' : ''} ${hasRated ? 'disabled' : ''}`}
-                onClick={() => handleRatingChange(star)}
-              >
-                {star}
-              </span>
+        {/* Seção do Cardápio */}
+        <div className="cardapio-section">
+          <h2>Cardápio</h2>
+          <div className="itens-cardapio">
+            {restaurante.cardapio.map(item => (
+              <div key={item.id} className="item-cardapio">
+                <div className="item-info">
+                  <h3>{item.nome}</h3>
+                  <span className="item-preco">{item.preco}</span>
+                </div>
+                <p className="item-descricao">{item.descricao}</p>
+              </div>
             ))}
           </div>
-
-          {!hasRated && (
-            <button onClick={handleSubmitRating} className="submit-rating-button">
-              Enviar Avaliação
-            </button>
-          )}
-          {hasRated && (
-            <p className="rating-message">Obrigado pela sua avaliação!</p>
-          )}
         </div>
-      </div>
 
-      
-    </main>
-    <Footer />
+        {/* Links de Gerenciamento (mantidos como estavam) */}
+        <div className="links-container">
+          <Link to="/cadastro-produtos" className="link-as-button">
+            Cadastrar Produtos
+          </Link>
+          <Link to="/EdicaoRestaurante" className="link-as-button">
+            Edição Restaurante
+          </Link>
+          <li><Link to="/ProdutoDetails">details</Link></li>
+        </div>
+
+        {/* Seção de Avaliação - MOVIDA PARA DEPOIS DOS LINKS DE GERENCIAMENTO */}
+        <div>
+          <div className="rating-section">
+            <h2>Avalie o Restaurante</h2>
+            <div className="rating-stars">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <span
+                  key={star}
+                  className={`star ${star <= userRating ? 'selected' : ''} ${hasRated ? 'disabled' : ''}`}
+                  onClick={() => handleRatingChange(star)}
+                >
+                  {star}
+                </span>
+              ))}
+            </div>
+
+            {!hasRated && (
+              <button onClick={handleSubmitRating} className="submit-rating-button">
+                Enviar Avaliação
+              </button>
+            )}
+            {hasRated && (
+              <p className="rating-message">Obrigado pela sua avaliação!</p>
+            )}
+          </div>
+        </div>
+      </main>
+      <Footer />
     </>
   );
 };

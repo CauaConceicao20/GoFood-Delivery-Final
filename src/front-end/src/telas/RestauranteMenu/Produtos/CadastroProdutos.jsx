@@ -7,12 +7,12 @@ const CadastroProdutos = () => {
     foto: null,
     nome: '',
     preco: '',
-    categoria: '', // Novo campo para categoria
+    categoria: '', 
     descricao: ''
-    // Endereço e Telefone removidos, pois geralmente são do restaurante, não do produto
+    
   });
 
-  const navigate = useNavigate(); // Hook para navegação programática
+  const navigate = useNavigate();
 
   const handleFileChange = (e) => {
     if (e.target.files[0]) {
@@ -20,7 +20,7 @@ const CadastroProdutos = () => {
       reader.onload = (event) => {
         setProduto(prev => ({
           ...prev,
-          foto: event.target.result // Usar Data URL para preview
+          foto: event.target.result 
         }));
       };
       reader.readAsDataURL(e.target.files[0]);
@@ -36,13 +36,12 @@ const CadastroProdutos = () => {
     e.preventDefault();
     console.log('Produto cadastrado:', produto);
     alert('Produto cadastrado com sucesso!');
-    navigate('/RestaurantePerfil'); // Redireciona de volta para o perfil do restaurante ou menu
+    navigate('/RestaurantePerfil');
   };
 
   return (
     <div className="cadastro-container">
-      {/* Cabeçalho */}
-      <div className="header-cadastro-produto"> {/* Nova classe para o cabeçalho */}
+      <div className="header-cadastro-produto">
         <Link to="/RestaurantePerfil" className="back-button">
           &larr; Voltar ao Perfil
         </Link>
@@ -51,7 +50,7 @@ const CadastroProdutos = () => {
 
       <form onSubmit={handleSubmit} className="produto-form">
         <div className="form-row">
-          {/* Coluna da Foto */}
+        
           <div className="photo-column">
             <label>Foto do Prato (opcional)</label>
             <label htmlFor="foto-produto" className="foto-upload">

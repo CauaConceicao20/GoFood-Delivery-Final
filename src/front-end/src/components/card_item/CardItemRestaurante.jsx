@@ -15,6 +15,7 @@ const CardItemRestaurante = ({
       <figure>
         <a href="/src/produto.html">
           <img src={imagemProduto} alt="Imagem do produto" />
+
         </a>
       </figure>
       <div className="descricao-do-alimento">

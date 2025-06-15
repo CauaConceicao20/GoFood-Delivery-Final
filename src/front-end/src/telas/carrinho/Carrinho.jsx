@@ -70,6 +70,7 @@ const Carrinho = () => {
   return (
     <>
       <Header toggleAddressModal={() => { }} />
+        
       <div className="carrinho-container">
 
         <main className="carrinho-main">
@@ -180,7 +181,8 @@ const Carrinho = () => {
                   className="btn btn-primary"
                   onClick={confirmarPedido}
                 >
-                  Finalizar e Ver Detalhes
+                  <Link to="/detalhes-pedido">Finalizar e Ver Detalhes</Link>
+                  
                 </button>
 
                 <button

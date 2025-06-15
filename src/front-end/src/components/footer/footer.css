@@ -49,7 +49,61 @@ footer {
     height: 30px;
 }
 
+
+.lista-inferior {
+    display: none;
+    /* Estilos para o contêiner da lista, se necessário */
+    width: 250px; /* Exemplo: uma largura para um menu lateral */
+    background-color: #f8f8f8;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    /* Se for um menu lateral que flutua, você pode adicionar position: fixed, top, left/right */
+}
+
+.lista-inferior ul {
+    list-style: none; /* Remove os marcadores de lista padrão */
+    padding: 0;
+    margin: 0;
+}
+
+.lista-inferior li {
+    margin-bottom: 15px; /* Espaçamento entre os itens da lista */
+}
+
+.lista-inferior li a {
+    text-decoration: none; /* Remove o sublinhado dos links */
+    color: #333; /* Cor do texto do link */
+    font-size: 18px;
+    font-weight: bold;
+    display: block; /* Garante que o link ocupe toda a largura do item da lista */
+    padding: 5px 0; /* Espaçamento interno do link */
+    transition: color 0.2s ease-in-out;
+}
+
+.lista-inferior li a:hover {
+    color: #007bff; /* Cor do link ao passar o mouse */
+}
+
+/* Estilo para o ícone de fechar, se ele pertencer a este componente */
+/* Supondo que o ícone de fechar (X) está fora do div da lista ou é um botão separado */
+.close-icon { /* Exemplo de classe para o X na imagem */
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.close-icon:hover {
+    color: #000;
+}
+
 @media (max-width: 579px) {
+    .lista-inferior {
+        display: block;
+    }
+    
     .footer-copyright {
         display: none;
     }

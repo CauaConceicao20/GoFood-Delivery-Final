@@ -4,7 +4,6 @@
 
 .carrinho-container {
     width: 100%; 
-    max-width: none; 
     margin: 0; 
     background-color: #fff;
     box-shadow: none;
@@ -13,6 +12,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    height: 100%;
 }
 
 .carrinho-main {
