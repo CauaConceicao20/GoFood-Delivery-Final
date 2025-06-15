@@ -3,6 +3,7 @@ import FotoProdutoRepository from "./FotoProdutoRepository.js";
 import CategoriaProdutoRepository from "./CategoriaProdutoRepository.js";
 import Produto from "../model/produto/Produto.js";
 import { BadRequestError } from "../exception/GlobalExceptions.js";
+import { EntidadeFotoTipo } from "../model/foto/enums/EntidadeFotoTipo.js";
 
 class ProdutoRepository {
 
@@ -17,13 +18,7 @@ class ProdutoRepository {
             conn = await this.connection.connect();
             await conn.run('BEGIN TRANSACTION');
 
-            let produtoRegistrado = await this.create(produto, conn);
-
-            await conn.run(
-                `INSERT INTO fotos_produto (nome, content_type, tamanho, url, produto_id)
-                 VALUES (?, ?, ?, ?, ?)`,
-                [foto.getNome(), foto.getContentType(), foto.getTamanho(), foto.getUrl(), produtoRegistrado.getId()]
-            );
+            let produtoRegistrado = await this.create(produto, foto, conn);
 
             await conn.run('COMMIT');
 
@@ -36,7 +31,7 @@ class ProdutoRepository {
         }
     }
 
-    async create(produto, conn) {
+    async create(produto, foto, conn) {
         if (!conn) conn = await this.connection.connect();
 
         try {
@@ -47,6 +42,13 @@ class ProdutoRepository {
                 produto.getIdCategoria()]
             );
             produto.setId(result.lastID);
+
+               await conn.run(
+                `INSERT INTO fotos (nome, content_type, tamanho, url, entidade_tipo, entidade_id)
+                             VALUES (?, ?, ?, ?, ?, ?)`,
+                [foto.getNome(), foto.getContentType(), foto.getTamanho(), foto.getUrl(),
+                EntidadeFotoTipo.PRODUTO, produto.getId()]
+            );
 
             return produto;
         } catch (err) {

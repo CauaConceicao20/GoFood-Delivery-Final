@@ -8,6 +8,7 @@ import { GrupoNomeEnum } from "../model/usuario/enums/GrupoNomeEnum.js";
 import UsuarioGrupo from "../model/usuario/UsuarioGrupo.js";
 import Endereco from "../model/usuario/Endereco.js";
 import { BadRequestError, NotFoundError } from "../exception/GlobalExceptions.js";
+import { EntidadeFotoTipo } from "../model/foto/enums/EntidadeFotoTipo.js";
 
 class RestauranteRepository {
 
@@ -18,13 +19,13 @@ class RestauranteRepository {
         this.usuarioGrupoRepository = new UsuarioGrupoRepository();
     }
 
-    async registra(restaurante, idsFormaPagamento, grupos) {
+    async registra(restaurante, idsFormaPagamento, grupos, foto) {
         let conn;
         try {
             conn = await this.connection.connect();
             await conn.run("BEGIN TRANSACTION");
 
-            await this.create(restaurante, conn);
+            await this.create(restaurante, foto, conn);
 
             for (const idFormaPagamento of idsFormaPagamento) {
                 const formaPagamentoEncontrada = await this.formaDePagamentoRepository.buscarPorId(idFormaPagamento, conn);
@@ -46,7 +47,7 @@ class RestauranteRepository {
         }
     }
 
-    async create(restaurante, conn) {
+    async create(restaurante, foto, conn) {
         try {
             if (!conn) conn = await this.connection.connect();
 
@@ -71,6 +72,14 @@ class RestauranteRepository {
             }
 
             restaurante.setId(result.lastID);
+
+               await conn.run(
+                `INSERT INTO fotos (nome, content_type, tamanho, url, entidade_tipo, entidade_id)
+                             VALUES (?, ?, ?, ?, ?, ?)`,
+                [foto.getNome(), foto.getContentType(), foto.getTamanho(), foto.getUrl(),
+                EntidadeFotoTipo.RESTAURANTE, restaurante.getId()]
+            );
+
             return restaurante;
 
         } catch (err) {
@@ -112,12 +121,12 @@ class RestauranteRepository {
             const restaurantesEncontrados = await conn.all(`SELECT * FROM restaurantes WHERE usuario_id = ?`, [idUsuario]);
 
             return restaurantesEncontrados.map(restauranteEncontrado => {
-                const endereco = new Endereco( restauranteEncontrado.cep, restauranteEncontrado.logradouro, 
+                const endereco = new Endereco(restauranteEncontrado.cep, restauranteEncontrado.logradouro,
                     restauranteEncontrado.numero, restauranteEncontrado.complemento, restauranteEncontrado.bairro,
                     restauranteEncontrado.cidade_id
                 );
 
-                const restaurante = new Restaurante(restauranteEncontrado.id, restauranteEncontrado.nome, 
+                const restaurante = new Restaurante(restauranteEncontrado.id, restauranteEncontrado.nome,
                     restauranteEncontrado.descricao, restauranteEncontrado.razao_social, restauranteEncontrado.taxa_frete,
                     restauranteEncontrado.data_cadastro, restauranteEncontrado.data_atualizacao, endereco,
                     restauranteEncontrado.usuario_id

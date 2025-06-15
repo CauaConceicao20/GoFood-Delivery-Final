@@ -30,4 +30,10 @@ class ForbiddenOwnRestaurantProductError extends ErrorDetails {
   }
 }
 
+class ArquivoDeFotoEObrigatorioError extends ErrorDetails {
+  constructor(message = 'É obrigatório enviar uma foto') {
+    super(400, message);
+  }
+}
+
 export { NotFoundError, BadRequestError,  UnauthorizedError, ForbiddenError, ForbiddenOwnRestaurantProductError };

@@ -12,10 +12,10 @@ class RestauranteService {
 
     }
 
-    async registra(restaurante) {
+    async registra(restaurante, foto) {
         try {
             const grupos = await this.grupoSerivce.buscarTodos();
-            return await this.restauranteRepository.registra(restaurante, restaurante.getIdsFormaPagamento(), grupos);
+            return await this.restauranteRepository.registra(restaurante, restaurante.getIdsFormaPagamento(), grupos, foto);
         } catch (err) {
             throw err;
         }

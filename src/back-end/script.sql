@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS itens_carrinho;
 DROP TABLE IF EXISTS itens_pedido;
 DROP TABLE IF EXISTS pedidos;
 DROP TABLE IF EXISTS carrinhos;
-DROP TABLE IF EXISTS fotos_produto;
+DROP TABLE IF EXISTS fotos;
 DROP TABLE IF EXISTS produtos;
 DROP TABLE IF EXISTS restaurantes_forma_pagamento;
 DROP TABLE IF EXISTS restaurantes;
@@ -113,14 +113,14 @@ CREATE TABLE IF NOT EXISTS produtos (
     FOREIGN KEY (categoria_id) REFERENCES categorias(id)
 );
 
-CREATE TABLE IF NOT EXISTS fotos_produto (
-    id INTEGER PRIMARY KEY,
-    nome VARCHAR(255),
-    content_type VARCHAR(100),
-    tamanho BIGINT,
-    url VARCHAR(150) NOT NULL,
-    produto_id INTEGER NOT NULL UNIQUE,
-    FOREIGN KEY (produto_id) REFERENCES produtos(id)
+CREATE TABLE IF NOT EXISTS fotos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    content_type TEXT NOT NULL,
+    tamanho INTEGER NOT NULL,
+    url TEXT NOT NULL,
+    entidade_tipo TEXT CHECK(entidade_tipo IN ('PRODUTO', 'RESTAURANTE')) NOT NULL,
+    entidade_id INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS carrinhos (

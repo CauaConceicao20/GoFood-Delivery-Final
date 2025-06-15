@@ -17,7 +17,7 @@ import FotoRegisterRequestDto from '../model/foto/dtos/FotoRegisterRequestDto.js
 class ProdutoController {
     constructor() {
         this.router = express.Router();
-        this.upload = new ConfigMulter().getUploader().single('arquivo');
+        this.configMulter = new ConfigMulter().getUploader().single('arquivo');
         this.usuarioService = new UsuarioService();
         this.restauranteService = new RestauranteService();
         this.authMiddleware = new AuthMiddleware();
@@ -28,7 +28,7 @@ class ProdutoController {
 
     iniciaRotas() {
         this.router.post('/register',
-            this.upload,
+            this.configMulter,
             this.authMiddleware.autenticar.bind(this.authMiddleware),
             this.authMiddleware.autorizar('RESTAURANTE'),
             this.registraProduto.bind(this)
