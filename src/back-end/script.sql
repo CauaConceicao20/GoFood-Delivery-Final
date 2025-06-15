@@ -355,16 +355,6 @@ INSERT INTO fotos (nome, descricao, content_type, tamanho, url, entidade_tipo, e
   ('mousse_maracuja.png', 'Foto do restaurante Doces Delícias', 'image/png', 123456, '/uploads/img-produtos-almoço/mousse_maracuja.png', 'RESTAURANTE', 103);
 */
 
-CREATE TABLE IF NOT EXISTS fotos (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    content_type TEXT NOT NULL,
-    tamanho INTEGER NOT NULL,
-    url TEXT NOT NULL,
-    entidade_tipo TEXT CHECK(entidade_tipo IN ('PRODUTO', 'RESTAURANTE')) NOT NULL,
-    entidade_id INTEGER NOT NULL
-);
-
 INSERT INTO fotos (id, nome, content_type, tamanho, url, entidade_tipo, entidade_id) VALUES
 (1, 'abobora_quinoa.png', 'image/png', 123456, '/uploads/img-produtos-almoço/abobora_quinoa.png', 'PRODUTO', 1),
 (2, 'agua_coco.png', 'image/png', 123456, '/uploads/img-produtos-almoço/agua_coco.png', 'PRODUTO', 2),

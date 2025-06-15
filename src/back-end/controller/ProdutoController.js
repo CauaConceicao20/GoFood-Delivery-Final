@@ -39,8 +39,6 @@ class ProdutoController {
         );
 
         this.router.get("/buscarTodos",
-            this.authMiddleware.autenticar.bind(this.authMiddleware),
-            this.authMiddleware.autorizar('CLIENTE'),
             this.buscarTodosProdutos.bind(this)
         );
     }
