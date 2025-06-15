@@ -41,8 +41,8 @@ class FotoProdutoRepository {
                return null
             }
 
-           return Foto(result.id, result.nome, result.descricao, result.content_type,
-             result.tamanho, result.url)
+           return new Foto(result.id, result.nome, result.content_type,
+             result.url, result.tamanho)
 
         } catch (err) {
             throw err;
