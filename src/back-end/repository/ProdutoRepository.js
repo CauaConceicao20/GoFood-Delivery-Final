@@ -8,18 +8,22 @@ class ProdutoRepository {
 
     constructor() {
         this.connection = new Connection();
-        this.fotoProdutoRepository = new FotoProdutoRepository();
         this.categoriaProdutoRepository = new CategoriaProdutoRepository();
     }
 
-    async registrar(produto, fotoProduto) {
+    async registrar(produto, foto) {
         let conn;
         try {
             conn = await this.connection.connect();
             await conn.run('BEGIN TRANSACTION');
 
             let produtoRegistrado = await this.create(produto, conn);
-            await this.fotoProdutoRepository.registrar(fotoProduto, produtoRegistrado.getId(), conn);
+
+            await conn.run(
+                `INSERT INTO fotos_produto (nome, content_type, tamanho, url, produto_id)
+                 VALUES (?, ?, ?, ?, ?)`,
+                [foto.getNome(), foto.getContentType(), foto.getTamanho(), foto.getUrl(), produtoRegistrado.getId()]
+            );
 
             await conn.run('COMMIT');
 
@@ -33,19 +37,19 @@ class ProdutoRepository {
     }
 
     async create(produto, conn) {
-        if(!conn) conn = await this.connection.connect();
+        if (!conn) conn = await this.connection.connect();
 
         try {
             await this.categoriaProdutoRepository.buscarPorId(produto.getIdCategoria(), conn);
             const result = await conn.run(
                 'INSERT INTO produtos (nome, preco, descricao, restaurante_id, ativo, categoria_id) VALUES (?, ?, ?, ?, ?, ?)',
                 [produto.getNome(), produto.getPreco(), produto.getDescricao(), produto.getIdRestaurante(), produto.getAtivo(),
-                     produto.getIdCategoria()]
+                produto.getIdCategoria()]
             );
             produto.setId(result.lastID);
 
             return produto;
-        }catch (err) {
+        } catch (err) {
             throw err;
         }
     }
@@ -69,17 +73,17 @@ class ProdutoRepository {
 
     async buscarPorId(id, conn) {
         try {
-            if(!conn) conn = await this.connection.connect();
+            if (!conn) conn = await this.connection.connect();
 
             const produto = await conn.get('SELECT * FROM produtos WHERE id = ?', [id]);
 
-            if(!produto) {
+            if (!produto) {
                 throw new BadRequestError(`Produto com ID ${id} não encontrado.`);
             }
 
             return new Produto(produto.id, produto.nome, produto.descricao, produto.preco,
-                 produto.restaurante_id, produto.categoria_id);
-        }catch (err) {
+                produto.restaurante_id, produto.categoria_id);
+        } catch (err) {
             throw err;
         }
     }

@@ -1,8 +1,7 @@
-class FotoProduto {
-    constructor(id, nome, descricao, contentType, url, tamanho) {
+class Foto{
+    constructor(id, nome, contentType, url, tamanho) {
         this.id = id;
         this.nome = nome;
-        this.descricao = descricao;
         this.contentType = contentType;
         this.url = url;
         this.tamanho = tamanho;
@@ -57,4 +56,4 @@ class FotoProduto {
     }
 }
 
-export default FotoProduto;
+export default Foto;

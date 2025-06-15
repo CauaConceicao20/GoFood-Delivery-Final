@@ -1,5 +1,4 @@
 import { BadRequestError } from "../../../exception/GlobalExceptions.js";
-import FotoProdutoDto from "./FotoProdutoDto.js";
 
 class ProdutoRegisterRequestDto {
   constructor(body) {
@@ -7,7 +6,6 @@ class ProdutoRegisterRequestDto {
     this.descricao = body.descricao;
     this.preco = body.preco;
     this.categoriaId = body.categoriaId;
-    this.fotoProduto = new FotoProdutoDto(body);
     this.restauranteId = body.restauranteId;
 
     this.validarCampos();

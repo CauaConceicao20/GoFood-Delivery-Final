@@ -116,7 +116,6 @@ CREATE TABLE IF NOT EXISTS produtos (
 CREATE TABLE IF NOT EXISTS fotos_produto (
     id INTEGER PRIMARY KEY,
     nome VARCHAR(255),
-    descricao TEXT,
     content_type VARCHAR(100),
     tamanho BIGINT,
     url VARCHAR(150) NOT NULL,

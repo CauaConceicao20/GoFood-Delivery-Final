@@ -1,3 +1,4 @@
+import { NotFoundError } from "../exception/GlobalExceptions.js";
 import ProdutoRepository from "../repository/ProdutoRepository.js";
 
 class ProdutoService {
@@ -8,11 +9,11 @@ class ProdutoService {
     async registrar(produto, fotoProduto) {
         try {
             if (!produto) {
-                throw new Error("Produto não informado");
+                throw new NotFoundError("Produto não informado");
             }
 
             if (!fotoProduto) {
-                throw new Error("Foto do produto não informada");
+                throw new NotFoundError("Foto do produto não informada");
             }
 
             return await this.produtoRepository.registrar(produto, fotoProduto);
