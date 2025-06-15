@@ -322,40 +322,31 @@ INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VA
 -- INSERIR 30 PRODUTOS (10 para cada restaurante)
 -- PRODUTOS DO RESTAURANTE 1 (ID = 1)
 INSERT INTO produtos (id, nome, descricao, preco, ativo, restaurante_id, categoria_id) VALUES
-  (1, 'Salada de Frutas', 'Salada de frutas frescas', 12.00, 1, 1, 1),
-  (2, 'Arroz Integral', 'Arroz integral soltinho', 8.00, 1, 1, 1),
-  (3, 'Frango Grelhado', 'Peito de frango grelhado', 18.00, 1, 1, 1),
-  (4, 'Feijão Tropeiro', 'Feijão tropeiro tradicional', 14.00, 1, 1, 1),
-  (5, 'Omelete de Legumes', 'Omelete com legumes frescos', 10.00, 1, 1, 1),
-  (6, 'Sopa de Legumes', 'Sopa nutritiva de legumes', 11.00, 1, 1, 1),
-  (7, 'Macarrão Integral', 'Macarrão integral ao molho', 13.00, 1, 1, 1),
-  (8, 'Peixe Assado', 'Filé de peixe assado', 20.00, 1, 1, 1),
-  (9, 'Purê de Batata', 'Purê de batata cremoso', 9.00, 1, 1, 1),
-  (10, 'Carne de Panela', 'Carne cozida com legumes', 19.00, 1, 1, 1),
-
--- PRODUTOS DO RESTAURANTE 2 (ID = 2)
-  (11, 'Burguer Clássico', 'Hambúrguer tradicional', 22.00, 1, 2, 2),
-  (12, 'Burguer Bacon', 'Hambúrguer com bacon crocante', 25.00, 1, 2, 2),
-  (13, 'Burguer Duplo', 'Dois hambúrgueres suculentos', 28.00, 1, 2, 2),
-  (14, 'Burguer Veggie', 'Hambúrguer vegetariano', 20.00, 1, 2, 2),
-  (15, 'Batata Frita', 'Batata frita crocante', 10.00, 1, 2, 2),
-  (16, 'Onion Rings', 'Anéis de cebola empanados', 12.00, 1, 2, 2),
-  (17, 'Milkshake Chocolate', 'Milkshake de chocolate', 15.00, 1, 2, 2),
-  (18, 'Milkshake Morango', 'Milkshake de morango', 15.00, 1, 2, 2),
-  (19, 'Cheeseburguer', 'Hambúrguer com queijo', 23.00, 1, 2, 2),
-  (20, 'Chicken Burguer', 'Hambúrguer de frango', 21.00, 1, 2, 2),
-
--- PRODUTOS DO RESTAURANTE 3 (ID = 3)
-  (21, 'Mousse de Maracujá', 'Mousse cremoso de maracujá', 9.00, 1, 3, 3),
-  (22, 'Pudim de Leite', 'Pudim tradicional', 10.00, 1, 3, 3),
-  (23, 'Torta de Limão', 'Torta doce de limão', 11.00, 1, 3, 3),
-  (24, 'Brigadeiro Gourmet', 'Brigadeiro artesanal', 4.00, 1, 3, 3),
-  (25, 'Beijinho', 'Doce de coco', 4.00, 1, 3, 3),
-  (26, 'Bolo de Cenoura', 'Bolo com cobertura de chocolate', 7.00, 1, 3, 3),
-  (27, 'Brownie', 'Brownie de chocolate', 8.00, 1, 3, 3),
-  (28, 'Quindim', 'Doce de gema e coco', 6.00, 1, 3, 3),
-  (29, 'Torta de Morango', 'Torta doce de morango', 12.00, 1, 3, 3),
-  (30, 'Cocada', 'Doce de coco tradicional', 5.00, 1, 3, 3);
+(1, 'Abóbora com Quinoa', 'Prato nutritivo com abóbora e quinoa', 16.00, 1, 1, 5),         -- VEGETARIANA
+(2, 'Água de Coco', 'Bebida natural e refrescante', 6.00, 1, 1, 1),                         -- BEBIDAS
+(3, 'Almôndega de Abóbora', 'Almôndega vegetal de abóbora', 14.00, 1, 1, 5),                -- VEGETARIANA
+(4, 'Bife Acebolado', 'Bife grelhado com cebolas douradas', 20.00, 1, 1, 4),                -- MARMITAS
+(5, 'Hambúrguer Tradicional', 'Hambúrguer artesanal suculento', 22.00, 1, 2, 6),            -- LANCHES
+(6, 'Café Preto', 'Café preto forte e sem açúcar', 4.00, 1, 1, 1),                           -- BEBIDAS
+(7, 'Coxinha de Frango', 'Coxinha recheada com frango desfiado', 8.00, 1, 2, 6),             -- LANCHES
+(8, 'Escondidinho de Mandioca', 'Escondidinho com carne moída e purê de mandioca', 17.00, 1, 1, 4), -- MARMITAS
+(9, 'Estrogonofe de Carne', 'Estrogonofe clássico com arroz e batata', 19.00, 1, 1, 4),      -- MARMITAS
+(10, 'Frango com Espaguete', 'Espaguete com frango ao molho', 18.00, 1, 1, 4),               -- MARMITAS
+(11, 'Sobremesa Gelada de Limão', 'Creme gelado com sabor de limão', 10.00, 1, 3, 3),        -- SOBREMESAS
+(12, 'Gelatina Colorida', 'Gelatina de sabores variados', 6.00, 1, 3, 3),                    -- SOBREMESAS
+(13, 'Lasanha de Berinjela', 'Lasanha vegetariana de berinjela', 18.00, 1, 1, 5),            -- VEGETARIANA
+(14, 'Mousse de Maracujá', 'Mousse cremoso e azedinho', 9.00, 1, 3, 3),                      -- SOBREMESAS
+(15, 'Nhoque de Batata', 'Nhoque artesanal com molho', 17.00, 1, 1, 4),                      -- MARMITAS
+(16, 'Omelete com Salada', 'Omelete leve com salada verde', 12.00, 1, 1, 5),                 -- VEGETARIANA
+(17, 'Panqueca de Espinafre com Ricota', 'Panqueca recheada com espinafre e ricota', 15.00, 1, 1, 5), -- VEGETARIANA
+(18, 'Pão de Queijo', 'Tradicional pão de queijo mineiro', 5.00, 1, 2, 6),                   -- LANCHES
+(19, 'Pudim de Leite', 'Sobremesa clássica de leite condensado', 8.00, 1, 3, 3),             -- SOBREMESAS
+(20, 'Refrigerante', 'Refrigerante lata 350ml', 5.00, 1, 1, 1),                              -- BEBIDAS
+(21, 'Salada de Frutas', 'Salada com frutas frescas da estação', 10.00, 1, 3, 3),            -- SOBREMESAS
+(22, 'Sanduíche de Atum', 'Sanduíche leve com pasta de atum', 12.00, 1, 2, 6),               -- LANCHES
+(23, 'Sorvete de Creme', 'Sorvete sabor creme', 7.00, 1, 3, 3),                              -- SOBREMESAS
+(24, 'Suco de Couve com Abacaxi', 'Suco natural detox', 6.00, 1, 1, 1),                      -- BEBIDAS
+(25, 'Suco de Laranja', 'Suco natural de laranja', 6.00, 1, 1, 1);                           -- BEBIDAS
 
 /*-- INSERIR FOTOS PARA RESTAURANTES
 INSERT INTO fotos (nome, descricao, content_type, tamanho, url, entidade_tipo, entidade_id) VALUES
@@ -375,35 +366,28 @@ CREATE TABLE IF NOT EXISTS fotos (
 );
 
 INSERT INTO fotos (id, nome, content_type, tamanho, url, entidade_tipo, entidade_id) VALUES
-('1', 'salada_frutas.png', 'image/png', 123456, '/uploads/img-produtos-almoço/salada_frutas.png', 'PRODUTO', 1),
-('2', 'arroz_integral.png', 'image/png', 123456, '/uploads/img-produtos-almoço/arroz_integral.png', 'PRODUTO', 2),
-('3', 'frango_grelhado.png', 'image/png', 123456, '/uploads/img-produtos-almoço/frango_grelhado.png', 'PRODUTO', 3),
-('4', 'feijao_tropeiro.png', 'image/png', 123456, '/uploads/img-produtos-almoço/feijao_tropeiro.png', 'PRODUTO', 4),
-('5', 'omelete_legumes.png', 'image/png', 123456, '/uploads/img-produtos-almoço/omelete_legumes.png', 'PRODUTO', 5),
-('6', 'sopa_legumes.png', 'image/png', 123456, '/uploads/img-produtos-almoço/sopa_legumes.png', 'PRODUTO', 6),
-('7', 'macarrao_integral.png', 'image/png', 123456, '/uploads/img-produtos-almoço/macarrao_integral.png', 'PRODUTO', 7),
-('8', 'peixe_assado.png', 'image/png', 123456, '/uploads/img-produtos-almoço/peixe_assado.png', 'PRODUTO', 8),
-('9', 'pure_batata.png', 'image/png', 123456, '/uploads/img-produtos-almoço/pure_batata.png', 'PRODUTO', 9),
-('10', 'carne_panela.png', 'image/png', 123456, '/uploads/img-produtos-almoço/carne_panela.png', 'PRODUTO', 10),
-
-('11', 'burguer_classico.png', 'image/png', 123456, '/uploads/img-produtos-almoço/burguer_classico.png', 'PRODUTO', 11),
-('12', 'burguer_bacon.png', 'image/png', 123456, '/uploads/img-produtos-almoço/burguer_bacon.png', 'PRODUTO', 12),
-('13', 'burguer_duplo.png', 'image/png', 123456, '/uploads/img-produtos-almoço/burguer_duplo.png', 'PRODUTO', 13),
-('14', 'burguer_veggie.png', 'image/png', 123456, '/uploads/img-produtos-almoço/burguer_veggie.png', 'PRODUTO', 14),
-('15', 'batata_frita.png', 'image/png', 123456, '/uploads/img-produtos-almoço/batata_frita.png', 'PRODUTO', 15),
-('16', 'onion_rings.png', 'image/png', 123456, '/uploads/img-produtos-almoço/onion_rings.png', 'PRODUTO', 16),
-('17', 'milkshake_chocolate.png', 'image/png', 123456, '/uploads/img-produtos-almoço/milkshake_chocolate.png', 'PRODUTO', 17),
-('18', 'milkshake_morango.png', 'image/png', 123456, '/uploads/img-produtos-almoço/milkshake_morango.png', 'PRODUTO', 18),
-('19', 'cheeseburguer.png', 'image/png', 123456, '/uploads/img-produtos-almoço/cheeseburguer.png', 'PRODUTO', 19),
-('20', 'chicken_burguer.png', 'image/png', 123456, '/uploads/img-produtos-almoço/chicken_burguer.png', 'PRODUTO', 20),
-
-('21', 'mousse_maracuja.png', 'image/png', 123456, '/uploads/img-produtos-almoço/mousse_maracuja.png', 'PRODUTO', 21),
-('22', 'pudim_leite.png', 'image/png', 123456, '/uploads/img-produtos-almoço/pudim_leite.png', 'PRODUTO', 22),
-('23', 'torta_limao.png', 'image/png', 123456, '/uploads/img-produtos-almoço/torta_limao.png', 'PRODUTO', 23),
-('24', 'brigadeiro_gourmet.png', 'image/png', 123456, '/uploads/img-produtos-almoço/brigadeiro_gourmet.png', 'PRODUTO', 24),
-('25', 'beijinho.png', 'image/png', 123456, '/uploads/img-produtos-almoço/beijinho.png', 'PRODUTO', 25),
-('26', 'bolo_cenoura.png', 'image/png', 123456, '/uploads/img-produtos-almoço/bolo_cenoura.png', 'PRODUTO', 26),
-('27', 'brownie.png', 'image/png', 123456, '/uploads/img-produtos-almoço/brownie.png', 'PRODUTO', 27),
-('28', 'quindim.png', 'image/png', 123456, '/uploads/img-produtos-almoço/quindim.png', 'PRODUTO', 28),
-('29', 'torta_morango.png', 'image/png', 123456, '/uploads/img-produtos-almoço/torta_morango.png', 'PRODUTO', 29),
-('30', 'cocada.png', 'image/png', 123456, '/uploads/img-produtos-almoço/cocada.png', 'PRODUTO', 30);
+(1, 'abobora_quinoa.png', 'image/png', 123456, '/uploads/img-produtos-almoço/abobora_quinoa.png', 'PRODUTO', 1),
+(2, 'agua_coco.png', 'image/png', 123456, '/uploads/img-produtos-almoço/agua_coco.png', 'PRODUTO', 2),
+(3, 'almondega_abobora.png', 'image/png', 123456, '/uploads/img-produtos-almoço/almondega_abobora.png', 'PRODUTO', 3),
+(4, 'bife_acebolado.png', 'image/png', 123456, '/uploads/img-produtos-almoço/bife_acebolado.png', 'PRODUTO', 4),
+(5, 'burguer.png', 'image/png', 123456, '/uploads/img-produtos-almoço/burguer.png', 'PRODUTO', 5),
+(6, 'cafe_preto.png', 'image/png', 123456, '/uploads/img-produtos-almoço/cafe_preto.png', 'PRODUTO', 6),
+(7, 'coxinha_frango.png', 'image/png', 123456, '/uploads/img-produtos-almoço/coxinha_frango.png', 'PRODUTO', 7),
+(8, 'escondidinho_mandioca.png', 'image/png', 123456, '/uploads/img-produtos-almoço/escondidinho_mandioca.png', 'PRODUTO', 8),
+(9, 'estrogonofe_carne.png', 'image/png', 123456, '/uploads/img-produtos-almoço/estrogonofe_carne.png', 'PRODUTO', 9),
+(10, 'frango_espaguete.png', 'image/png', 123456, '/uploads/img-produtos-almoço/frango_espaguete.png', 'PRODUTO', 10),
+(11, 'gelado_limão.png', 'image/png', 123456, '/uploads/img-produtos-almoço/gelado_limão.png', 'PRODUTO', 11),
+(12, 'gelatina_colorida.png', 'image/png', 123456, '/uploads/img-produtos-almoço/gelatina_colorida.png', 'PRODUTO', 12),
+(13, 'lasanha_berinjela.png', 'image/png', 123456, '/uploads/img-produtos-almoço/lasanha_berinjela.png', 'PRODUTO', 13),
+(14, 'mousse_maracuja.png', 'image/png', 123456, '/uploads/img-produtos-almoço/mousse_maracuja.png', 'PRODUTO', 14),
+(15, 'nhoque_batata.png', 'image/png', 123456, '/uploads/img-produtos-almoço/nhoque_batata.png', 'PRODUTO', 15),
+(16, 'omelete_salada.png', 'image/png', 123456, '/uploads/img-produtos-almoço/omelete_salada.png', 'PRODUTO', 16),
+(17, 'panqueca_espinafre_ricota.png', 'image/png', 123456, '/uploads/img-produtos-almoço/panqueca_espinafre_ricota.png', 'PRODUTO', 17),
+(18, 'pao_queijo.png', 'image/png', 123456, '/uploads/img-produtos-almoço/pao_queijo.png', 'PRODUTO', 18),
+(19, 'pudim_leite.png', 'image/png', 123456, '/uploads/img-produtos-almoço/pudim_leite.png', 'PRODUTO', 19),
+(20, 'refrigerante.png', 'image/png', 123456, '/uploads/img-produtos-almoço/refrigerante.png', 'PRODUTO', 20),
+(21, 'salada_frutas.png', 'image/png', 123456, '/uploads/img-produtos-almoço/salada_frutas.png', 'PRODUTO', 21),
+(22, 'sanduiche_atum.png', 'image/png', 123456, '/uploads/img-produtos-almoço/sanduiche_atum.png', 'PRODUTO', 22),
+(23, 'sorvete_creme.png', 'image/png', 123456, '/uploads/img-produtos-almoço/sorvete_creme.png', 'PRODUTO', 23),
+(24, 'suco_couve_abacaxi.png', 'image/png', 123456, '/uploads/img-produtos-almoço/suco_couve_abacaxi.png', 'PRODUTO', 24),
+(25, 'Suco_laranja.png', 'image/png', 123456, '/uploads/img-produtos-almoço/Suco_laranja.png', 'PRODUTO', 25);
