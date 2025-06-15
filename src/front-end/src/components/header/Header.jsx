@@ -72,7 +72,6 @@ const Header = () => {
           </Link>
         </button>
 
-        {/* Botão e Menu agrupados para controle de clique externo */}
         <div className="perfil-wrapper" ref={perfilRef}>
           <button
             type="button"
