@@ -1,5 +1,6 @@
 import Connection from "../database/Connection.js";
-import { BadRequestError } from "../exception/GlobalExceptions.js";
+import { BadRequestError, NotFoundError } from "../exception/GlobalExceptions.js";
+import Foto from "../model/foto/Foto.js";
 
 class FotoProdutoRepository {
     constructor() {
@@ -22,6 +23,26 @@ class FotoProdutoRepository {
             fotoProduto.setId(result.lastID);
 
             return fotoProduto;
+
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async buscarFotoDeProdutoPorId(id, conn) {
+        try {
+            if(!conn) conn = await this.connection.connect();
+            const result = await conn.get(
+                'SELECT * FROM fotos WHERE entidade_id = ? AND entidade_tipo = "PRODUTO"',
+                [id]
+            );
+
+            if (!result) {
+               return null
+            }
+
+           return Foto(result.id, result.nome, result.descricao, result.content_type,
+             result.tamanho, result.url)
 
         } catch (err) {
             throw err;
