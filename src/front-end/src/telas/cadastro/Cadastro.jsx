@@ -1,29 +1,84 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Cadastro.css';
+import ModalErro from '../../components/modal_erro/ModalErro.jsx';
 
 const Cadastro = () => {
   const [formData, setFormData] = useState({
     nome: '',
     email: '',
     telefone: '',
-    cep: '',
+    cpf: '',
     senha: '',
     confirmarSenha: ''
   });
 
+  const [mensagemErro, setMensagemErro] = useState('');
+  const [mostrarModal, setMostrarModal] = useState(false);
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+
+    const cleanValue = ['telefone', 'cpf'].includes(name)
+      ? value.replace(/\D/g, '')
+      : value;
+
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: cleanValue
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Validação e envio dos dados
-    console.log('Dados do cadastro:', formData);
+
+    if (formData.senha !== formData.confirmarSenha) {
+      setMensagemErro('As senhas não coincidem.');
+      setMostrarModal(true);
+      return;
+    }
+
+    if (!/^\d+$/.test(formData.telefone)) {
+      setMensagemErro('Telefone deve conter apenas números.');
+      setMostrarModal(true);
+      return;
+    }
+
+    if (!/^\d+$/.test(formData.cpf)) {
+      setMensagemErro('CPF deve conter apenas números.');
+      setMostrarModal(true);
+      return;
+    }
+
+    const usuario = {
+      nome: formData.nome,
+      email: formData.email,
+      senha: formData.senha,
+      telefone: formData.telefone,
+      cpf: formData.cpf
+    };
+
+    try {
+      const response = await fetch('http://localhost:3001/api/v1/usuarios/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(usuario)
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setMensagemErro(data.erro || 'Erro ao cadastrar.');
+        setMostrarModal(true);
+        return;
+      }
+
+      navigate('/login');
+    } catch (err) {
+      setMensagemErro('Erro na comunicação com o servidor.');
+      setMostrarModal(true);
+    }
   };
 
   return (
@@ -31,7 +86,7 @@ const Cadastro = () => {
       <div className="cadastro-box">
         <h2>Criar Conta</h2>
         <p>Preencha seus dados para se cadastrar</p>
-        
+
         <form onSubmit={handleSubmit} className="cadastro-form">
           <div className="form-group">
             <label>Nome Completo</label>
@@ -60,23 +115,23 @@ const Cadastro = () => {
           <div className="form-group">
             <label>Telefone</label>
             <input
-              type="tel"
+              type="text"
               name="telefone"
               value={formData.telefone}
               onChange={handleChange}
-              placeholder="(00) 00000-0000"
+              placeholder="Somente números (ex: 11999998899)"
               required
             />
           </div>
 
           <div className="form-group">
-            <label>CEP</label>
+            <label>CPF</label>
             <input
               type="text"
-              name="cep"
-              value={formData.cep}
+              name="cpf"
+              value={formData.cpf}
               onChange={handleChange}
-              placeholder="00000-000"
+              placeholder="Somente números (ex: 12345678900)"
               required
             />
           </div>
@@ -109,10 +164,16 @@ const Cadastro = () => {
             Cadastrar
           </button>
 
-          <div className="login-link">Já tem uma conta? <Link to="/login">Faça login</Link></div>
-
+          <div className="login-link">
+            Já tem uma conta? <Link to="/login">Faça login</Link>
+          </div>
         </form>
       </div>
+
+      <ModalErro
+        mensagem={mostrarModal ? mensagemErro : ''}
+        onClose={() => setMostrarModal(false)}
+      />
     </div>
   );
 };

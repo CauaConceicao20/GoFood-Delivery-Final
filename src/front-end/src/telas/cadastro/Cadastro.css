@@ -1,10 +1,17 @@
- .cadastro-container {
+.app {
+    background-color: #f5f5f5;
+   
+}
+
+.cadastro-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   background-color: #f5f5f5;
   padding: 20px;
+  margin: auto;
+  overflow: hidden;
 }
 
 .cadastro-box {
@@ -86,6 +93,16 @@
 
 .login-link a:hover {
   text-decoration: underline;
+}
+
+.input-error {
+  border: 2px solid red;
+}
+
+.erro-msg {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 4px;
 }
 
 @media (max-width: 768px) {
