@@ -1,38 +1,39 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
-import ModalEndereco from '../modal_endereco/ModalEndereco.jsx';
 import MenuPerfil from '../menu_perfil/MenuPerfil.jsx';
+import MenuRestaurante from '../menu_restaurante/MenuRestaurante.jsx';
 
 import GoFoodLogo from '../../assets/logo.png';
 import IconPesquisar from '../../assets/icon-pesquisar.png';
 import IconCarrinho from '../../assets/icon-carrinho-de-compras-.png';
 import IconConta from '../../assets/icon-conta.png';
+import IconRestaurante from '../../assets/icon-restaurante.png';
 
 const Header = () => {
-  const [showMenu, setShowMenu] = useState(false);
-  const [modalAberto, setModalAberto] = useState(false);
-  const [cep, setCep] = useState('');
+  const [showMenuPerfil, setShowMenuPerfil] = useState(false);
+  const [menuRestauranteAtivo, setMenuRestauranteAtivo] = useState(false);
 
   const perfilRef = useRef(null);
-
-  const abrirModal = () => setModalAberto(true);
-  const fecharModal = () => setModalAberto(false);
-
-  const adicionarEndereco = (novoCep) => {
-    setCep(novoCep);
-    fecharModal();
-  };
+  const restauranteRef = useRef(null);
 
   const handlePerfilClick = (event) => {
     event.stopPropagation();
-    setShowMenu((prev) => !prev);
+    setShowMenuPerfil((prev) => !prev);
+  };
+
+  const handleRestauranteClick = (event) => {
+    event.stopPropagation();
+    setMenuRestauranteAtivo((prev) => !prev);
   };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (perfilRef.current && !perfilRef.current.contains(event.target)) {
-        setShowMenu(false);
+        setShowMenuPerfil(false);
+      }
+      if (restauranteRef.current && !restauranteRef.current.contains(event.target)) {
+        setMenuRestauranteAtivo(false);
       }
     };
 
@@ -62,9 +63,12 @@ const Header = () => {
           />
         </form>
 
-        <button className="btn-endereco" id="btnEndereco" onClick={abrirModal}>
-          { cep ? `CEP: ${cep}` : 'Insira seu CEP' }
-        </button>
+        <div ref={restauranteRef}>
+          <button className="btn-restaurante" id="btn-restaurante" onClick={handleRestauranteClick}>
+            <img src={IconRestaurante} alt="Ícone de restaurante" />
+          </button>
+          <MenuRestaurante ativo={menuRestauranteAtivo} />
+        </div>
 
         <button className="btn-carrinho" id="btnCarrinhoHeader">
           <Link to="/carrinho">
@@ -82,15 +86,9 @@ const Header = () => {
             <img src={IconConta} alt="Ícone de perfil" />
           </button>
 
-          {showMenu && <MenuPerfil ativo={showMenu} />}
+          {showMenuPerfil && <MenuPerfil ativo={showMenuPerfil} />}
         </div>
       </header>
-
-      <ModalEndereco
-        aberto={modalAberto}
-        onClose={fecharModal}
-        onAddEndereco={adicionarEndereco}
-      />
     </>
   );
 };

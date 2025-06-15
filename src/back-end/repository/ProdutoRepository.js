@@ -1,5 +1,5 @@
 import Connection from "../database/Connection.js";
-import FotoProdutoRepository from "./FotoProdutoRepository.js";
+import FotoProdutoRepository from "./FotoRepository.js";
 import CategoriaProdutoRepository from "./CategoriaProdutoRepository.js";
 import Produto from "../model/produto/Produto.js";
 import { BadRequestError } from "../exception/GlobalExceptions.js";

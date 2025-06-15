@@ -1,5 +1,5 @@
 import { BadRequestError } from "../../../exception/GlobalExceptions.js";
-import EnderecoDto from "../../usuario/dtos/EnderecoDto.js";
+import EnderecoDto from "../../endereco/dtos/EnderecoDto.js";
 
 class RestauranteRegisterRequestDto {
     constructor(body) {

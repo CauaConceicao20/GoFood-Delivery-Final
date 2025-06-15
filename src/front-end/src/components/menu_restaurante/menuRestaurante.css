@@ -1,0 +1,71 @@
+.menu-restaurante {
+  position: fixed;
+  top: 70px;
+  right: 50px;
+  width: 260px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1.5px 4px rgba(0,0,0,0.10);
+  padding: 0 0 10px 0;
+  z-index: 2001;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px) scale(0.98);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.menu-restaurante.ativo {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.menu-restaurante h2 {
+  margin: 0;
+  padding: 16px 16px 8px 16px;
+  font-size: 1.1rem;
+  color: #e53935;
+  border-bottom: 1px solid #f4f4f4;
+  font-weight: 600;
+}
+
+.menu-restaurante nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-restaurante nav li {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  transition: background 0.2s;
+}
+
+.menu-restaurante nav li:hover {
+  background-color: #f4f4f4;
+}
+
+.menu-restaurante a {
+  font-family: "Inter", sans-serif;
+  display: flex;
+  align-items: center;
+  color: #222;
+  text-decoration: none;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.logo-restaurante {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+@media (max-width: 600px) {
+  .menu-restaurante {
+    right: 10px;
+    width: 90vw;
+  }
+}

@@ -1,7 +1,7 @@
 .menu-perfil {
     position: fixed;
-    top: 70px; /* Ajuste conforme a altura do seu header */
-    right: 30px; /* Alinha à direita, mas não colado na borda */
+    top: 70px;
+    right: 30px;
     width: 220px;
     min-height: 120px;
     background: #fff;

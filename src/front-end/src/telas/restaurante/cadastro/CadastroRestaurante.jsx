@@ -11,11 +11,9 @@ const CadastroRestaurante = () => {
     rua: '',
     numero: '',
     bairro: '',
-    cidade: '', // agora será o ID da cidade
+    cidade: '',
     descricao: '',
     razaoSocial: '',
-    logradouro: '',
-    complemento: '',
     cnpj: ''
   });
 
@@ -175,35 +173,6 @@ const CadastroRestaurante = () => {
                     required
                   />
                 </div>
-
-                <div className="form-group"> 
-                  <label htmlFor="complemento" > 
-                    Complemento
-                  </label>
-                  <input
-                    type="text"
-                    id="complemento"
-                    name="complemento"
-                    value={formData.complemento}
-                    onChange={handleChange}
-                    
-                  />
-                </div>
-
-                <div className="form-group"> 
-                  <label htmlFor="logradouro"> 
-                    Logradouro *
-                  </label>
-                  <input
-                    type="text"
-                    id="logradouro"
-                    name="logradouro"
-                    value={formData.logradouro}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
 
                 <div className="form-group">
                   <label htmlFor="bairro">Bairro *</label>

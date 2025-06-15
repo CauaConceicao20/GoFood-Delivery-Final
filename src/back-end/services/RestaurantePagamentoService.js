@@ -12,6 +12,16 @@ class RestaurantePagamentoService {
             throw err;
         }
     }
+
+    async buscaFormasDePagamentoAssociadasAoRestaurante(idRestaurante) {
+        try {
+            return await this.restaurantePagamentoRepository.buscaFormasDePagamentoAssociadasAoRestaurante(idRestaurante);
+        } catch (err) {
+            throw err;
+        }
+    }
 }
+
+
 
 export default RestaurantePagamentoService;

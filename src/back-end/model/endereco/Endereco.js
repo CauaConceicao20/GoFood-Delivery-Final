@@ -1,11 +1,11 @@
 class Endereco {
-    constructor(EnderecoDto) {
-        this.cep = EnderecoDto.cep;
-        this.logradouro = EnderecoDto.logradouro;
-        this.numero = EnderecoDto.numero;
-        this.complemento = EnderecoDto.complemento;
-        this.bairro = EnderecoDto.bairro;
-        this.cidadeId = EnderecoDto.cidadeId;
+    constructor(cep, logradouro, numero, complemento, bairro, cidadeId) {
+        this.cep = cep,
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.cidadeId = cidadeId;
     }
 
     setCep(cep) {

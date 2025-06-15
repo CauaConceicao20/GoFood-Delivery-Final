@@ -1,4 +1,4 @@
-import FotoProdutoRepository from "../repository/FotoProdutoRepository.js";
+import FotoProdutoRepository from "../repository/FotoRepository.js";
 
 class FotoService {
     constructor() {
@@ -8,6 +8,14 @@ class FotoService {
     async buscarFotoDeProdutoPorId(id) {
         try {
             return await this.fotoProdutoRepository.buscarFotoDeProdutoPorId(id);
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async buscarFotoDeRestaurantePorId(id) {
+        try {
+            return await this.fotoProdutoRepository.buscarFotoDeRestaurantePorId(id);
         } catch (err) {
             throw err;
         }

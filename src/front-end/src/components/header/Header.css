@@ -16,7 +16,7 @@ header figure {
 
 .btn-perfil,
 .btn-carrinho,
-.btn-endereco {
+.btn-restaurante {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,18 +35,18 @@ header div:hover,
 .container-logo:hover,
 .btn-perfil:hover,
 .btn-carrinho:hover,
-.btn-endereco:hover {
+.btn-restaurante:hover {
     cursor: pointer;
 }
 
 .btn-perfil:hover,
 .btn-carrinho:hover,
-.btn-endereco:hover {
+.btn-restaurante:hover {
     background-color: #a82d2d;
 }
 
-.btn-endereco {
-    max-width: 146px;
+.btn-restaurante {
+    max-width: 106px;
     min-width: 90px;
     text-overflow: ellipsis;
 }
@@ -120,7 +120,7 @@ header div {
 
 @media (max-width: 700px) {
 
-    .btn-endereco {
+    .btn-restaurante {
         display: none;
     }
 }

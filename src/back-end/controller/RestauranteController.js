@@ -4,21 +4,28 @@ import AuthMiddleware from '../config/security/AuthMiddleware.js';
 import RestauranteService from '../services/RestauranteService.js';
 import Restaurante from '../model/restaurante/Restaurante.js';
 import RestauranteRegisterRequestDto from '../model/restaurante/dtos/RestauranteRegisterRequestDto.js';
-import Endereco from '../model/usuario/Endereco.js';
+import Endereco from '../model/endereco/Endereco.js';
+import EnderecoService from '../services/EnderecoService.js';
 import TokenService from '../services/TokenService.js';
 import UsuarioService from '../services/UsuarioService.js';
 import ConfigMulter from '../config/ConfigMulter.js';
 import Foto from '../model/foto/Foto.js';
 import FotoRegisterRequestDto from '../model/foto/dtos/FotoRegisterRequestDto.js';
+import RestaurantePagamentoService from '../services/RestaurantePagamentoService.js';
+import RestauranteResponseDto from '../model/restaurante/dtos/RestauranteResponseDto.js';
 import fs from 'fs/promises';
 import path from 'path';
+import FotoService from '../services/FotoService.js';
 
 class RestauranteController {
     constructor() {
         this.router = express.Router();
         this.router.use(bodyParser.json());
         this.restauranteService = new RestauranteService();
+        this.restaurantePagamentoService = new RestaurantePagamentoService();
+        this.enderecoService = new EnderecoService();
         this.usaurioService = new UsuarioService();
+        this.fotoService = new FotoService();
         this.authMiddleware = new AuthMiddleware();
         this.tokenService = new TokenService();
         this.dataHoraAtual = new Date().toLocaleString('sv-SE', { timeZone: 'America/Sao_Paulo' }).replace(' ', 'T');
@@ -35,6 +42,13 @@ class RestauranteController {
             this.configMulter,
             this.registraRestaurante.bind(this)
         );
+
+        this.router.get(
+            "/buscaRestaurantesAssociados",
+            this.authMiddleware.autenticar.bind(this.authMiddleware),
+            this.authMiddleware.autorizar('CLIENTE, RESTAURANTE'),
+            this.buscarRestaurantesAssociadosAoUsuario.bind(this)
+        );
     }
 
     async registraRestaurante(req, res) {
@@ -45,9 +59,9 @@ class RestauranteController {
 
             let restaurante = new Restaurante(null, restauranteDto.nome, restauranteDto.descricao,
                 restauranteDto.razaoSocial, restauranteDto.taxaFrete, this.dataHoraAtual, null,
-                new Endereco(restauranteDto.endereco), usuario.getId(), restauranteDto.formasPagamento,
-                restauranteDto.cnpj
-            );
+                new Endereco(restauranteDto.endereco.cep, restauranteDto.endereco.logradouro, restauranteDto.endereco.numero,
+                restauranteDto.endereco.complemento, restauranteDto.endereco.bairro, restauranteDto.endereco.cidadeId),
+                usuario.getId(), restauranteDto.formasPagamento, restauranteDto.cnpj);
 
             if (!file) {
                 return res.status(400).json({ erro: 'Arquivo da foto é obrigatório' });
@@ -80,6 +94,28 @@ class RestauranteController {
                 }
             }
 
+            throw err;
+        }
+    }
+
+    async buscarRestaurantesAssociadosAoUsuario(req, res) {
+        try {
+            const usuario = await this.usaurioService.buscarPorId(req.usuario.id);
+            const restaurantes = await this.restauranteService.buscarRestaurantesAssociadosAUsuario(usuario.getId());
+
+            const restaurantesDto = await Promise.all(restaurantes.map(async (restaurante) => {
+                const endereco = restaurante.getEndereco();
+                const cidade = await this.enderecoService.buscaCidadePorId(endereco.getCidadeId());
+                const estado = await this.enderecoService.buscaEstadoPorId(cidade.getEstadoId());
+                const foto = await this.fotoService.buscarFotoDeRestaurantePorId(restaurante.getId());
+                const formasPagamento = await this.restaurantePagamentoService.
+                    buscaFormasDePagamentoAssociadasAoRestaurante(restaurante.getId());
+                return new RestauranteResponseDto(restaurante, endereco, cidade, estado, formasPagamento,
+                foto);
+            }));
+
+            res.status(200).json(restaurantesDto);
+        } catch (err) {
             throw err;
         }
     }

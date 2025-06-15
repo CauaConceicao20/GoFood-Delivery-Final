@@ -9,11 +9,11 @@ class FotoProdutoRepository {
 
     async registrar(fotoProduto, idProduto, conn) {
         try {
-            if(!conn) conn = await this.connection.connect();
+            if (!conn) conn = await this.connection.connect();
             const result = await conn.run(
                 'INSERT INTO fotos_produto (nome, descricao, content_type, tamanho, url, produto_id) VALUES (?, ?, ?, ?, ?, ?)',
                 [fotoProduto.getNome(), fotoProduto.getDescricao(), fotoProduto.getContentType(), fotoProduto.getTamanho(),
-                     fotoProduto.getUrl(), idProduto]
+                fotoProduto.getUrl(), idProduto]
             );
 
             if (!result.changes) {
@@ -31,18 +31,38 @@ class FotoProdutoRepository {
 
     async buscarFotoDeProdutoPorId(id, conn) {
         try {
-            if(!conn) conn = await this.connection.connect();
+            if (!conn) conn = await this.connection.connect();
             const result = await conn.get(
                 'SELECT * FROM fotos WHERE entidade_id = ? AND entidade_tipo = "PRODUTO"',
                 [id]
             );
 
             if (!result) {
-               return null
+                return null
             }
 
-           return new Foto(result.id, result.nome, result.content_type,
-             result.url, result.tamanho)
+            return new Foto(result.id, result.nome, result.content_type,
+                result.url, result.tamanho)
+
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async buscarFotoDeRestaurantePorId(id, conn) {
+        try {
+            if (!conn) conn = await this.connection.connect();
+            const result = await conn.get(
+                'SELECT * FROM fotos WHERE entidade_id = ? AND entidade_tipo = "RESTAURANTE"',
+                [id]
+            );
+
+            if (!result) {
+                return null
+            }
+
+            return new Foto(result.id, result.nome, result.content_type,
+                result.url, result.tamanho)
 
         } catch (err) {
             throw err;

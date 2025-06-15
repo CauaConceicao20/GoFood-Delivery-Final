@@ -6,7 +6,7 @@ import RestaurantePagamento from "../model/restaurante/RestaurantePagamento.js";
 import UsuarioGrupoRepository from "./UsuarioGrupoRepository.js";
 import { GrupoNomeEnum } from "../model/usuario/enums/GrupoNomeEnum.js";
 import UsuarioGrupo from "../model/usuario/UsuarioGrupo.js";
-import Endereco from "../model/usuario/Endereco.js";
+import Endereco from "../model/endereco/Endereco.js";
 import { BadRequestError, NotFoundError } from "../exception/GlobalExceptions.js";
 import { EntidadeFotoTipo } from "../model/foto/enums/EntidadeFotoTipo.js";
 
@@ -73,7 +73,7 @@ class RestauranteRepository {
 
             restaurante.setId(result.lastID);
 
-               await conn.run(
+            await conn.run(
                 `INSERT INTO fotos (nome, content_type, tamanho, url, entidade_tipo, entidade_id)
                              VALUES (?, ?, ?, ?, ?, ?)`,
                 [foto.getNome(), foto.getContentType(), foto.getTamanho(), foto.getUrl(),
@@ -83,6 +83,9 @@ class RestauranteRepository {
             return restaurante;
 
         } catch (err) {
+            if (err.code === 'SQLITE_CONSTRAINT' && err.message.includes('restaurantes.cnpj')) {
+                throw new BadRequestError('CNPJ já cadastrado.');
+            }
             throw err;
         }
     }
