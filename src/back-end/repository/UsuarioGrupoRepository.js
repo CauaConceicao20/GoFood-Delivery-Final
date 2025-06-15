@@ -1,6 +1,7 @@
 import Connection from "../database/Connection.js";
 import GrupoRepository from "./GrupoRepository.js";
 import Grupo from "../model/usuario/Grupo.js";
+import { BadRequestError } from "../exception/GlobalExceptions.js";
 
 class UsuarioGrupoRepository {
 

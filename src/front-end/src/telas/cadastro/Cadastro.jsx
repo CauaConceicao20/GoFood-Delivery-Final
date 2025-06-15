@@ -82,7 +82,7 @@ const Cadastro = () => {
   };
 
   return (
-    <div className="cadastro-container">
+    <div className="cadastro-user-container">
       <div className="cadastro-box">
         <h2>Criar Conta</h2>
         <p>Preencha seus dados para se cadastrar</p>

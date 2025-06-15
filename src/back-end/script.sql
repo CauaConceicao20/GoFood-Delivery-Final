@@ -287,6 +287,14 @@ VALUES
 (2, 'Maria Oliveira', 'maria@exemplo.com', 'senha123', '2024-06-12T12:00:00', '234.567.890-11', '(11) 99999-2222'),
 (3, 'João Souza', 'joao@exemplo.com', 'senha123', '2024-06-12T12:00:00', '345.678.901-22', '(48) 98888-3333');
 
+INSERT INTO usuarios_grupo (usuario_id, grupo_id) VALUES (1, 1);
+INSERT INTO usuarios_grupo (usuario_id, grupo_id) VALUES (1, 3);
+INSERT INTO usuarios_grupo (usuario_id, grupo_id) VALUES (2, 1);
+INSERT INTO usuarios_grupo (usuario_id, grupo_id) VALUES (2, 3);
+
+INSERT INTO usuarios_grupo (usuario_id, grupo_id) VALUES (3, 1);
+INSERT INTO usuarios_grupo (usuario_id, grupo_id) VALUES (3, 3);
+
 -- 3 Restaurantes completos
 INSERT INTO restaurantes (nome, descricao, razao_social, cnpj, taxa_frete, data_cadastro, data_atualizacao, aberto, ativo, cidade_id, usuario_id, cep, logradouro, numero, complemento, bairro)
 VALUES 

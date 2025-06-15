@@ -1,17 +1,5 @@
-/* Variáveis CSS para padronização */
 :root {
-    /* Fundo geral da página (usado por EDR-app-container) */
-    --background-light: #ffffff;
-    --background-card: #fff; /* Fundo dos cards/formulários */
-
-    /* Propriedades de fonte movidas para :root */
-    font-family: "Inter", sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+line-height: 1.5;
 }
 
 /* Base Root Styling (do seu CSS) */

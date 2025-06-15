@@ -1,14 +1,4 @@
-/* Variáveis de cores para consistência com o estilo GoFood (vermelho primário) */
-:root {
-  --primary-red: #da291c; /* Vermelho principal do GoFood */
-  --light-gray-bg: #f0f2f5; /* Fundo geral da página */
-  --white-card-bg: #fff; /* Fundo dos cards */
-  --dark-text: #333; /* Cor principal do texto */
-  --medium-text: #666; /* Cor do texto secundário/informativo */
-  --border-color: #ddd; /* Cor das bordas */
-  --shadow-light: rgba(0, 0, 0, 0.08); /* Sombra suave */
-  --transition-speed: 0.3s;
-}
+
 
 .settings-container {
   display: flex;

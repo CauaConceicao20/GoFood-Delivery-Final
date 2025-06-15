@@ -1,16 +1,15 @@
-/* Definição do fundo global da página */
-html, body {
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff; /* Fundo branco para toda a página */
-    height: 100%; /* Garante que o html/body ocupe 100% da altura da viewport */
+.section-cadastro-produtos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 957px;
 }
 
 .cadastro-container {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: var(--background-light);
+  width: 1200px;
+  margin: 40px auto;
+  padding: 0 30px 0 30px;
   font-family: 'Arial', sans-serif;
   color: var(--text-color-dark);
   display: flex;
@@ -18,79 +17,66 @@ html, body {
   align-items: center;
 }
 
-/* Estilos do Cabeçalho da Tela de Cadastro */
-.header-cadastro-produto { /* Nova classe para o cabeçalho específico */
+.header-cadastro-de-produto {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   position: relative;
-  margin-bottom: 30px;
-  background-color: var(--background-card);
-  padding: 20px;
-  border-radius: var(--border-radius-default);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.header-cadastro-produto h1 {
-  font-size: 1.8em;
-  color: var(--text-color-dark);
-  text-align: center;
   margin: 0;
-  flex-grow: 1;
-  transform: translateX(-15px); /* Ajuste para centralizar o título */
-  z-index: 1;
+  margin-bottom: 30px;
+  padding: 20px 30px 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilos do Botão Voltar (mantido padrão) */
-.back-button {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 8px 15px;
-  background-color: #e0e0e0;
-  color: var(--text-color-dark);
+.header-cadastro-de-produto h1 {
+  font-size: 1.8em;
+  color: black;
+  text-align: center;
+}
+
+.btn-voltar-perfil {
+  color: #e53935;
+  font-weight: 600;
+  font-size: 1.125rem;
+  background-color: #ffffff;
+  border: 1px solid #e53935;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-left: 1rem;
   text-decoration: none;
-  border-radius: 4px;
-  font-size: 14px;
-  transition: all var(--transition-speed) ease;
-  display: flex;
-  align-items: center;
-  z-index: 2;
 }
 
-.back-button:hover {
-  background-color: #d0d0d0;
-  color: #000;
+.btn-voltar-perfil:hover {
+  background-color: #fcebeb;
+  color: #e53935;
+  border-color: #e53935;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.back-button::before {
-  /* Se você estiver usando um ícone com before/after, certifique-se de que o content está definido no HTML ou JS */
-  /* content: '←'; */ /* Exemplo, se for um caractere unicode */
-  margin-right: 5px;
-  font-size: 1.2em;
-}
-
-/* Estilos do Formulário Principal */
 .produto-form {
-  background: var(--background-card);
   padding: 30px;
   border-radius: var(--border-radius-default);
-  box-shadow: 0 2px 10px var(--shadow-medium);
+  box-shadow: 0 2px 10px;
   width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .form-row {
   display: flex;
+  flex-direction: row;
   gap: 30px;
-  margin-bottom: 20px;
-  flex-wrap: wrap; /* Para responsividade */
+  margin-bottom: 30px;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
-/* Coluna da Foto */
 .photo-column {
-  flex: 0 0 150px; /* Largura fixa para a coluna da foto */
+  width: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -107,14 +93,13 @@ html, body {
   width: 100px;
   height: 100px;
   border: 2px dashed var(--border-color);
-  border-radius: 4px; /* Retangular como nas imagens anteriores */
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin: 0 auto;
   overflow: hidden;
-  background-color: var(--background-light); /* Agora será branco */
+  background-color: var(--background-light);
   transition: all var(--transition-speed) ease;
 }
 
@@ -135,12 +120,11 @@ html, body {
   color: var(--text-color-light);
 }
 
-/* Coluna dos Campos Principais */
 .fields-column {
-  flex: 1; /* Ocupa o restante do espaço */
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Espaço entre os grupos de formulário */
+  gap: 20px;
 }
 
 .form-group {
@@ -149,7 +133,6 @@ html, body {
 }
 
 .form-group label {
-  display: block;
   margin-bottom: 8px;
   font-weight: 500;
   color: var(--text-color-dark);
@@ -163,16 +146,16 @@ html, body {
 
 .form-group input,
 .form-group textarea,
-.form-group select { /* Inclui select */
+.form-group select {
   width: 100%;
   padding: 10px;
   border: 1px solid var(--border-color);
   border-radius: 4px;
   font-size: 16px;
   box-sizing: border-box;
+  color: var(--text-color-dark);
+  background-color: var(--background-card);
   transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-  color: var(--text-color-dark); /* Cor do texto digitado */
-  background-color: var(--background-card); /* Fundo branco para inputs */
 }
 
 .form-group input:focus,
@@ -188,7 +171,6 @@ html, body {
   min-height: 80px;
 }
 
-/* Botão de Submissão */
 .submit-button {
   background-color: var(--primary-color);
   color: white;
@@ -198,10 +180,9 @@ html, body {
   font-size: 1.1em;
   font-weight: bold;
   cursor: pointer;
-  display: block;
   width: 100%;
-  max-width: 300px; /* Largura máxima para o botão */
-  margin: 30px auto 0; /* Centraliza e adiciona margem superior */
+  max-width: 300px;
+  margin: 30px auto 0;
   transition: background-color var(--transition-speed) ease, transform 0.2s ease;
 }
 
@@ -213,56 +194,53 @@ html, body {
 /* Responsividade */
 @media (max-width: 768px) {
   .cadastro-container {
-    padding: 15px;
+    padding: 10px;
   }
 
-  .header-cadastro-produto {
+  .header-cadastro-de-produto {
     flex-direction: column;
     align-items: flex-start;
     padding: 15px;
   }
 
-  .header-cadastro-produto h1 {
+  .header-cadastro-de-produto h1 {
     font-size: 1.5em;
-    transform: none;
     text-align: left;
   }
 
-  .back-button {
+  .btn-voltar-perfil {
     position: static;
     transform: none;
     margin-bottom: 15px;
-    display: inline-flex;
-    width: auto;
   }
 
   .produto-form {
-    padding: 15px;
+    padding: 20px;
   }
 
   .form-row {
     flex-direction: column;
-    gap: 20px;
   }
 
   .photo-column {
-    flex: 1;
-    order: -1; /* Move a foto para o topo em telas pequenas */
+    width: 100%;
+    align-items: center;
     margin-bottom: 20px;
   }
 
   .foto-upload {
-    margin: 0 auto; /* Centraliza a foto em mobile */
-  }
-
-  .fields-column {
-    gap: 15px;
+    margin: 0 auto;
   }
 
   .submit-button {
-    width: 100%;
-    max-width: 100%; /* Botão ocupa a largura total em mobile */
+    max-width: 100%;
     font-size: 1em;
     padding: 12px 20px;
+  }
+
+  @media (min-width: 768px) {
+    .header-cadastro-de-produto {
+      margin-top: 500px;
+    }
   }
 }
