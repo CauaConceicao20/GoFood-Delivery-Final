@@ -180,5 +180,33 @@ class CarrinhoRepository {
             throw err;
         }
     }
+
+    async deletarItemCarrinho(itemCarrinho, carrinho) {
+        try {
+            const conn = await this.connection.connect();
+
+            await conn.run(
+                `DELETE FROM itens_carrinho
+       WHERE carrinho_id = ? AND produto_id = ?`,
+                [
+                    itemCarrinho.getCarrinhoId(),
+                    itemCarrinho.getProdutoId()
+                ]
+            );
+
+            await conn.run(
+                `UPDATE carrinhos
+       SET quantidade_total_itens = ?, sub_total = ?
+       WHERE id = ?`,
+                [
+                    carrinho.getQuantidadeTotalDeItems(),
+                    carrinho.getSubTotal(),
+                    carrinho.getId()
+                ]
+            );
+        } catch (err) {
+            throw err;
+        }
+    }
 }
 export default CarrinhoRepository;

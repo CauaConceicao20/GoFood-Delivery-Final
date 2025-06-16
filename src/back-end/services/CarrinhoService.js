@@ -83,5 +83,14 @@ class CarrinhoService {
 
         await this.carrinhoRepository.atualizarItemCarrinhoECarrinho(itemCarrinho, carrinho);
     }
+
+    async deletarItemDoCarrinho(produto, carrinho) {
+        try {
+            const itemCarrinho = await this.itemCarrinhoService.buscarItemCarrinhoPorIdProduto(produto.getId());
+            await this.carrinhoRepository.deletarItemCarrinho(itemCarrinho, carrinho);
+        } catch (err) {
+            throw err;
+        }
+    }
 }
 export default CarrinhoService;

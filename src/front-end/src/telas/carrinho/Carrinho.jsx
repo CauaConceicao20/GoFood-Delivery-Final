@@ -5,11 +5,12 @@ import IconPesquisar from '../../assets/icon-pesquisar.png';
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import CarrinhoItem from "../../components/item_carrinho/CarrinhoItem.jsx";
-import ModalErro from "../../components/modal_erro/ModalErro"; // Importação do modal
+import ModalErro from "../../components/modal_erro/ModalErro"; // Modal para erro e sucesso
 
 const Carrinho = () => {
   const [items, setItems] = useState([]);
-  const [mensagemErro, setMensagemErro] = useState(""); // Estado para o modal de erro
+  const [mensagemErro, setMensagemErro] = useState("");
+  const [mensagemSucesso, setMensagemSucesso] = useState("");
 
   const buscarCarrinho = () => {
     fetch("http://localhost:3001/api/v1/carrinhos/buscarCarrinho", {
@@ -60,6 +61,7 @@ const Carrinho = () => {
       buscarCarrinho();
     } catch (error) {
       console.error("Erro ao aumentar item do carrinho:", error);
+      setMensagemErro("Erro ao aumentar quantidade do item.");
     }
   };
 
@@ -96,10 +98,40 @@ const Carrinho = () => {
   };
 
   const handleDelete = async (id) => {
-    // lógica futura
+    const item = items.find(i => i.id === id);
+    if (!item) return;
+
+    try {
+      const response = await fetch(`http://localhost:3001/api/v1/carrinhos/removerItem/${item.produtoId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          produtoId: item.produtoId,
+          carrinhoId: item.carrinhoId
+        })
+      });
+
+      const body = await response.json();
+
+      if (!response.ok) {
+        const mensagem = body.erro || "Falha ao remover item";
+        setMensagemErro(mensagem);
+        return;
+      }
+
+      buscarCarrinho();
+      setMensagemSucesso(body.mensagem || "Item removido com sucesso");
+
+    } catch (error) {
+      console.error("Erro ao remover item do carrinho:", error);
+      setMensagemErro("Erro interno ao tentar remover item.");
+    }
   };
 
-  const subTotal = items.reduce((acc, item) => acc + item.price, 0);
+  const subTotal = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
   return (
     <div className={styles["page-container"]}>
@@ -153,8 +185,9 @@ const Carrinho = () => {
           </div>
         </section>
       </main>
-      
+
       <ModalErro mensagem={mensagemErro} onClose={() => setMensagemErro("")} />
+      <ModalErro mensagem={mensagemSucesso} onClose={() => setMensagemSucesso("")} />
 
       <Footer />
     </div>
