@@ -29,6 +29,7 @@ class AuthController {
       this.buscaUsuarioLogado.bind(this));
 
     this.router.post("/refresh-token", this.refreshToken.bind(this));
+    this.router.get("/status", this.status.bind(this));
   }
 
   async login(req, res) {
@@ -92,6 +93,21 @@ class AuthController {
       res.status(200).json({ message: 'Token atualizado com sucesso' });
     } catch (err) {
       res.status(401).json({ message: 'Erro ao atualizar token', error: err.message });
+    }
+  }
+
+  async status(req, res) {
+    try {
+      const token = req.cookies?.token;
+
+      const payload = this.tokenService.validarToken(token);
+      const usuario = await this.usuarioService.buscarPorId(payload.id); 
+
+      return res.status(200).json({ logado: true });
+
+    } catch (err) {
+      console.error(err);
+      return res.status(401).json({ mensagem: "Usuário não autenticado ou inexistente." });
     }
   }
 }

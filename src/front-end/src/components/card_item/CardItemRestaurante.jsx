@@ -14,13 +14,39 @@ const CardItemRestaurante = ({
 }) => {
   const [mensagemModal, setMensagemModal] = useState('');
 
+  // Função para verificar se o usuário está autenticado
+  const verificarAutenticacao = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/v1/auth/status', {
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        return false;
+      }
+
+      const data = await response.json();
+      return data.logado;
+
+    } catch {
+      return false;
+    }
+  };
+
   const adicionarAoCarrinho = async () => {
+    const logado = await verificarAutenticacao();
+
+    if (!logado) {
+      setMensagemModal('Faça login para adicionar este produto ao seu carrinho');
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:3001/api/v1/carrinhos/adicionaAoCarrinho', {
         method: 'POST',
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           produtoId: id,
@@ -30,9 +56,7 @@ const CardItemRestaurante = ({
 
       const resultado = await response.json();
 
-      if (response.status === 401) {
-        setMensagemModal('Faça login para adicionar este produto ao seu carrinho');
-      } else if (response.ok) {
+      if (response.ok) {
         setMensagemModal(resultado.mensagem || 'Produto adicionado com sucesso.');
       } else {
         setMensagemModal(resultado.erro || 'Erro ao adicionar produto.');

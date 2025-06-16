@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // para navegação programática
 import './Header.css';
+import { Link } from 'react-router-dom';
 import MenuPerfil from '../menu_perfil/MenuPerfil.jsx';
 import MenuRestaurante from '../menu_restaurante/MenuRestaurante.jsx';
 
@@ -9,22 +10,79 @@ import IconPesquisar from '../../assets/icon-pesquisar.png';
 import IconCarrinho from '../../assets/icon-carrinho-de-compras-.png';
 import IconConta from '../../assets/icon-conta.png';
 import IconRestaurante from '../../assets/icon-restaurante.png';
+import ModalErro from '../modal_erro/ModalErro.jsx'; // ajuste o caminho se necessário
 
 const Header = () => {
   const [showMenuPerfil, setShowMenuPerfil] = useState(false);
   const [menuRestauranteAtivo, setMenuRestauranteAtivo] = useState(false);
+  const [mostrarModal, setMostrarModal] = useState(false);
+  const [mensagemErro, setMensagemErro] = useState('');
 
   const perfilRef = useRef(null);
   const restauranteRef = useRef(null);
+  const navigate = useNavigate();
+
+  const verificarAutenticacao = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/api/v1/auth/status", {
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data?.mensagem || "Erro de autenticação.");
+      }
+
+      const data = await response.json();
+      return data.logado;
+
+    } catch {
+      return false;
+    }
+  };
 
   const handlePerfilClick = (event) => {
     event.stopPropagation();
     setShowMenuPerfil((prev) => !prev);
   };
 
-  const handleRestauranteClick = (event) => {
+  const handleRestauranteClick = async (event) => {
     event.stopPropagation();
-    setMenuRestauranteAtivo((prev) => !prev);
+
+    const logado = await verificarAutenticacao();
+
+    if (logado) {
+      setMenuRestauranteAtivo((prev) => !prev);
+    } else {
+      setMensagemErro("Você precisa estar logado para acessar o menu de restaurantes.");
+      setMostrarModal(true);
+    }
+  };
+
+  const handleCarrinhoClick = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/api/v1/auth/status", {
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data?.mensagem || "Erro de autenticação.");
+      }
+
+      const data = await response.json();
+
+      if (data.logado) {
+        navigate('/carrinho');
+      } else {
+        setMensagemErro("Você precisa estar logado para acessar o carrinho.");
+        setMostrarModal(true);
+      }
+
+    } catch (err) {
+      setMensagemErro("Você precisa estar logado para acessar o carrinho.");
+      setMostrarModal(true);
+    }
   };
 
   useEffect(() => {
@@ -70,10 +128,8 @@ const Header = () => {
           <MenuRestaurante ativo={menuRestauranteAtivo} />
         </div>
 
-        <button className="btn-carrinho" id="btnCarrinhoHeader">
-          <Link to="/carrinho">
-            <img src={IconCarrinho} alt="Ícone do carrinho de compras" />
-          </Link>
+        <button className="btn-carrinho" id="btnCarrinhoHeader" onClick={handleCarrinhoClick}>
+          <img src={IconCarrinho} alt="Ícone do carrinho de compras" />
         </button>
 
         <div className="perfil-wrapper" ref={perfilRef}>
@@ -89,6 +145,13 @@ const Header = () => {
           {showMenuPerfil && <MenuPerfil ativo={showMenuPerfil} />}
         </div>
       </header>
+
+      {mostrarModal && (
+        <ModalErro
+          mensagem={mensagemErro}
+          onClose={() => setMostrarModal(false)}
+        />
+      )}
     </>
   );
 };
