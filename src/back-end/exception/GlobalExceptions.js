@@ -30,10 +30,11 @@ class ForbiddenOwnRestaurantProductError extends ErrorDetails {
   }
 }
 
-class ArquivoDeFotoEObrigatorioError extends ErrorDetails {
-  constructor(message = 'É obrigatório enviar uma foto') {
+class MinimumQuantityException extends ErrorDetails {
+  constructor(message = 'Quantidade minima atingida') {
     super(400, message);
   }
 }
 
-export { NotFoundError, BadRequestError,  UnauthorizedError, ForbiddenError, ForbiddenOwnRestaurantProductError };
+export { NotFoundError, BadRequestError,  UnauthorizedError, ForbiddenError,
+  MinimumQuantityException, ForbiddenOwnRestaurantProductError };

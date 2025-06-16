@@ -1,7 +1,9 @@
 import React from "react";
-import styles from "../../telas/carrinho/Carrinho.module.css"; // ou um CSS próprio, se preferir
+import styles from "../../telas/carrinho/Carrinho.module.css";
 
 const CarrinhoItem = ({ item, onIncrease, onDecrease, onDelete }) => {
+  const precoFormatado = (Number(item.price) || 0).toFixed(2).replace('.', ',');
+
   return (
     <article className={styles["alimento-do-carrinho"]}>
       <div className={styles["area-checkbox-e-img"]}>
@@ -17,7 +19,7 @@ const CarrinhoItem = ({ item, onIncrease, onDecrease, onDelete }) => {
         <div>
           <p>{item.description}</p>
         </div>
-        <span className={styles.preco}>Valor: {item.price.toFixed(2).replace('.', ',')}</span>
+        <span className={styles.preco}>Valor: {precoFormatado}</span>
         <div className={styles["linha-de-opcoes"]}>
           <span className={styles["area-btn-diminuir"]}>
             <button onClick={() => onDecrease(item.id)}>-</button>

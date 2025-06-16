@@ -5,54 +5,101 @@ import IconPesquisar from '../../assets/icon-pesquisar.png';
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import CarrinhoItem from "../../components/item_carrinho/CarrinhoItem.jsx";
+import ModalErro from "../../components/modal_erro/ModalErro"; // Importação do modal
 
 const Carrinho = () => {
   const [items, setItems] = useState([]);
+  const [mensagemErro, setMensagemErro] = useState(""); // Estado para o modal de erro
 
-  useEffect(() => {
+  const buscarCarrinho = () => {
     fetch("http://localhost:3001/api/v1/carrinhos/buscarCarrinho", {
-      credentials: "include" // importante para enviar o cookie com JWT
+      credentials: "include"
     })
       .then(res => res.json())
       .then(data => {
-        const itensConvertidos = data.itens.map((item, index) => ({
-          id: `${item.carrinho_id}-${item.produto_id}`, // ID único gerado
+        const itensConvertidos = data.itens.map((item) => ({
+          id: `${item.carrinho_id}-${item.produto_id}`,
+          produtoId: item.produto_id,
+          carrinhoId: item.carrinho_id,
           name: item.nome,
           description: item.descricao,
-          price: item.preco,
+          price: Number(item.preco ?? 0),
           quantity: item.quantidade,
           imgUrl: `http://localhost:3001${item.fotoUrl}`
         }));
         setItems(itensConvertidos);
       })
       .catch(err => console.error("Erro ao buscar itens do carrinho:", err));
+  };
+
+  useEffect(() => {
+    buscarCarrinho();
   }, []);
 
-  const handleIncrease = (id) => {
-    setItems(prev =>
-      prev.map(item =>
-        item.id === id && item.quantity < 100
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      )
-    );
+  const handleIncrease = async (id) => {
+    const item = items.find(i => i.id === id);
+    if (!item) return;
+
+    try {
+      const response = await fetch("http://localhost:3001/api/v1/carrinhos/aumentarQuantidade", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          produtoId: item.produtoId,
+          carrinhoId: item.carrinhoId
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("Falha ao aumentar quantidade");
+      }
+
+      buscarCarrinho();
+    } catch (error) {
+      console.error("Erro ao aumentar item do carrinho:", error);
+    }
   };
 
-  const handleDecrease = (id) => {
-    setItems(prev =>
-      prev.map(item =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
+  const handleDecrease = async (id) => {
+    const item = items.find(i => i.id === id);
+    if (!item) return;
+
+    try {
+      const response = await fetch("http://localhost:3001/api/v1/carrinhos/diminuirQuantidade", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          produtoId: item.produtoId,
+          carrinhoId: item.carrinhoId
+        })
+      });
+
+      const body = await response.json();
+
+      if (!response.ok) {
+        const mensagem = body.erro || "Falha ao diminuir quantidade";
+        setMensagemErro(mensagem);
+        return;
+      }
+
+      buscarCarrinho();
+    } catch (error) {
+      console.error("Erro ao diminuir item do carrinho:", error);
+      setMensagemErro("Erro interno ao tentar diminuir item.");
+    }
   };
 
-  const handleDelete = (id) => {
-    setItems(prev => prev.filter(item => item.id !== id));
+  const handleDelete = async (id) => {
+    // lógica futura
   };
 
-  const subTotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const subTotal = items.reduce((acc, item) => acc + item.price, 0);
 
   return (
     <div className={styles["page-container"]}>
@@ -106,6 +153,9 @@ const Carrinho = () => {
           </div>
         </section>
       </main>
+      
+      <ModalErro mensagem={mensagemErro} onClose={() => setMensagemErro("")} />
+
       <Footer />
     </div>
   );

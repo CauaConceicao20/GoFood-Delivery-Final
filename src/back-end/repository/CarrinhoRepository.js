@@ -14,8 +14,7 @@ class CarrinhoRepository {
         try {
             await conn.run('BEGIN TRANSACTION');
 
-            await this.upsertItemCarrinho(itemCarrinho, conn);
-            await this.atualizaTotaisDoCarrinho(itemCarrinho.getCarrinhoId(), conn);
+            await this.aumentaValoresCarrinhoEItemCarrinho(itemCarrinho, itemCarrinho.getCarrinhoId(), conn)
 
             await conn.run('COMMIT');
         } catch (err) {
@@ -73,6 +72,18 @@ class CarrinhoRepository {
         }
     }
 
+    async aumentaValoresCarrinhoEItemCarrinho(itemCarrinho, carrinhoId, conn) {
+        try {
+            if (!conn) conn = await this.connection.connect();
+
+            await this.upsertItemCarrinho(itemCarrinho, conn);
+            await this.atualizaTotaisDoCarrinho(carrinhoId, conn);
+
+        } catch (err) {
+            throw err;
+        }
+    }
+
     async atualizaTotaisDoCarrinho(carrinhoId, conn) {
         if (!conn) conn = await this.connection.connect();
 
@@ -98,9 +109,9 @@ class CarrinhoRepository {
     `, [carrinhoId, carrinhoId]);
     }
 
-    async upsertItemCarrinho(itemCarrinho) {
+    async upsertItemCarrinho(itemCarrinho, conn) {
         try {
-            const conn = await this.connection.connect();
+            if (!conn) conn = await this.connection.connect();
             await conn.run(
                 `INSERT INTO itens_carrinho (carrinho_id, produto_id, quantidade, preco)
              VALUES (?, ?, ?, ?)
@@ -127,13 +138,44 @@ class CarrinhoRepository {
                 'SELECT * FROM itens_carrinho WHERE carrinho_id = ?',
                 [carrinho.getId()]
             );
-            
+
             return {
                 id: carrinho.getId(),
                 quantidade_total_itens: carrinho.getQuantidadeTotalDeItems(),
                 sub_total: carrinho.getSubTotal(),
                 itens: itens
             };
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async atualizarItemCarrinhoECarrinho(itemCarrinho, carrinho, conn) {
+        try {
+            if (!conn) conn = await this.connection.connect();
+
+            await conn.run(
+                `UPDATE itens_carrinho
+       SET quantidade = ?, preco = ?
+       WHERE carrinho_id = ? AND produto_id = ?`,
+                [
+                    itemCarrinho.getQuantidade(),
+                    itemCarrinho.getPreco(),
+                    itemCarrinho.getCarrinhoId(),
+                    itemCarrinho.getProdutoId()
+                ]
+            );
+
+            await conn.run(
+                `UPDATE carrinhos
+       SET quantidade_total_itens = ?, sub_total = ?
+       WHERE id = ?`,
+                [
+                    carrinho.getQuantidadeTotalDeItems(),
+                    carrinho.getSubTotal(),
+                    carrinho.getId()
+                ]
+            );
         } catch (err) {
             throw err;
         }

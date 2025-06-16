@@ -38,6 +38,18 @@ class CarrinhoController {
             this.authMiddleware.autorizar(['CLIENTE']),
             this.buscarCarrinhoComItensPorId.bind(this)
         );
+
+        this.router.put("/aumentarQuantidade",
+            this.authMiddleware.autenticar.bind(this.authMiddleware),
+            this.authMiddleware.autorizar(['CLIENTE']),
+            this.aumentarQuantidadeDeItemDoCarrinho.bind(this)
+        );
+
+        this.router.put("/diminuirQuantidade",
+            this.authMiddleware.autenticar.bind(this.authMiddleware),
+            this.authMiddleware.autorizar(['CLIENTE']),
+            this.diminuirQuantidadeDeItemDoCarrinho.bind(this)
+        );
     }
 
     async adicionarProduto(req, res) {
@@ -86,5 +98,34 @@ class CarrinhoController {
             throw err;
         }
     }
+
+    async aumentarQuantidadeDeItemDoCarrinho(req, res) {
+        try {
+            await this.usuarioService.buscarPorId(req.usuario.id);
+
+            const carrinho = await this.carrinhoService.buscarCarrinhoDoUsuario(req.usuario.id);
+        
+            const produto = await this.produtoService.buscarPorId(req.body.produtoId);
+            await this.carrinhoService.aumentarQuantidadeDeItemDoCarrinho(produto, carrinho);
+            res.status(200).json({ mensagem: "Quantidade do item aumentada com sucesso" });
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async diminuirQuantidadeDeItemDoCarrinho(req, res) {
+        try {
+            await this.usuarioService.buscarPorId(req.usuario.id);
+
+            const carrinho = await this.carrinhoService.buscarCarrinhoDoUsuario(req.usuario.id);
+        
+            const produto = await this.produtoService.buscarPorId(req.body.produtoId);
+            await this.carrinhoService.diminuirQuantidadeDeItemDoCarrinho(produto, carrinho);
+            res.status(200).json({ mensagem: "Quantidade do item diminuida com sucesso" });
+        } catch (err) {
+            throw err;
+        }
+    }
 }
+
 export default CarrinhoController;

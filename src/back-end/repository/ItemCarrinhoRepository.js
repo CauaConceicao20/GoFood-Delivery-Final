@@ -43,22 +43,33 @@ class ItemCarrinhoRepository {
 
     async buscaTodosItensAssociadosAoCarrinho(id, conn) {
         try {
-            if(!conn) await this.connection.connect(); 
+            if (!conn) await this.connection.connect();
 
             const itensCarrinho = await conn.all(`SELECT * FROM itens_carrinho WHERE carrinho_id = ?`, [id]);
 
-            if(itensCarrinho.length == 0) {
+            if (itensCarrinho.length == 0) {
                 throw new BadRequestError('Nenhum item do carrinho encontrado.');
             }
 
-            return itensCarrinho.map(itemCarrinho => new ItemCarrinho( itemCarrinho.produto_id, itemCarrinho.carrinho_id,
+            return itensCarrinho.map(itemCarrinho => new ItemCarrinho(itemCarrinho.produto_id, itemCarrinho.carrinho_id,
                 itemCarrinho.quantidade));
 
-        }catch(err) {
+        } catch (err) {
             throw err;
         }
     }
 
+    async buscarItemCarrinhoPorIdProduto(id) {
+        try {
+            const conn = await this.connection.connect();
+            const itemCarrinho = await conn.get(`SELECT * FROM itens_carrinho WHERE produto_id = ?`, [id]);
+
+            return new ItemCarrinho(itemCarrinho.produto_id, itemCarrinho.carrinho_id,
+                itemCarrinho.quantidade, itemCarrinho.preco);
+        } catch (err) {
+            throw err;
+        }
+    }
 }
 
 export default ItemCarrinhoRepository;

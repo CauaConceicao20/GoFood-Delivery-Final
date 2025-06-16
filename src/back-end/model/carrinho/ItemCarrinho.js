@@ -39,6 +39,14 @@ class ItemCarrinho {
         return this.preco;
     }
 
+    aumentaPreco(preco) {
+        this.preco += Number(preco);
+    }
+
+    diminuiPreco(preco) {
+        this.preco -= Number(preco);
+    }
+
     aumentaQuantidade(quantidade) {
         this.quantidade += Number(quantidade);
     }

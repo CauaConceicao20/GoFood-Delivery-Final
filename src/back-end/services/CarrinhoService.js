@@ -1,14 +1,16 @@
 import CarrinhoRepository from '../repository/CarrinhoRepository.js';
 import ProdutoService from './ProdutoService.js';
 import RestauranteService from './RestauranteService.js';
-import { ForbiddenOwnRestaurantProductError, NotFoundError } from '../exception/GlobalExceptions.js';
+import { ForbiddenOwnRestaurantProductError, MinimumQuantityException } from '../exception/GlobalExceptions.js';
 import ItemCarrinho from '../model/carrinho/ItemCarrinho.js';
+import ItemCarrinhoService from './ItemCarrinhoService.js';
 class CarrinhoService {
 
     constructor() {
         this.carrinhoRepository = new CarrinhoRepository();
         this.produtoService = new ProdutoService();
         this.restauranteService = new RestauranteService();
+        this.itemCarrinhoService = new ItemCarrinhoService();
     }
 
     async registra(carrinho, idUsuario) {
@@ -55,6 +57,31 @@ class CarrinhoService {
         } catch (err) {
             throw err;
         }
+    }
+
+    async aumentarQuantidadeDeItemDoCarrinho(produto, carrinho) {
+        const itemCarrinho = await this.itemCarrinhoService.buscarItemCarrinhoPorIdProduto(produto.getId());
+
+        itemCarrinho.aumentaQuantidade(1);
+        itemCarrinho.aumentaPreco(produto.getPreco());
+        carrinho.aumentaQuantidadeTotalDeItems(1);
+        carrinho.aumentaSubTotalDoCarrinho(produto.getPreco());
+
+        await this.carrinhoRepository.atualizarItemCarrinhoECarrinho(itemCarrinho, carrinho);
+    }
+
+    async diminuirQuantidadeDeItemDoCarrinho(produto, carrinho) {
+        const itemCarrinho = await this.itemCarrinhoService.buscarItemCarrinhoPorIdProduto(produto.getId());
+
+        if (itemCarrinho.getQuantidade() <= 1) {
+            throw new MinimumQuantityException("Quantidade mínima atingida");
+        }
+        itemCarrinho.diminuiQuantidade(1);
+        itemCarrinho.diminuiPreco(produto.getPreco());
+        carrinho.diminuiQuantidadeTotalDeItems(1);
+        carrinho.diminuiSubTotalDoCarrinho(produto.getPreco());
+
+        await this.carrinhoRepository.atualizarItemCarrinhoECarrinho(itemCarrinho, carrinho);
     }
 }
 export default CarrinhoService;
