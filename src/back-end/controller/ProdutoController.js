@@ -90,7 +90,8 @@ class ProdutoController {
                 const categoria = await this.categoriaService.buscarPorId(produto.getIdCategoria());
                 const restaurante = await this.restauranteService.buscarPorId(produto.getIdRestaurante());
                 const foto = await this.fotoService.buscarFotoDeProdutoPorId(produto.getId());
-                return new ProdutoResponseDto(produto, categoria, restaurante, foto);
+                const logoRestaurante = await this.fotoService.buscarFotoDeRestaurantePorId(restaurante.getId());
+                return new ProdutoResponseDto(produto, categoria, restaurante, foto, logoRestaurante);
             }));
             res.status(200).json(produtosDto);
         } catch (err) {

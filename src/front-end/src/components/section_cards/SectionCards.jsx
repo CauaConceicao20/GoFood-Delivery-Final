@@ -28,7 +28,7 @@ const CardSection = () => {
           preco={produto.preco}
           descricaoProduto={produto.descricao}
           imagemProduto={`http://localhost:3001${produto.fotoUrl}`}
-          logoDoRestaurante={`/uploads/img-restaurantes/${produto.restaurante.id}.jpeg`}
+          logoDoRestaurante={`http://localhost:3001${produto.logoRestaurante}`}
           restauranteNome={produto.restaurante.nome}
         />
       ))}

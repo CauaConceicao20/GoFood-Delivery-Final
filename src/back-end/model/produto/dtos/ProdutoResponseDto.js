@@ -1,7 +1,7 @@
 import CategoriaResponseDto from "./CategoriaResponseDto.js";
 
 class ProdutoResponseDto {
-    constructor(produto, categoria, restaurante, foto) {
+    constructor(produto, categoria, restaurante, foto, logoRestaurante) {
         this.id = produto.getId();
         this.nome = produto.getNome();
         this.preco = produto.getPreco();
@@ -9,6 +9,7 @@ class ProdutoResponseDto {
         this.categoria = new CategoriaResponseDto(categoria);
         this.restaurante = new RestauranteIdNomeDto(restaurante);
         this.fotoUrl = foto ? foto.getUrl() : null;
+        this.logoRestaurante = logoRestaurante ? logoRestaurante.getUrl() : null;
         this.ativo = produto.getAtivo();
     }
 }
