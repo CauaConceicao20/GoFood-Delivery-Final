@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Carrinho.module.css";
+import { Link } from 'react-router-dom';
 import IconPesquisar from '../../assets/icon-pesquisar.png';
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
@@ -60,7 +61,9 @@ const Carrinho = () => {
         <section className={styles.carrinho}>
           <div className={styles["area-do-btn-voltar"]}>
             <button className={styles["btn-de-voltar"]}>
-              <i className="fas fa-arrow-left"></i>
+              <Link to="/">
+                <i className="fas fa-arrow-left"></i>
+              </Link>
             </button>
           </div>
 

@@ -1,32 +1,35 @@
 .page-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .main {
-  flex: 1;
+    flex: 1;
 }
 
 .header-do-carrinho {
     margin-bottom: 30px;
 }
 
-p, span  {
+p,
+span {
     font-family: "Inter", sans-serif;
 }
 
 .carrinho {
-    width: 1200px;
-    padding: 30px;
+    width: 100vw;
+    max-width: 1200px;
+    padding: 30px 20px;
     margin: 0 auto 20px auto;
 }
 
 .area-do-btn-voltar a {
     text-decoration: none;
+    color: inherit;
 }
 
-.btn-de-voltar{
+.btn-de-voltar {
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 50%;
@@ -54,13 +57,11 @@ p, span  {
     max-width: 400px;
 }
 
- 
 .icone-de-busca-carrinho {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 40px;
-    height: auto;
     background-color: white;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -79,20 +80,14 @@ p, span  {
 
 .header-do-carrinho input {
     width: 100%;
-    height: 5px;
     border: 1px solid #ddd;
     border-left: none;
-    border-radius: 5px;
-    padding: 10px;
-    display: block;
-    min-width: 200px;
-    height: auto;
     padding: 11px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-      outline: none;
+    outline: none;
 }
 
 .conteudo-do-carrinho {
@@ -103,15 +98,14 @@ p, span  {
 .header-do-carrinho h1 {
     font-family: "Acme", sans-serif;
     font-size: 30px;
-    font-style: normal;
     color: #E53935;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
 .linha-de-separacao {
-    margin: 20px 0 20px;
-    border: 1px solid #E53935 ;
+    margin: 20px 0;
+    border: 1px solid #E53935;
 }
 
 .summary {
@@ -119,13 +113,12 @@ p, span  {
     justify-content: space-between;
 }
 
-.area-de-preco span{
+.area-de-preco span {
     font-weight: bold;
 }
 
 .summary span {
-   font-size: clamp(18px, 2vw, 20px);
-
+    font-size: clamp(18px, 2vw, 20px);
 }
 
 .botao-finalizar button {
@@ -140,7 +133,7 @@ p, span  {
 }
 
 .botao-finalizar button:hover {
-    background-color:#a82d2d;
+    background-color: #a82d2d;
     cursor: pointer;
 }
 
@@ -152,15 +145,19 @@ p, span  {
     margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
+    padding: 10px;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 .alimento-do-carrinho img {
-    min-width: 200px;
-    height: 200px;
-    padding: 10px;
+    width: 100%;
+    max-width: 180px;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
+    padding: 10px;
     border-radius: 20px;
-
+    flex-shrink: 0;
 }
 
 .alimento-do-carrinho img:hover {
@@ -203,15 +200,12 @@ input[type="checkbox"]:hover {
     display: flex;
 }
 
-.linha-de-opcoes input[type="number"]  {
+.linha-de-opcoes input[type="number"] {
     text-align: center;
     border: 1px solid black;
     width: 30px;
     margin: 0;
     padding: 0;
-}
-
-.linha-de-opcoes input[type="number"] {
     -moz-appearance: textfield;
 }
 
@@ -227,16 +221,15 @@ input[type="checkbox"]:hover {
     background-color: #E53935;
     color: white;
     border: 1px solid black;
-    
-
 }
+
 .area-btn-diminuir button {
     border-top-left-radius: 10px;
-    border-bottom-left-radius : 10px;
+    border-bottom-left-radius: 10px;
 }
 
 .area-btn-aumentar button {
-  border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 10px;
     border-top-right-radius: 10px;
 }
 
@@ -254,11 +247,9 @@ input[type="checkbox"]:hover {
 
 .btn-excluir,
 .area-btn-diminuir button,
-.area-btn-aumentar button{
- transition: background-color 0.3s ease;
+.area-btn-aumentar button {
+    transition: background-color 0.3s ease;
 }
-
-
 
 .btn-excluir:hover,
 .area-btn-diminuir button:hover,
@@ -267,6 +258,30 @@ input[type="checkbox"]:hover {
     cursor: pointer;
 }
 
+/* RESPONSIVO */
+
+@media (max-width: 1024px) {
+    .carrinho {
+        padding: 20px;
+    }
+
+    .alimento-do-carrinho {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .alimento-do-carrinho img {
+        width: 100%;
+        max-width: 180px;
+    }
+
+    .conteudo-alimento {
+        max-width: 100%;
+        width: 100%;
+        align-items: center;
+        text-align: center;
+    }
+}
 
 @media (max-width: 760px) {
     .alimento-do-carrinho {
@@ -284,6 +299,7 @@ input[type="checkbox"]:hover {
 
     .alimento-do-carrinho img {
         width: 100%;
+        max-width: 180px;
     }
 
     .botao-finalizar button {
@@ -295,8 +311,6 @@ input[type="checkbox"]:hover {
         margin: 0;
     }
 }
-
-
 
 @media (max-width: 630px) {
     .summary {
