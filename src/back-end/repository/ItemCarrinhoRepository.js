@@ -40,7 +40,7 @@ class ItemCarrinhoRepository {
         }
     }
 
-    /*
+
     async buscaTodosItensAssociadosAoCarrinho(id, conn) {
         try {
             if(!conn) await this.connection.connect(); 
@@ -58,7 +58,6 @@ class ItemCarrinhoRepository {
             throw err;
         }
     }
-        */
 
 }
 

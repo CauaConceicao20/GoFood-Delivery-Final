@@ -38,7 +38,7 @@ class RestauranteController {
         this.router.post(
             "/registra",
             this.authMiddleware.autenticar.bind(this.authMiddleware),
-            this.authMiddleware.autorizar('CLIENTE'),
+            this.authMiddleware.autorizar(['CLIENTE']),
             this.configMulter,
             this.registraRestaurante.bind(this)
         );
@@ -46,7 +46,7 @@ class RestauranteController {
         this.router.get(
             "/buscaRestaurantesAssociados",
             this.authMiddleware.autenticar.bind(this.authMiddleware),
-            this.authMiddleware.autorizar('CLIENTE, RESTAURANTE'),
+            this.authMiddleware.autorizar(['RESTAURANTE', 'ADMIN']),
             this.buscarRestaurantesAssociadosAoUsuario.bind(this)
         );
     }

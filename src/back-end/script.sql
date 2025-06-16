@@ -165,6 +165,7 @@ CREATE TABLE IF NOT EXISTS itens_carrinho (
     carrinho_id INTEGER NOT NULL,
     produto_id INTEGER NOT NULL,
     quantidade INT,
+    preco DECIMAL(10,2),
     PRIMARY KEY (carrinho_id, produto_id),
     FOREIGN KEY (carrinho_id) REFERENCES carrinhos(id),
     FOREIGN KEY (produto_id) REFERENCES produtos(id)

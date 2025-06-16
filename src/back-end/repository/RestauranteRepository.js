@@ -19,7 +19,7 @@ class RestauranteRepository {
         this.usuarioGrupoRepository = new UsuarioGrupoRepository();
     }
 
-    async registra(restaurante, idsFormaPagamento, grupos, foto) {
+    async registra(restaurante, idsFormaPagamento, grupos, foto, jaTemGrupoRestaurante) {
         let conn;
         try {
             conn = await this.connection.connect();
@@ -30,16 +30,21 @@ class RestauranteRepository {
             for (const idFormaPagamento of idsFormaPagamento) {
                 const formaPagamentoEncontrada = await this.formaDePagamentoRepository.buscarPorId(idFormaPagamento, conn);
                 await this.restaurantePagamentoRepository.associaRestauranteEPagamento(
-                    new RestaurantePagamento(restaurante.getId(), formaPagamentoEncontrada.getId()), conn);
+                    new RestaurantePagamento(restaurante.getId(), formaPagamentoEncontrada.getId()), conn
+                );
             }
 
-            for (const grupo of grupos) {
-                if (grupo.getNome() === GrupoNomeEnum.RESTAURANTE)
-                    await this.usuarioGrupoRepository.associaUsuarioAoGrupo(new UsuarioGrupo(restaurante.getIdUsuario(),
-                        grupo.getId()), conn)
+            if (!jaTemGrupoRestaurante) {
+                for (const grupo of grupos) {
+                    if (grupo.getNome() === GrupoNomeEnum.RESTAURANTE) {
+                        await this.usuarioGrupoRepository.associaUsuarioAoGrupo(
+                            new UsuarioGrupo(restaurante.getIdUsuario(), grupo.getId()), conn
+                        );
+                    }
+                }
             }
+
             await conn.run("COMMIT");
-
             return restaurante;
         } catch (err) {
             await conn.run("ROLLBACK");

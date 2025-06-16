@@ -1,6 +1,7 @@
-    import Connection from "../database/Connection.js";
+import Connection from "../database/Connection.js";
 import { BadRequestError } from "../exception/GlobalExceptions.js";
 import Carrinho from "../model/carrinho/Carrinho.js";
+import { NotFoundError } from "../exception/GlobalExceptions.js";
 
 class CarrinhoRepository {
 
@@ -62,7 +63,7 @@ class CarrinhoRepository {
             const result = await conn.get(`SELECT * FROM carrinhos WHERE usuario_id = ?`, [idUsuario]);
 
             if (!result) {
-                throw new BadRequestError(`Carrinho não encontrado.`);
+                throw new NotFoundError(`Carrinho não encontrado.`);
             }
 
             return new Carrinho(result.id, result.quantidade_total_itens, result.sub_total, result.usuario_id);
@@ -97,19 +98,45 @@ class CarrinhoRepository {
     `, [carrinhoId, carrinhoId]);
     }
 
-    async upsertItemCarrinho(itemCarrinho, conn) {
-        if (!conn) conn = await this.connection.connect();
-        await conn.run(`
-        INSERT INTO itens_carrinho (carrinho_id, produto_id, quantidade)
-        VALUES (?, ?, ?)
-        ON CONFLICT(carrinho_id, produto_id)
-        DO UPDATE SET quantidade = quantidade + excluded.quantidade
-    `, [
-            itemCarrinho.getCarrinhoId(),
-            itemCarrinho.getProdutoId(),
-            itemCarrinho.getQuantidade()
-        ]);
+    async upsertItemCarrinho(itemCarrinho) {
+        try {
+            const conn = await this.connection.connect();
+            await conn.run(
+                `INSERT INTO itens_carrinho (carrinho_id, produto_id, quantidade, preco)
+             VALUES (?, ?, ?, ?)
+             ON CONFLICT(carrinho_id, produto_id) DO UPDATE SET
+                quantidade = quantidade + excluded.quantidade,
+                preco = preco + excluded.preco`,
+                [
+                    itemCarrinho.getCarrinhoId(),
+                    itemCarrinho.getProdutoId(),
+                    itemCarrinho.getQuantidade(),
+                    itemCarrinho.getPreco()
+                ]
+            );
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async buscarCarrinhoComItens(carrinho) {
+        try {
+            const conn = await this.connection.connect();
+
+            const itens = await conn.all(
+                'SELECT * FROM itens_carrinho WHERE carrinho_id = ?',
+                [carrinho.getId()]
+            );
+            
+            return {
+                id: carrinho.getId(),
+                quantidade_total_itens: carrinho.getQuantidadeTotalDeItems(),
+                sub_total: carrinho.getSubTotal(),
+                itens: itens
+            };
+        } catch (err) {
+            throw err;
+        }
     }
 }
-
 export default CarrinhoRepository;

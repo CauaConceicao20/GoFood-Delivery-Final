@@ -1,9 +1,10 @@
 class ItemCarrinho {
 
-    constructor(produtoId, carrinhoId, quantidade) {
+    constructor(produtoId, carrinhoId, quantidade, preco) {
         this.produtoId = produtoId;
         this.carrinhoId = carrinhoId;
         this.quantidade = Number(quantidade);
+        this.preco = preco;
     }
 
     setProdutoId(produtoId) {
@@ -28,6 +29,14 @@ class ItemCarrinho {
 
     getQuantidade() {
         return this.quantidade;
+    }
+    
+    setPreco(preco) {
+        this.preco = preco;
+    }
+
+    getPreco() {
+        return this.preco;
     }
 
     aumentaQuantidade(quantidade) {

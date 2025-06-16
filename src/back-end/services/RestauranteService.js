@@ -2,6 +2,7 @@ import RestauranteRepository from '../repository/RestauranteRepository.js';
 import RestaurantePagamentoService from './RestaurantePagamentoService.js';
 import { BadRequestError } from '../exception/GlobalExceptions.js';
 import GrupoService from './GrupoService.js';
+import { GrupoNomeEnum } from '../model/usuario/enums/GrupoNomeEnum.js';
 
 class RestauranteService {
 
@@ -15,7 +16,18 @@ class RestauranteService {
     async registra(restaurante, foto) {
         try {
             const grupos = await this.grupoSerivce.buscarTodos();
-            return await this.restauranteRepository.registra(restaurante, restaurante.getIdsFormaPagamento(), grupos, foto);
+
+            let jaTemGrupoRestaurante = false;
+
+            for (const grupo of grupos) {
+                if (grupo.getNome() === GrupoNomeEnum.RESTAURANTE) {
+                    jaTemGrupoRestaurante = true;
+                    break;
+                }
+            }
+            return await this.restauranteRepository.registra(restaurante, restaurante.getIdsFormaPagamento(),
+                grupos, foto, jaTemGrupoRestaurante
+            );
         } catch (err) {
             throw err;
         }
@@ -33,10 +45,10 @@ class RestauranteService {
         }
     }
 
-    async buscarRestaurantesAssociadosAUsuario (idUsuario) {
+    async buscarRestaurantesAssociadosAUsuario(idUsuario) {
         try {
             const restaurantes = await this.restauranteRepository.buscarRestaurantesAssociadosAUsuario(idUsuario);
-            for(const restaurante of restaurantes) {
+            for (const restaurante of restaurantes) {
                 if (!restaurante) {
                     throw new BadRequestError(`Restaurante com ID ${idUsuario} não encontrado.`);
                 }
