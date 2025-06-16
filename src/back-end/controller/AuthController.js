@@ -8,7 +8,6 @@ import { UnauthorizedError } from '../exception/GlobalExceptions.js';
 import UsuarioService from '../services/UsuarioService.js';
 import UsuarioResponseDto from '../model/usuario/dtos/UsuarioResponseDto.js';
 import UsuarioGrupoService from '../services/UsuarioGrupoService.js';
-import cookieParser from 'cookie-parser';
 
 
 class AuthController {
@@ -18,7 +17,7 @@ class AuthController {
     this.authService = new AuthService();
     this.tokenService = new TokenService();
     this.authMiddleware = new AuthMiddleware();
-    this.usuarioService = new UsuarioService
+    this.usuarioService = new UsuarioService();
     this.UsuarioGrupoService = new UsuarioGrupoService();
     this.iniciaRotas();
   }

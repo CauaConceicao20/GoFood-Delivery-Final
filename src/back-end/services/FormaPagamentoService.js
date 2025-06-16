@@ -12,6 +12,14 @@ class FormaPagamentoService {
             throw err;
         }
     }
+
+    async buscarTodos() {
+        try {
+            return await this.formaPagamentoRepository.buscarTodos();
+        } catch (err) {
+            throw err;
+        }
+    }
 }
 
 export default FormaPagamentoService;

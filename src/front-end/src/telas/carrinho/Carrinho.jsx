@@ -5,12 +5,13 @@ import IconPesquisar from '../../assets/icon-pesquisar.png';
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import CarrinhoItem from "../../components/item_carrinho/CarrinhoItem.jsx";
-import ModalErro from "../../components/modal_erro/ModalErro"; // Modal para erro e sucesso
+import ModalErro from "../../components/modal_erro/ModalErro";
 
 const Carrinho = () => {
   const [items, setItems] = useState([]);
   const [mensagemErro, setMensagemErro] = useState("");
   const [mensagemSucesso, setMensagemSucesso] = useState("");
+  const [metodosPagamento, setMetodosPagamento] = useState([]);
 
   const buscarCarrinho = () => {
     fetch("http://localhost:3001/api/v1/carrinhos/buscarCarrinho", {
@@ -35,6 +36,16 @@ const Carrinho = () => {
 
   useEffect(() => {
     buscarCarrinho();
+
+    fetch("http://localhost:3001/api/v1/metodos-pagamento/buscarTodos", {
+      credentials: "include"
+    })
+      .then(res => {
+        if (!res.ok) throw new Error("Erro ao buscar métodos de pagamento");
+        return res.json();
+      })
+      .then(data => setMetodosPagamento(data))
+      .catch(err => console.error("Erro ao buscar métodos de pagamento:", err));
   }, []);
 
   const handleIncrease = async (id) => {
@@ -44,9 +55,7 @@ const Carrinho = () => {
     try {
       const response = await fetch("http://localhost:3001/api/v1/carrinhos/aumentarQuantidade", {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({
           produtoId: item.produtoId,
@@ -54,9 +63,7 @@ const Carrinho = () => {
         })
       });
 
-      if (!response.ok) {
-        throw new Error("Falha ao aumentar quantidade");
-      }
+      if (!response.ok) throw new Error("Falha ao aumentar quantidade");
 
       buscarCarrinho();
     } catch (error) {
@@ -72,9 +79,7 @@ const Carrinho = () => {
     try {
       const response = await fetch("http://localhost:3001/api/v1/carrinhos/diminuirQuantidade", {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({
           produtoId: item.produtoId,
@@ -104,9 +109,7 @@ const Carrinho = () => {
     try {
       const response = await fetch(`http://localhost:3001/api/v1/carrinhos/removerItem/${item.produtoId}`, {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({
           produtoId: item.produtoId,
@@ -170,6 +173,18 @@ const Carrinho = () => {
                 />
               ))
             )}
+          </div>
+
+          <div className={styles["area-metodo-pagamento"]}>
+            <label htmlFor="metodoPagamento">Método de Pagamento:</label>
+            <select id="metodoPagamento" name="metodoPagamento">
+              <option value="">Selecione um método</option>
+              {metodosPagamento.map((metodo) => (
+                <option key={metodo.id} value={metodo.id}>
+                  {metodo.nome}
+                </option>
+              ))}
+            </select>
           </div>
 
           <hr className={styles["linha-de-separacao"]} />
