@@ -29,6 +29,8 @@ main {
     display: flex;
 }
 
+
+
 @media (max-width: 1366px) {
     main {
         flex-direction: column;

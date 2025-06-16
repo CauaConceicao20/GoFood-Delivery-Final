@@ -8,7 +8,7 @@ const CardSection = () => {
   useEffect(() => {
     fetch('http://localhost:3001/api/v1/produtos/buscarTodos', {
       method: 'GET',
-      credentials: 'include', // <-- ESSENCIAL para enviar cookies
+      credentials: 'include',
     })
       .then((response) => {
         if (!response.ok) throw new Error('Erro ao buscar produtos');
