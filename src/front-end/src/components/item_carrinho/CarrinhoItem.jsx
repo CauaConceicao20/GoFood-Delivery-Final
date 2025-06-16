@@ -1,14 +1,18 @@
 import React from "react";
 import styles from "../../telas/carrinho/Carrinho.module.css";
 
-const CarrinhoItem = ({ item, onIncrease, onDecrease, onDelete }) => {
+const CarrinhoItem = ({ item, onIncrease, onDecrease, onDelete, onToggleSelect, isSelected }) => {
   const precoFormatado = (Number(item.price) || 0).toFixed(2).replace('.', ',');
 
   return (
     <article className={styles["alimento-do-carrinho"]}>
       <div className={styles["area-checkbox-e-img"]}>
         <div className={styles["div-checkbox"]}>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            checked={isSelected}
+            onChange={() => onToggleSelect(item.id)}
+          />
         </div>
         <span className={styles["area-imagem"]}>
           <img src={item.imgUrl} alt={item.name} />

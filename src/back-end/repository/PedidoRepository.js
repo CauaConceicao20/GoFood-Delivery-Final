@@ -16,7 +16,7 @@ class PedidoRepository {
             (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [pedido.getCodigo(), pedido.getSubTotal(), pedido.getTaxaFrete(),
             pedido.getValorTotal(), pedido.getDataCriacao(), pedido.getDataConfirmacao(), pedido.getDataEntrega(),
             pedido.getDataCancelamento(), pedido.getStatusPedido(), pedido.getUsuarioId(), pedido.getRestauranteId(),
-            pedido.getMetodoPagamento()]);
+            pedido.getIdMetodoPagamento()]);
 
             for (const itemPedido of itemsPedido) {
                 await this.associaItemAoPedido(result.lastID, itemPedido, conn);

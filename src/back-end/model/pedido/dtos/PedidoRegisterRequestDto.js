@@ -10,7 +10,7 @@ class PedidoRegisterRequestDto {
             p => new ItemPedidoDto(p.idProduto, p.quantidade, p.observacao)
         );
         this.idMetodoPagamento = body.idMetodoPagamento;
-
+        this.nomeMetodoPagamento = body.nomeMetodoPagamento;
         this.validarCampos();
     }
 

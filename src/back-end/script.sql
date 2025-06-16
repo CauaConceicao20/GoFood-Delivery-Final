@@ -323,7 +323,6 @@ VALUES ('logo-sabor-rapido.jpeg', 'image/jpeg', 123456, '/uploads/img-restaurant
 
 INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VALUES (1, 1);
 INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VALUES (1, 2);
-INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VALUES (1, 3);
 INSERT INTO restaurantes_forma_pagamento (restaurante_id, forma_pagamento_id) VALUES (1, 4);
 
 -- Restaurante 2 aceita todas as formas de pagamento

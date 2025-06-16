@@ -1,4 +1,4 @@
-import { NotFoundError } from "../exception/GlobalExceptions.js";
+import { DifferentRestaurantProductsError, NotFoundError } from "../exception/GlobalExceptions.js";
 import ProdutoRepository from "../repository/ProdutoRepository.js";
 
 class ProdutoService {
@@ -39,17 +39,21 @@ class ProdutoService {
     }
 
     async verificaSeProdutosPertencemAoMesmoRestaurante(produtosId) {
-        let produtos = [];
-        for (const idProduto of produtosId) {
-            let contador = 0;
-            let produto = await this.buscarPorId(idProduto);
-            produtos.push(produto);
-            if (contador > 0 && produto.getIdRestaurante() !== produtos[contador - 1].getIdRestaurante()) {
-                throw new Error("Todos os produtos devem pertencer ao mesmo restaurante");
-            }
-            contador++;
-        }
+        if (produtosId.length === 0) return [];
 
+        const produtos = [];
+        let restauranteIdReferencia = null;
+
+        for (const idProduto of produtosId) {
+            const produto = await this.buscarPorId(idProduto);
+            produtos.push(produto);
+
+            if (restauranteIdReferencia === null) {
+                restauranteIdReferencia = produto.getIdRestaurante();
+            } else if (produto.getIdRestaurante() !== restauranteIdReferencia) {
+                throw new DifferentRestaurantProductsError("Não é possivel continuar, todos os produtos devem pertencer ao mesmo restaurante");
+            }
+        }
         return produtos;
     }
 }

@@ -2,6 +2,8 @@ import Pedido from '../model/pedido/Pedido.js';
 import PedidoRepository from '../repository/PedidoRepository.js';
 import ProdutoService from './ProdutoService.js';
 import RestauranteService from './RestauranteService.js';
+import RestaurantePagamentoService from './RestaurantePagamentoService.js';
+import { PaymentMethodNotAcceptedError } from '../exception/GlobalExceptions.js';
 
 class PedidoService {
 
@@ -9,6 +11,7 @@ class PedidoService {
         this.pedidoRepository = new PedidoRepository();
         this.produtoService = new ProdutoService();
         this.restauranteService = new RestauranteService();
+        this.restaurantePagamentoService = new RestaurantePagamentoService();
     }
 
     converteDtoParaPedido(pedidoDto, idUsuario) {
@@ -25,6 +28,8 @@ class PedidoService {
 
     async registra(pedido, itemsPedidoDto) {
         let produto = null
+        let condicao = false;
+
         try {
             for (const itemPedido of itemsPedidoDto) {
                 produto = await this.produtoService.buscarPorId(itemPedido.getIdProduto());
@@ -32,7 +37,19 @@ class PedidoService {
                 let subtotal = produto.getPreco() * itemPedido.getQuantidade();
                 pedido.setSubTotal(pedido.getSubTotal() + subtotal);
             }
+
             const restaurante = await this.restauranteService.buscarPorId(produto.getIdRestaurante());
+            const formasDePagamento = await this.restaurantePagamentoService.buscaFormasDePagamentoAssociadasAoRestaurante(produto.getIdRestaurante());
+
+            for (const formaDePagamento of formasDePagamento) {
+                if (formaDePagamento.getId() === pedido.getIdMetodoPagamento()) {
+                    condicao = true;
+                }
+            }
+
+            if (!condicao) throw new PaymentMethodNotAcceptedError(`O Restaurante ${restaurante.getNome()}
+             não aceita esse metodo de pagamento`);
+
             pedido.setProdutosId(itemsPedidoDto.map(item => item.getIdProduto()));
             pedido.setRestauranteId(produto.getIdRestaurante());
             pedido.setTaxaFrete(restaurante.getTaxaFrete());

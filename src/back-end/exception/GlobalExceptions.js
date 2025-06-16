@@ -35,6 +35,17 @@ class MinimumQuantityException extends ErrorDetails {
     super(400, message);
   }
 }
+class PaymentMethodNotAcceptedError extends BadRequestError {
+  constructor(message = 'O restaurante não aceita esse método de pagamento') {
+    super(message);
+  }
+}
+
+class DifferentRestaurantProductsError extends BadRequestError {
+  constructor(message = 'Todos os produtos devem pertencer ao mesmo restaurante') {
+    super(message);
+  }
+}
 
 export { NotFoundError, BadRequestError,  UnauthorizedError, ForbiddenError,
-  MinimumQuantityException, ForbiddenOwnRestaurantProductError };
+  MinimumQuantityException, ForbiddenOwnRestaurantProductError, PaymentMethodNotAcceptedError ,DifferentRestaurantProductsError};

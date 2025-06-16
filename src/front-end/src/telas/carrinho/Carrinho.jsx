@@ -12,11 +12,11 @@ const Carrinho = () => {
   const [mensagemErro, setMensagemErro] = useState("");
   const [mensagemSucesso, setMensagemSucesso] = useState("");
   const [metodosPagamento, setMetodosPagamento] = useState([]);
+  const [itensSelecionados, setItensSelecionados] = useState([]);
+  const [metodoSelecionado, setMetodoSelecionado] = useState("");
 
   const buscarCarrinho = () => {
-    fetch("http://localhost:3001/api/v1/carrinhos/buscarCarrinho", {
-      credentials: "include"
-    })
+    fetch("http://localhost:3001/api/v1/carrinhos/buscarCarrinho", { credentials: "include" })
       .then(res => res.json())
       .then(data => {
         const itensConvertidos = data.itens.map((item) => ({
@@ -37,9 +37,7 @@ const Carrinho = () => {
   useEffect(() => {
     buscarCarrinho();
 
-    fetch("http://localhost:3001/api/v1/metodos-pagamento/buscarTodos", {
-      credentials: "include"
-    })
+    fetch("http://localhost:3001/api/v1/metodos-pagamento/buscarTodos", { credentials: "include" })
       .then(res => {
         if (!res.ok) throw new Error("Erro ao buscar métodos de pagamento");
         return res.json();
@@ -57,10 +55,7 @@ const Carrinho = () => {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({
-          produtoId: item.produtoId,
-          carrinhoId: item.carrinhoId
-        })
+        body: JSON.stringify({ produtoId: item.produtoId, carrinhoId: item.carrinhoId })
       });
 
       if (!response.ok) throw new Error("Falha ao aumentar quantidade");
@@ -81,10 +76,7 @@ const Carrinho = () => {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({
-          produtoId: item.produtoId,
-          carrinhoId: item.carrinhoId
-        })
+        body: JSON.stringify({ produtoId: item.produtoId, carrinhoId: item.carrinhoId })
       });
 
       const body = await response.json();
@@ -111,10 +103,7 @@ const Carrinho = () => {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({
-          produtoId: item.produtoId,
-          carrinhoId: item.carrinhoId
-        })
+        body: JSON.stringify({ produtoId: item.produtoId, carrinhoId: item.carrinhoId })
       });
 
       const body = await response.json();
@@ -127,10 +116,90 @@ const Carrinho = () => {
 
       buscarCarrinho();
       setMensagemSucesso(body.mensagem || "Item removido com sucesso");
-
     } catch (error) {
       console.error("Erro ao remover item do carrinho:", error);
       setMensagemErro("Erro interno ao tentar remover item.");
+    }
+  };
+
+  const toggleItemSelecionado = (id) => {
+    setItensSelecionados(prev =>
+      prev.includes(id) ? prev.filter(itemId => itemId !== id) : [...prev, id]
+    );
+  };
+
+  const handleFinalizarPedido = async () => {
+    if (itensSelecionados.length === 0) {
+      setMensagemErro("Selecione ao menos um item do carrinho.");
+      return;
+    }
+
+    const metodo = metodosPagamento.find(m => m.id.toString() === metodoSelecionado);
+    if (!metodo) {
+      setMensagemErro("Selecione um método de pagamento válido.");
+      return;
+    }
+
+    const produtos = items
+      .filter(item => itensSelecionados.includes(item.id))
+      .map(item => ({
+        idProduto: item.produtoId,
+        quantidade: item.quantity,
+        observacao: "Sem observação"
+      }));
+
+    try {
+      const response = await fetch("http://localhost:3001/api/v1/pedidos/registra", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          produtos,
+          idMetodoPagamento: metodo.id,
+          nomeMetodoPagamento: metodo.nome
+        })
+      });
+
+      const body = await response.json();
+
+      if (!response.ok) {
+        setMensagemErro(body.erro || "Erro ao finalizar o pedido.");
+        return;
+      }
+
+      // Pedido finalizado com sucesso, agora removemos os itens selecionados do carrinho
+      for (const id of itensSelecionados) {
+        const item = items.find(i => i.id === id);
+        if (!item) continue;
+
+        try {
+          const deleteResponse = await fetch(
+            `http://localhost:3001/api/v1/carrinhos/removerItem/${item.produtoId}`,
+            {
+              method: "DELETE",
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+              body: JSON.stringify({ produtoId: item.produtoId, carrinhoId: item.carrinhoId })
+            }
+          );
+
+          // Mesmo que falhe na remoção de algum item, não para o fluxo, só registra erro no console
+          if (!deleteResponse.ok) {
+            const deleteBody = await deleteResponse.json();
+            console.error(`Falha ao remover item ${item.produtoId}:`, deleteBody.erro || "Erro desconhecido");
+          }
+        } catch (err) {
+          console.error(`Erro interno ao remover item ${item.produtoId}:`, err);
+        }
+      }
+
+      setMensagemSucesso("Pedido realizado com sucesso.");
+      setItensSelecionados([]);
+      setMetodoSelecionado("");
+      buscarCarrinho();
+    } catch (error) {
+      console.error("Erro ao finalizar pedido:", error);
+      setMensagemErro("Erro interno ao finalizar pedido.");
     }
   };
 
@@ -170,6 +239,8 @@ const Carrinho = () => {
                   onIncrease={handleIncrease}
                   onDecrease={handleDecrease}
                   onDelete={handleDelete}
+                  onToggleSelect={toggleItemSelecionado}
+                  isSelected={itensSelecionados.includes(item.id)}
                 />
               ))
             )}
@@ -177,7 +248,12 @@ const Carrinho = () => {
 
           <div className={styles["area-metodo-pagamento"]}>
             <label htmlFor="metodoPagamento">Método de Pagamento:</label>
-            <select id="metodoPagamento" name="metodoPagamento">
+            <select
+              id="metodoPagamento"
+              name="metodoPagamento"
+              value={metodoSelecionado}
+              onChange={(e) => setMetodoSelecionado(e.target.value)}
+            >
               <option value="">Selecione um método</option>
               {metodosPagamento.map((metodo) => (
                 <option key={metodo.id} value={metodo.id}>
@@ -195,7 +271,7 @@ const Carrinho = () => {
               <span>R$ {subTotal.toFixed(2).replace('.', ',')}</span>
             </div>
             <div className={styles["botao-finalizar"]}>
-              <button>Finalizar pedido</button>
+              <button onClick={handleFinalizarPedido}>Finalizar pedido</button>
             </div>
           </div>
         </section>
