@@ -46,7 +46,7 @@ class RestauranteController {
         this.router.get(
             "/buscaRestaurantesAssociados",
             this.authMiddleware.autenticar.bind(this.authMiddleware),
-            this.authMiddleware.autorizar(['RESTAURANTE', 'ADMIN']),
+            this.authMiddleware.autorizar(['CLIENTE', 'RESTAURANTE']),
             this.buscarRestaurantesAssociadosAoUsuario.bind(this)
         );
     }

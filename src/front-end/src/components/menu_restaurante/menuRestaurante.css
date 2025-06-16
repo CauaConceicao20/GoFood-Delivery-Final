@@ -37,6 +37,7 @@
 
 .menu-restaurante nav li {
   display: flex;
+  color: black;
   align-items: center;
   padding: 8px 16px;
   transition: background 0.2s;
