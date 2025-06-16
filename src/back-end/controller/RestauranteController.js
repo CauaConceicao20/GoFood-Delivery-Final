@@ -57,6 +57,13 @@ class RestauranteController {
             this.configMulter,
             this.atualizaRestaurante.bind(this)
         );
+
+        this.router.get(
+            "/buscaRestaurante/:id",
+            this.authMiddleware.autenticar.bind(this.authMiddleware),
+            this.authMiddleware.autorizar(['RESTAURANTE']),
+            this.buscarRestaurantePorId.bind(this)
+        );
     }
 
     async registraRestaurante(req, res) {
@@ -123,6 +130,37 @@ class RestauranteController {
             }));
 
             res.status(200).json(restaurantesDto);
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async buscarRestaurantePorId(req, res) {
+        try {
+            const usuarioId = req.usuario.id;
+            const restauranteId = parseInt(req.params.id);
+
+            const usuario = await this.usaurioService.buscarPorId(usuarioId);
+            
+            const restaurantes = await this.restauranteService.buscarRestaurantesAssociadosAUsuario(usuarioId);
+            const restaurante = restaurantes.find(r => r.getId() === restauranteId);
+
+            if (!restaurante) {
+                return res.status(404).json({ mensagem: "Restaurante não encontrado ou não associado ao usuário." });
+            }
+
+            const endereco = restaurante.getEndereco();
+            const cidade = await this.enderecoService.buscaCidadePorId(endereco.getCidadeId());
+            const estado = await this.enderecoService.buscaEstadoPorId(cidade.getEstadoId());
+            const foto = await this.fotoService.buscarFotoDeRestaurantePorId(restauranteId);
+            const formasPagamento = await this.restaurantePagamentoService
+                .buscaFormasDePagamentoAssociadasAoRestaurante(restauranteId);
+
+            const restauranteDto = new RestauranteResponseDto(restaurante, endereco, cidade, estado,
+                formasPagamento, foto
+            );
+
+            return res.status(200).json(restauranteDto);
         } catch (err) {
             throw err;
         }

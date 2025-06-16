@@ -167,7 +167,6 @@ const Carrinho = () => {
         return;
       }
 
-      // Pedido finalizado com sucesso, agora removemos os itens selecionados do carrinho
       for (const id of itensSelecionados) {
         const item = items.find(i => i.id === id);
         if (!item) continue;
@@ -183,7 +182,6 @@ const Carrinho = () => {
             }
           );
 
-          // Mesmo que falhe na remoção de algum item, não para o fluxo, só registra erro no console
           if (!deleteResponse.ok) {
             const deleteBody = await deleteResponse.json();
             console.error(`Falha ao remover item ${item.produtoId}:`, deleteBody.erro || "Erro desconhecido");
