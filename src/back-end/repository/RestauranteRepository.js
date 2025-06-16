@@ -148,6 +148,101 @@ class RestauranteRepository {
             throw err;
         }
     }
+
+    async atualiza(restaurante, novaFoto) {
+        let conn;
+        try {
+            conn = await this.connection.connect();
+            await conn.run("BEGIN TRANSACTION");
+
+            const campos = [];
+            const valores = [];
+
+            if (restaurante.getNome()) {
+                campos.push('nome = ?');
+                valores.push(restaurante.getNome());
+            }
+            if (restaurante.getDescricao()) {
+                campos.push('descricao = ?');
+                valores.push(restaurante.getDescricao());
+            }
+            if (restaurante.getRazaoSocial()) {
+                campos.push('razao_social = ?');
+                valores.push(restaurante.getRazaoSocial());
+            }
+
+            const endereco = restaurante.getEndereco();
+
+            if (endereco.getCep()) {
+                campos.push('cep = ?');
+                valores.push(endereco.getCep());
+            }
+            if (endereco.getLogradouro()) {
+                campos.push('logradouro = ?');
+                valores.push(endereco.getLogradouro());
+            }
+            if (endereco.getNumero()) {
+                campos.push('numero = ?');
+                valores.push(endereco.getNumero());
+            }
+            if (endereco.getComplemento()) {
+                campos.push('complemento = ?');
+                valores.push(endereco.getComplemento());
+            }
+            if (endereco.getBairro()) {
+                campos.push('bairro = ?');
+                valores.push(endereco.getBairro());
+            }
+            if (endereco.getCidadeId()) {
+                campos.push('cidade_id = ?');
+                valores.push(endereco.getCidadeId());
+            }
+
+            campos.push('data_atualizacao = ?');
+            valores.push(restaurante.getDataAtualizacao());
+
+            valores.push(restaurante.getId());
+            const query = `UPDATE restaurantes SET ${campos.join(', ')} WHERE id = ?`;
+            await conn.run(query, valores);
+
+            if (novaFoto) {
+                const row = await conn.get(
+                    `SELECT id, url FROM fotos WHERE entidade_id = ? AND entidade_tipo = ?`,
+                    [restaurante.getId(), 'RESTAURANTE']
+                );
+
+                if (row) {
+                    const caminhoAntigo = path.resolve('uploads', path.basename(row.url));
+                    try {
+                        await fs.unlink(caminhoAntigo);
+                    } catch (err) {
+                        console.warn('Falha ao excluir imagem antiga:', err.message);
+                    }
+
+                    await conn.run(`DELETE FROM fotos WHERE id = ?`, [row.id]);
+                }
+
+                await conn.run(
+                    `INSERT INTO fotos (nome, content_type, tamanho, url, entidade_tipo, entidade_id)
+                 VALUES (?, ?, ?, ?, ?, ?)`,
+                    [
+                        novaFoto.getNome(),
+                        novaFoto.getContentType(),
+                        novaFoto.getTamanho(),
+                        novaFoto.getUrl(),
+                        'RESTAURANTE',
+                        restaurante.getId()
+                    ]
+                );
+            }
+
+            await conn.run("COMMIT");
+            return await this.buscarPorId(restaurante.getId(), conn);
+        } catch (err) {
+            await conn.run("ROLLBACK");
+            throw err;
+        }
+    }
 }
 
 export default RestauranteRepository;

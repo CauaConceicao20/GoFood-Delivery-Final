@@ -46,8 +46,16 @@ class RestauranteController {
         this.router.get(
             "/buscaRestaurantesAssociados",
             this.authMiddleware.autenticar.bind(this.authMiddleware),
-            this.authMiddleware.autorizar(['CLIENTE', 'RESTAURANTE']),
+            this.authMiddleware.autorizar(['RESTAURANTE']),
             this.buscarRestaurantesAssociadosAoUsuario.bind(this)
+        );
+
+        this.router.put(
+            "/atualizaRestaurante/:id",
+            this.authMiddleware.autenticar.bind(this.authMiddleware),
+            this.authMiddleware.autorizar(['RESTAURANTE']),
+            this.configMulter,
+            this.atualizaRestaurante.bind(this)
         );
     }
 
@@ -60,7 +68,7 @@ class RestauranteController {
             let restaurante = new Restaurante(null, restauranteDto.nome, restauranteDto.descricao,
                 restauranteDto.razaoSocial, restauranteDto.taxaFrete, this.dataHoraAtual, null,
                 new Endereco(restauranteDto.endereco.cep, restauranteDto.endereco.logradouro, restauranteDto.endereco.numero,
-                restauranteDto.endereco.complemento, restauranteDto.endereco.bairro, restauranteDto.endereco.cidadeId),
+                    restauranteDto.endereco.complemento, restauranteDto.endereco.bairro, restauranteDto.endereco.cidadeId),
                 usuario.getId(), restauranteDto.formasPagamento, restauranteDto.cnpj);
 
             if (!file) {
@@ -111,11 +119,33 @@ class RestauranteController {
                 const formasPagamento = await this.restaurantePagamentoService.
                     buscaFormasDePagamentoAssociadasAoRestaurante(restaurante.getId());
                 return new RestauranteResponseDto(restaurante, endereco, cidade, estado, formasPagamento,
-                foto);
+                    foto);
             }));
 
             res.status(200).json(restaurantesDto);
         } catch (err) {
+            throw err;
+        }
+    }
+
+    async atualizaRestaurante(req, res) {
+        try {
+            const restauranteDto = new RestauranteUpdateRequestDto(JSON.parse(req.body.restaurante));
+            const fotoDto = req.file ? new FotoRegisterRequestDto(req.file) : null;
+
+            const restauranteAtualizado = await this.restauranteService.atualiza(restauranteDto, fotoDto);
+
+            res.status(200).json(restauranteAtualizado);
+        } catch (err) {
+            if (req.file) {
+                const filePath = path.resolve('uploads', req.file.filename);
+                try {
+                    await fs.unlink(filePath);
+                } catch (e) {
+                    console.error('Erro ao remover arquivo órfão:', e);
+                }
+            }
+
             throw err;
         }
     }

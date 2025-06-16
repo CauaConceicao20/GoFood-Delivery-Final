@@ -3,35 +3,37 @@ import RestaurantePagamentoService from './RestaurantePagamentoService.js';
 import { BadRequestError } from '../exception/GlobalExceptions.js';
 import GrupoService from './GrupoService.js';
 import { GrupoNomeEnum } from '../model/usuario/enums/GrupoNomeEnum.js';
+import UsuarioGrupoService from './UsuarioGrupoService.js';
 
 class RestauranteService {
 
     constructor() {
         this.restauranteRepository = new RestauranteRepository();
         this.restaurantePagamentoService = new RestaurantePagamentoService();
+        this.usuarioGrupoService = new UsuarioGrupoService();
         this.grupoSerivce = new GrupoService();
 
     }
 
     async registra(restaurante, foto) {
-        try {
-            const grupos = await this.grupoSerivce.buscarTodos();
+    try {
+        const gruposSistema = await this.grupoSerivce.buscarTodos();
 
-            let jaTemGrupoRestaurante = false;
+        const gruposUsuario = await this.usuarioGrupoService.buscaGruposDoUsuario(restaurante.getIdUsuario());
 
-            for (const grupo of grupos) {
-                if (grupo.getNome() === GrupoNomeEnum.RESTAURANTE) {
-                    jaTemGrupoRestaurante = true;
-                    break;
-                }
-            }
-            return await this.restauranteRepository.registra(restaurante, restaurante.getIdsFormaPagamento(),
-                grupos, foto, jaTemGrupoRestaurante
-            );
-        } catch (err) {
-            throw err;
-        }
+        const jaTemGrupoRestaurante = gruposUsuario.some(grupo => grupo.getNome() === GrupoNomeEnum.RESTAURANTE);
+
+        return await this.restauranteRepository.registra(
+            restaurante,
+            restaurante.getIdsFormaPagamento(),
+            gruposSistema,
+            foto,
+            jaTemGrupoRestaurante
+        );
+    } catch (err) {
+        throw err;
     }
+}
 
     async buscarPorId(id) {
         try {
@@ -54,6 +56,32 @@ class RestauranteService {
                 }
             }
             return restaurantes;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async atualiza(restauranteDto, fotoDto) {
+        try {
+            const restaurante = await this.restauranteRepository.buscarPorId(restauranteDto.id);
+            if (!restaurante) throw new NotFoundError("Restaurante não encontrado");
+
+            restaurante.setNome(restauranteDto.nome);
+            restaurante.setDescricao(restauranteDto.descricao);
+            restaurante.setRazaoSocial(restauranteDto.razaoSocial);
+
+            const endereco = restaurante.getEndereco();
+            endereco.setCep(restauranteDto.cep);
+            endereco.setLogradouro(restauranteDto.logradouro);
+            endereco.setNumero(restauranteDto.numero);
+            endereco.setComplemento(restauranteDto.complemento);
+            endereco.setBairro(restauranteDto.bairro);
+            endereco.setCidadeId(restauranteDto.cidadeId);
+            restaurante.setEndereco(endereco);
+
+            restaurante.setDataAtualizacao(new Date().toISOString());
+
+            return await this.restauranteRepository.atualiza(restaurante, fotoDto);
         } catch (err) {
             throw err;
         }

@@ -25,7 +25,7 @@ class AuthController {
   iniciaRotas() {
     this.router.post("/login", this.login.bind(this));
     this.router.get("/me", this.authMiddleware.autenticar.bind(this.authMiddleware),
-      this.authMiddleware.autorizar('CLIENTE'),
+      this.authMiddleware.autorizar(['CLIENTE']),
       this.buscaUsuarioLogado.bind(this));
 
     this.router.post("/refresh-token", this.refreshToken.bind(this));
