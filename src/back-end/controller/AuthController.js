@@ -41,6 +41,12 @@ class AuthController {
         throw new UnauthorizedError('Usuário ou senha inválidos');
       }
 
+      res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+      });
+
       res.cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
@@ -101,7 +107,7 @@ class AuthController {
       const token = req.cookies?.token;
 
       const payload = this.tokenService.validarToken(token);
-      const usuario = await this.usuarioService.buscarPorId(payload.id); 
+      const usuario = await this.usuarioService.buscarPorId(payload.id);
 
       return res.status(200).json({ logado: true });
 

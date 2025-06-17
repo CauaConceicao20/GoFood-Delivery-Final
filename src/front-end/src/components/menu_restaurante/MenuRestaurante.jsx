@@ -5,7 +5,7 @@ import "./menuRestaurante.css";
 const MenuRestaurante = ({ ativo }) => {
   const [restaurantes, setRestaurantes] = useState([]);
   const menuRef = useRef(null);
-  const navigate = useNavigate(); // ← instanciar o hook
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!ativo) return;

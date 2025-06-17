@@ -1,10 +1,9 @@
 import { StatusPedidoEnum } from './enums/StatusPedidoEnum.js';
 
 class Pedido {
-    constructor(id, codigo, produtosId, subTotal, taxaFrete, valorTotal, dataCriacao, dataConfirmacao, dataEntrega, dataCancelamento, idMetodoPagamento, usuarioId, restauranteId) {
+    constructor(id, codigo, subTotal, taxaFrete, valorTotal, dataCriacao, dataConfirmacao, dataEntrega, dataCancelamento, idMetodoPagamento, usuarioId, restauranteId, statusPedido) {
         this.id = id;
         this.codigo = codigo;
-        this.produtosId = produtosId;
         this.subTotal = subTotal;
         this.taxaFrete = taxaFrete;
         this.valorTotal = valorTotal;
@@ -15,7 +14,7 @@ class Pedido {
         this.idMetodoPagamento = idMetodoPagamento;
         this.restauranteId = restauranteId;
         this.usuarioId = usuarioId;
-        this.statusPedido = StatusPedidoEnum.CRIADO;
+        this.statusPedido = statusPedido;
     }
 
     setId(id) {
@@ -32,14 +31,6 @@ class Pedido {
 
     getCodigo() {
         return this.codigo;
-    }
-
-    setProdutosId(produtosId) {
-        this.produtosId = produtosId;
-    }
-
-    getProdutosId() {
-        return this.produtosId;
     }
 
     setSubTotal(subTotal) {

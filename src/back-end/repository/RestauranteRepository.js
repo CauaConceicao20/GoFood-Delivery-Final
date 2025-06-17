@@ -112,7 +112,7 @@ class RestauranteRepository {
             const restaurante = new Restaurante(restauranteEncontrado.id, restauranteEncontrado.nome,
                 restauranteEncontrado.descricao, restauranteEncontrado.razao_social, restauranteEncontrado.taxa_frete,
                 restauranteEncontrado.data_cadastro, restauranteEncontrado.data_atualizacao, endereco,
-                restauranteEncontrado.usuario_id);
+                restauranteEncontrado.usuario_id, null, restauranteEncontrado.cnpj );
 
             restaurante.setAberto(restauranteEncontrado.aberto);
             restaurante.setAtivo(restauranteEncontrado.ativo);

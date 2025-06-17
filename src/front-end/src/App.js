@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Login from './telas/login/Login';
 import Cadastro from './telas/cadastro/Cadastro';
-import LoginRestaurante from './telas/restaurante/login/LoginRestaurante';
+//import LoginRestaurante from './telas/restaurante/login/LoginRestaurante';
 import CadastroRestaurante from './telas/restaurante/cadastro/CadastroRestaurante';
 import MainMenu from './telas/main_menu/MainMenu';
 import Carrinho from './telas/carrinho/Carrinho';
@@ -11,7 +11,7 @@ import CadastroProdutos from './telas/RestauranteMenu/Produtos/CadastroProdutos'
 import DetalhesPedido from './telas/restaurante/pedidos/DetalhePedido';
 import EdicaoRestaurante from './telas/RestauranteMenu/EdicaoDados';
 import EdicaoUsuario from './telas/PerfilUsuario/EdicaoUsuario';
-import Header from './components/header/Header.jsx';
+//import Header from './components/header/Header.jsx';
 import AboutScreen from './telas/aboutScreen/AboutScreen.jsx';
 import SettingsScreen from './telas/SettingsScreen/SettingsScreen.jsx'
 import ProdutoDetails from './telas/RestauranteMenu/Produtos/ProdutosDetails.jsx';
@@ -22,7 +22,7 @@ function App() {
   return (
     <div className="app">
       <Routes>
-        <Route path="/" element={<MainMenu />} />
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/cadastro/restaurante" element={<CadastroRestaurante />} />

@@ -3,7 +3,7 @@ import PedidoRepository from '../repository/PedidoRepository.js';
 import ProdutoService from './ProdutoService.js';
 import RestauranteService from './RestauranteService.js';
 import RestaurantePagamentoService from './RestaurantePagamentoService.js';
-import { PaymentMethodNotAcceptedError } from '../exception/GlobalExceptions.js';
+import { PaymentMethodNotAcceptedError, NotFoundError } from '../exception/GlobalExceptions.js';
 
 class PedidoService {
 
@@ -19,12 +19,11 @@ class PedidoService {
             const dataCriacao = this.dataHoraAtual = new Date().toLocaleString('sv-SE', { timeZone: 'America/Sao_Paulo' }).replace(' ', 'T');
             const codigo = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
 
-            return new Pedido(null, codigo, null, 0, 0, 0, dataCriacao, null, null, null, pedidoDto.idMetodoPagamento, idUsuario, null);
+            return new Pedido(null, codigo, 0, 0, 0, dataCriacao, null, null, null, pedidoDto.idMetodoPagamento, idUsuario, null);
         } catch (err) {
             throw err;
         }
     }
-
 
     async registra(pedido, itemsPedidoDto) {
         let produto = null
@@ -47,15 +46,27 @@ class PedidoService {
                 }
             }
 
-            if (!condicao) throw new PaymentMethodNotAcceptedError(`O Restaurante ${restaurante.getNome()}
-             não aceita esse metodo de pagamento`);
+            if (!condicao) throw new PaymentMethodNotAcceptedError(`O ${restaurante.getNome()} não aceita esse metodo de pagamento`);
 
-            pedido.setProdutosId(itemsPedidoDto.map(item => item.getIdProduto()));
             pedido.setRestauranteId(produto.getIdRestaurante());
             pedido.setTaxaFrete(restaurante.getTaxaFrete());
             pedido.setValorTotal(pedido.getSubTotal() + pedido.getTaxaFrete());
 
             return await this.pedidoRepository.registrar(pedido, itemsPedidoDto);
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async buscarPedidosDoRestaurante(idRestaurante) {
+        try {
+            const pedidos = await this.pedidoRepository.buscarPedidosDoRestaurante(idRestaurante);
+
+            if (!pedidos || pedidos.length === 0) {
+                throw new NotFoundError('Nenhum pedido encontrado.');
+            }
+
+            return pedidos;
         } catch (err) {
             throw err;
         }

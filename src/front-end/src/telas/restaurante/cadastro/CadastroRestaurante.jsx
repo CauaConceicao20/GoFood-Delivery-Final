@@ -152,7 +152,7 @@ const CadastroRestaurante = () => {
       setMostrarModal(true);
     } catch (err) {
       console.error(err);
-      setMensagemErro(err.message || "Erro ao cadastrar restaurante");
+      setMensagemErro(err.erro || "Erro ao cadastrar restaurante");
       setSucessoCadastro(false);
       setMostrarModal(true);
     }

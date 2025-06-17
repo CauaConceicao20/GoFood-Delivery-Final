@@ -1,10 +1,12 @@
 import ItemPedido from '../model/pedido/ItemPedido.js';
 import ProdutoService from './ProdutoService.js';
+import ItemPedidoRepository from '../repository/ItemPedidoRepository.js';
 
 class ItemPedidoService {
 
     constructor() {
         this.produtoService = new ProdutoService();
+        this.itemPedidoRepository = new ItemPedidoRepository();
     }
 
     async converteDtosParaItemPedido(itemsPedidoDto) {
@@ -24,6 +26,21 @@ class ItemPedidoService {
         }
 
         return itemsPedido;
+    }
+
+    async buscaItensDePedido(idPedido) {
+        try {
+            const itemsPedido = await this.itemPedidoRepository.buscarItensDoPedido(idPedido);
+
+            if (!itemsPedido || itemsPedido.length === 0) {
+                throw new NotFoundError('Nenhum item de pedido encontrado.');
+            }
+
+            return itemsPedido;
+        } catch (err) {
+            throw err;
+        }
+
     }
 }
 export default ItemPedidoService;

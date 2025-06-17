@@ -9,7 +9,7 @@ class FormaPagamentoRepository {
 
   async buscarPorId(id, conn) {
     try {
-      if (!conn) await this.connection.connect();
+      if (!conn) conn = await this.connection.connect();
 
       const formaPagamento = await conn.get(
         `SELECT * FROM formas_pagamento WHERE id = ?`,
