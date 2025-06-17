@@ -87,6 +87,10 @@ class CarrinhoService {
     async deletarItemDoCarrinho(produto, carrinho) {
         try {
             const itemCarrinho = await this.itemCarrinhoService.buscarItemCarrinhoPorIdProduto(produto.getId());
+            itemCarrinho.diminuiQuantidade(1);
+            itemCarrinho.diminuiPreco(produto.getPreco());
+            carrinho.diminuiQuantidadeTotalDeItems(1);
+            carrinho.diminuiSubTotalDoCarrinho(produto.getPreco());
             await this.carrinhoRepository.deletarItemCarrinho(itemCarrinho, carrinho);
         } catch (err) {
             throw err;

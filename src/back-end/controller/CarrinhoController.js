@@ -140,6 +140,7 @@ class CarrinhoController {
             const carrinho = await this.carrinhoService.buscarCarrinhoDoUsuario(req.usuario.id);
 
             const produto = await this.produtoService.buscarPorId(req.body.produtoId);
+            await this.carrinhoService.diminuirQuantidadeDeItemDoCarrinho(produto, carrinho);
             await this.carrinhoService.deletarItemDoCarrinho(produto, carrinho);
             res.status(200).json({ mensagem: "Item deletado do carrinho com sucesso" });
         } catch (err) {
