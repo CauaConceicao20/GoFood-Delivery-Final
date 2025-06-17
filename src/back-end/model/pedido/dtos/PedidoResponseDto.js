@@ -1,5 +1,5 @@
 class PedidoResponseDto {
-  constructor(pedido, usuario, restaurante, produtos, metodoDePagamento) {
+  constructor(pedido, usuario, restaurante, produtos, metodoDePagamento, itensPedido) {
     this.id = pedido.id;
     this.codigo = pedido.codigo;
     this.produtosId = pedido.produtosId;
@@ -25,12 +25,16 @@ class PedidoResponseDto {
       cpf: usuario.getCpf(),
     };
 
-    this.produtos = produtos.map(produto => ({
-      id: produto.getId(),
-      nome: produto.getNome(),
-      descricao: produto.getDescricao(),
-      preco: produto.getPreco(),
-    }));
+    this.produtos = produtos.map(produto => {
+      const item = itensPedido.find(i => i.idProduto === produto.getId());
+      return {
+        id: produto.getId(),
+        nome: produto.getNome(),
+        descricao: produto.getDescricao(),
+        preco: produto.getPreco(),
+        quantidade: item ? item.quantidade : 0
+      };
+    });
   }
 }
 

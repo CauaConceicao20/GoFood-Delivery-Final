@@ -63,19 +63,17 @@ class PedidoController {
             const pedidosCompletos = await Promise.all(pedidos.map(async (pedido) => {
                 const usuario = await this.usuarioService.buscarPorId(pedido.getUsuarioId());
                 const restaurante = await this.restauranteService.buscarPorId(pedido.getRestauranteId());
-
                 const metodoDePagamento = await this.formaPagamentoService.buscarPorId(pedido.getIdMetodoPagamento());
 
                 const itensPedido = await this.itemPedidoService.buscaItensDePedido(pedido.getId());
-            
+
                 const idsProdutosUnicos = [...new Set(itensPedido.map(item => item.idProduto))];
                 const produtos = await Promise.all(
                     idsProdutosUnicos.map(id => this.produtoService.buscarPorId(id))
                 );
 
-                return new PedidoResponseDto(pedido, usuario, restaurante, produtos, metodoDePagamento);
+                return new PedidoResponseDto(pedido, usuario, restaurante, produtos, metodoDePagamento, itensPedido);
             }));
-
             res.status(200).json(pedidosCompletos);
         } catch (err) {
             throw err;
