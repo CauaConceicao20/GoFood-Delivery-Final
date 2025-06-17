@@ -89,6 +89,18 @@ class ProdutoRepository {
             throw err;
         }
     }
+
+    async buscarProdutosDeRestaurante(idRestaurante) {
+        const conn = await this.connection.connect();
+        try {
+            const produtos = await conn.all('SELECT * FROM produtos WHERE restaurante_id = ?', [idRestaurante]);
+
+            return produtos.map(produto => new Produto(produto.id, produto.nome, produto.descricao, produto.preco,
+                produto.restaurante_id, produto.categoria_id));
+        } catch (err) {
+            throw err;
+        }
+    }
 }
 
 export default ProdutoRepository;

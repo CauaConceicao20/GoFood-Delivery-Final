@@ -1,109 +1,146 @@
-import React, { useState } from 'react';
-import './RestauranteMenu.css';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import Header from '../../components/header/Header.jsx';
 import Footer from '../../components/footer/Footer.jsx';
+import styles from './RestauranteMenu.module.css';
+import FotoLogo from '../../assets/logo-restaurante-hamburguer.jpg';
+import ProdutoCardapio from '../../components/produto_cardapio/ProdutoCardapio.jsx';
 
 const Restaurante = () => {
-  const restaurante = {
-    nome: "RESTAURANTE BOM SABOR",
-    descricao: "No Bom Sabor, a gente sabe que não tem nada melhor do que uma comida que abraça a gente. E é exatamente isso que você vai encontrar aqui: o sabor autêntico da comida caseira, preparada com carinho, ingredientes frescos e aquele toque especial que só a gente tem.",
-    cardapio: [
-      { id: 1, nome: "Burger Clássico", preco: "R$ 27,90", descricao: "Pão, carne, queijo e salada" },
-      { id: 2, nome: "Burger Picante", preco: "R$ 32,90", descricao: "Pão, carne, queijo, bacon e molho picante" },
-      { id: 3, nome: "Burger Vegetariano", preco: "R$ 29,90", descricao: "Pão, hambúrguer de grão-de-bico e vegetais" }
-    ]
+  const { id } = useParams();
+  const [restaurante, setRestaurante] = useState(null);
+  const [produtos, setProdutos] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const pedidos = [
+    { id: 101, cliente: "João Silva", itens: ["Burger Clássico", "Suco"], total: "R$ 35,00" },
+    { id: 102, cliente: "Maria Souza", itens: ["Burger Picante"], total: "R$ 32,90" }
+  ];
+
+  useEffect(() => {
+    const buscarRestaurante = async () => {
+      try {
+        const resposta = await fetch(
+          `http://localhost:3001/api/v1/restaurantes/buscaRestaurante/${id}`,
+          {
+            method: 'GET',
+            credentials: 'include',
+          }
+        );
+        if (!resposta.ok) {
+          throw new Error('Erro ao buscar restaurante');
+        }
+        const dados = await resposta.json();
+        setRestaurante(dados);
+      } catch (erro) {
+        console.error('Erro ao carregar restaurante:', erro);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const buscarProdutos = async () => {
+      try {
+        const resposta = await fetch(
+          `http://localhost:3001/api/v1/produtos/buscarProdutosDeRestaurante/${id}`,
+          {
+            method: 'GET',
+            credentials: 'include',
+          }
+        );
+        if (!resposta.ok) {
+          throw new Error('Erro ao buscar produtos');
+        }
+        const dados = await resposta.json();
+        setProdutos(dados);
+      } catch (erro) {
+        console.error('Erro ao carregar produtos:', erro);
+      }
+    };
+
+    buscarRestaurante();
+    buscarProdutos();
+  }, [id]);
+
+  const excluirRestaurante = () => {
+    console.log("Excluir restaurante");
   };
 
-  const [userRating, setUserRating] = useState(0);
-  const [hasRated, setHasRated] = useState(false);
-
-  const handleRatingChange = (rating) => {
-    if (!hasRated) {
-      setUserRating(rating);
-    }
-  };
-
-  const handleToggleAddressModal = () => { console.log('Toggle do modal de endereço na página de Pedidos.'); }
-
-
-  const handleSubmitRating = () => {
-    if (userRating > 0) {
-      alert(`Você avaliou o restaurante com ${userRating} estrelas!`);
-      console.log(`Avaliação do restaurante: ${userRating}`);
-      setHasRated(true);
-    } else {
-      alert("Por favor, selecione uma nota de 1 a 5 para avaliar o restaurante.");
-    }
-  };
-
-
+  if (loading) return <p>Carregando...</p>;
+  if (!restaurante) return <p>Restaurante não encontrado</p>;
 
   return (
-    <>
-      <Header toggleAddressModal={handleToggleAddressModal} />
-      <main className="restaurante-view">
-        <div className="restaurante-info">
-          <h1>{restaurante.nome}</h1>
-          <p>{restaurante.descricao}</p>
+    <div className={styles["page-container"]}>
+      <Header />
+      <main className={styles.restauranteView}>
+        <div className={styles.restauranteTopo}>
+          <img src={FotoLogo} alt="Logo Restaurante" className={styles.logoRestaurante} />
+          <div className={styles.infoRestaurante}>
+            <h1>{restaurante.nome}</h1>
+            <p>{restaurante.descricao}</p>
+            <div className={styles.linksContainer}>
+              <Link to="/EdicaoRestaurante" className={styles.linkAsButton}>Edição Restaurante</Link>
+              <button className={`${styles.linkAsButton} ${styles.linkAsButtonExcluir}`} onClick={excluirRestaurante}>
+                Excluir Restaurante
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Seção do Cardápio */}
-        <div className="cardapio-section">
-          <h2>Cardápio</h2>
-          <div className="itens-cardapio">
-            {restaurante.cardapio.map(item => (
-              <div key={item.id} className="item-cardapio">
-                <div className="item-info">
-                  <h3>{item.nome}</h3>
-                  <span className="item-preco">{item.preco}</span>
-                </div>
-                <p className="item-descricao">{item.descricao}</p>
+        <div className={styles.infoExtraRestaurante}>
+          <div className={styles.colunaInfo}>
+            <h3>Endereço</h3>
+            <p><strong>Rua:</strong> {restaurante.endereco.logradouro}</p>
+            <p><strong>Número:</strong> {restaurante.endereco.numero}</p>
+            <p><strong>Complemento:</strong> {restaurante.endereco.complemento}</p>
+            <p><strong>Bairro:</strong> {restaurante.endereco.bairro}</p>
+            <p><strong>Cidade:</strong> {restaurante.endereco.cidade.nome}</p>
+            <p><strong>Estado:</strong> {restaurante.endereco.cidade.estado.nome} ({restaurante.endereco.cidade.estado.sigla})</p>
+            <p><strong>CEP:</strong> {restaurante.endereco.cep}</p>
+          </div>
+
+          <div className={styles.colunaInfo}>
+            <h3>Formas de Pagamento</h3>
+            <ul>
+              {restaurante.formasPagamento.map(fp => (
+                <li key={fp.id}>{fp.nome}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className={styles.blocosHorizontal}>
+          <div className={styles.blocoCardapio}>
+            <h2>Cardápio</h2>
+            <div className={styles.itensCardapio}>
+              {produtos.map(produto => (
+                <ProdutoCardapio
+                  key={produto.id}
+                  nome={produto.nome}
+                  descricao={produto.descricao}
+                  preco={produto.preco}
+                  fotoUrl={produto.fotoUrl}
+                />
+              ))}
+              <Link to="/cadastro-produtos" className={styles.linkAsButton}>Cadastrar Produtos</Link>
+            </div>
+          </div>
+
+          <div className={styles.blocoPedidos}>
+            <h2>Pedidos Recebidos</h2>
+            {pedidos.map(pedido => (
+              <div key={pedido.id} className={styles.pedidoCard}>
+                <h4>Pedido #{pedido.id}</h4>
+                <p><strong>Cliente:</strong> {pedido.cliente}</p>
+                <p><strong>Itens:</strong> {pedido.itens.join(", ")}</p>
+                <p><strong>Total:</strong> {pedido.total}</p>
               </div>
             ))}
           </div>
         </div>
-
-        {/* Links de Gerenciamento (mantidos como estavam) */}
-        <div className="links-container">
-          <Link to="/cadastro-produtos" className="link-as-button">
-            Cadastrar Produtos
-          </Link>
-          <Link to="/EdicaoRestaurante" className="link-as-button">
-            Edição Restaurante
-          </Link>
-          <li><Link to="/ProdutoDetails">details</Link></li>
-        </div>
-
-        {/* Seção de Avaliação - MOVIDA PARA DEPOIS DOS LINKS DE GERENCIAMENTO */}
-        <div>
-          <div className="rating-section">
-            <h2>Avalie o Restaurante</h2>
-            <div className="rating-stars">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <span
-                  key={star}
-                  className={`star ${star <= userRating ? 'selected' : ''} ${hasRated ? 'disabled' : ''}`}
-                  onClick={() => handleRatingChange(star)}
-                >
-                  {star}
-                </span>
-              ))}
-            </div>
-
-            {!hasRated && (
-              <button onClick={handleSubmitRating} className="submit-rating-button">
-                Enviar Avaliação
-              </button>
-            )}
-            {hasRated && (
-              <p className="rating-message">Obrigado pela sua avaliação!</p>
-            )}
-          </div>
-        </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

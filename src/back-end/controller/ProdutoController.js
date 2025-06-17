@@ -34,12 +34,18 @@ class ProdutoController {
         this.router.post('/register',
             this.configMulter,
             this.authMiddleware.autenticar.bind(this.authMiddleware),
-            this.authMiddleware.autorizar('RESTAURANTE'),
+            this.authMiddleware.autorizar(['RESTAURANTE']),
             this.registraProduto.bind(this)
         );
 
         this.router.get("/buscarTodos",
             this.buscarTodosProdutos.bind(this)
+        );
+
+        this.router.get("/buscarProdutosDeRestaurante/:id",
+            this.authMiddleware.autenticar.bind(this.authMiddleware),
+            this.authMiddleware.autorizar(['RESTAURANTE']),
+             this.buscarProdutosDeRestaurante.bind(this),
         );
     }
 
@@ -85,6 +91,23 @@ class ProdutoController {
     async buscarTodosProdutos(req, res) {
         try {
             const produtos = await this.produtoService.buscarTodos();
+
+            const produtosDto = await Promise.all(produtos.map(async (produto) => {
+                const categoria = await this.categoriaService.buscarPorId(produto.getIdCategoria());
+                const restaurante = await this.restauranteService.buscarPorId(produto.getIdRestaurante());
+                const foto = await this.fotoService.buscarFotoDeProdutoPorId(produto.getId());
+                const logoRestaurante = await this.fotoService.buscarFotoDeRestaurantePorId(restaurante.getId());
+                return new ProdutoResponseDto(produto, categoria, restaurante, foto, logoRestaurante);
+            }));
+            res.status(200).json(produtosDto);
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async buscarProdutosDeRestaurante(req, res) {
+        try {
+            const produtos = await this.produtoService.buscarProdutosDeRestaurante(req.params.id);
 
             const produtosDto = await Promise.all(produtos.map(async (produto) => {
                 const categoria = await this.categoriaService.buscarPorId(produto.getIdCategoria());

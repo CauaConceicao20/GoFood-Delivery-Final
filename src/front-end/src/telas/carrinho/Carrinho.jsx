@@ -14,6 +14,7 @@ const Carrinho = () => {
   const [metodosPagamento, setMetodosPagamento] = useState([]);
   const [itensSelecionados, setItensSelecionados] = useState([]);
   const [metodoSelecionado, setMetodoSelecionado] = useState("");
+  const [subTotal, setSubTotal] = useState(0); // <- novo state para o subtotal
 
   const buscarCarrinho = () => {
     fetch("http://localhost:3001/api/v1/carrinhos/buscarCarrinho", { credentials: "include" })
@@ -30,6 +31,7 @@ const Carrinho = () => {
           imgUrl: `http://localhost:3001${item.fotoUrl}`
         }));
         setItems(itensConvertidos);
+        setSubTotal(Number(data.subTotal ?? 0)); // <- pegando subtotal do back-end
       })
       .catch(err => console.error("Erro ao buscar itens do carrinho:", err));
   };
@@ -200,8 +202,6 @@ const Carrinho = () => {
       setMensagemErro("Erro interno ao finalizar pedido.");
     }
   };
-
-  const subTotal = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
   return (
     <div className={styles["page-container"]}>

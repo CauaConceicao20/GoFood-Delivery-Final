@@ -1,4 +1,4 @@
-import { DifferentRestaurantProductsError, NotFoundError } from "../exception/GlobalExceptions.js";
+import { DifferentRestaurantProductsError, NotFoundError, BadRequestError } from "../exception/GlobalExceptions.js";
 import ProdutoRepository from "../repository/ProdutoRepository.js";
 
 class ProdutoService {
@@ -55,6 +55,20 @@ class ProdutoService {
             }
         }
         return produtos;
+    }
+
+    async buscarProdutosDeRestaurante(idRestaurante) {
+        try {
+            const produtos = await this.produtoRepository.buscarProdutosDeRestaurante(idRestaurante);
+
+            if (!produtos || produtos.length === 0) {
+                throw new BadRequestError('Nenhum produto encontrado.');
+            }
+
+            return produtos;
+        } catch (err) {
+            throw err;
+        }
     }
 }
 

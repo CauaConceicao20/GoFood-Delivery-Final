@@ -1,0 +1,36 @@
+.itemCardapio {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  background-color: #fdfdfd;
+}
+
+.imagemProduto {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.itemTexto {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.itemInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+.itemDescricao {
+  color: #555;
+  font-size: 14px;
+  margin-top: 4px;
+}

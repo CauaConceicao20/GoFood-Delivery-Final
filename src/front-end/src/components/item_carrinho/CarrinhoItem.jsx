@@ -22,6 +22,7 @@ const CarrinhoItem = ({ item, onIncrease, onDecrease, onDelete, onToggleSelect, 
         <h2>{item.name}</h2>
         <div>
           <p>{item.description}</p>
+          <p>Quantidade: {item.quantity}</p>
         </div>
         <span className={styles.preco}>Valor: {precoFormatado}</span>
         <div className={styles["linha-de-opcoes"]}>
