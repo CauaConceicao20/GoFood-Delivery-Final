@@ -13,7 +13,6 @@ class Restaurante {
         this.idUsuario = idUsuario
         this.idsFormaPagamento = idsFormaPagamento;
         this.cnpj = cnpj;
-        this.ativo = true;
     }
 
     setId(id) {

@@ -5,6 +5,7 @@ import Footer from '../../components/footer/Footer.jsx';
 import styles from './RestauranteMenu.module.css';
 import ProdutoCardapio from '../../components/produto_cardapio/ProdutoCardapio.jsx';
 import PedidoCard from '../../components/pedido_card/PedidoCard.jsx';
+import ModalErro from '../../components/modal_erro/ModalErro.jsx';
 
 const Restaurante = () => {
   const { id } = useParams();
@@ -13,9 +14,13 @@ const Restaurante = () => {
   const [pedidos, setPedidos] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [mensagemModal, setMensagemModal] = useState('');
+  const [modalAberto, setModalAberto] = useState(false);
+
+  const fecharModal = () => setModalAberto(false);
+
   useEffect(() => {
     const buscarRestaurante = async () => {
-
       try {
         const resposta = await fetch(
           `http://localhost:3001/api/v1/restaurantes/buscaRestaurante/${id}`,
@@ -24,9 +29,7 @@ const Restaurante = () => {
             credentials: 'include',
           }
         );
-        if (!resposta.ok) {
-          throw new Error('Erro ao buscar restaurante');
-        }
+        if (!resposta.ok) throw new Error('Erro ao buscar restaurante');
         const dados = await resposta.json();
         setRestaurante(dados);
       } catch (erro) {
@@ -45,9 +48,7 @@ const Restaurante = () => {
             credentials: 'include',
           }
         );
-        if (!resposta.ok) {
-          throw new Error('Erro ao buscar produtos');
-        }
+        if (!resposta.ok) throw new Error('Erro ao buscar produtos');
         const dados = await resposta.json();
         setProdutos(dados);
       } catch (erro) {
@@ -64,9 +65,7 @@ const Restaurante = () => {
             credentials: 'include',
           }
         );
-        if (!resposta.ok) {
-          throw new Error('Erro ao buscar pedidos');
-        }
+        if (!resposta.ok) throw new Error('Erro ao buscar pedidos');
         const dados = await resposta.json();
         setPedidos(dados);
       } catch (erro) {
@@ -79,8 +78,35 @@ const Restaurante = () => {
     buscarPedidos();
   }, [id]);
 
-  const excluirRestaurante = () => {
-    console.log("Excluir restaurante");
+  const excluirRestaurante = async () => {
+    const confirmacao = window.confirm("Tem certeza que deseja excluir este restaurante? Essa ação não pode ser desfeita.");
+    if (!confirmacao) return;
+
+    try {
+      const resposta = await fetch(
+        `http://localhost:3001/api/v1/restaurantes/excluirRestaurante/${id}`,
+        {
+          method: 'DELETE',
+          credentials: 'include',
+        }
+      );
+
+      if (!resposta.ok) {
+        const erro = await resposta.json();
+        throw new Error(erro.message || 'Erro ao excluir restaurante');
+      }
+
+      setMensagemModal("Restaurante excluído com sucesso.");
+      setModalAberto(true);
+
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 2000);
+    } catch (erro) {
+      console.error("Erro ao excluir restaurante:", erro);
+      setMensagemModal(`Erro ao excluir restaurante: ${erro.message}`);
+      setModalAberto(true);
+    }
   };
 
   if (loading) return <p>Carregando...</p>;
@@ -147,7 +173,6 @@ const Restaurante = () => {
             </div>
           </div>
 
-
           <div className={styles.blocoPedidos}>
             <h2>Pedidos Recebidos</h2>
             <div className={styles.pedidosLista}>
@@ -163,6 +188,10 @@ const Restaurante = () => {
         </div>
       </main>
       <Footer />
+
+      {modalAberto && (
+        <ModalErro mensagem={mensagemModal} onClose={fecharModal} />
+      )}
     </div>
   );
 };

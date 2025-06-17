@@ -100,7 +100,9 @@ class RestauranteRepository {
     async buscarPorId(id, conn) {
         try {
             if (!conn) conn = await this.connection.connect();
-            const restauranteEncontrado = await conn.get(`SELECT * FROM restaurantes WHERE id = ?`, [id]);
+            const restauranteEncontrado = await conn.get(
+                `SELECT * FROM restaurantes WHERE id = ? AND ativo = 1`, [id]
+            );
 
             if (!restauranteEncontrado) {
                 throw new NotFoundError(`Restaurante com ID ${id} não encontrado.`);
@@ -127,8 +129,9 @@ class RestauranteRepository {
     async buscarRestaurantesAssociadosAUsuario(idUsuario, conn) {
         try {
             if (!conn) conn = await this.connection.connect();
-            const restaurantesEncontrados = await conn.all(`SELECT * FROM restaurantes WHERE usuario_id = ?`, [idUsuario]);
-
+            const restaurantesEncontrados = await conn.all(
+                `SELECT * FROM restaurantes WHERE usuario_id = ? AND ativo = 1`, [idUsuario]
+            );
             return restaurantesEncontrados.map(restauranteEncontrado => {
                 const endereco = new Endereco(restauranteEncontrado.cep, restauranteEncontrado.logradouro,
                     restauranteEncontrado.numero, restauranteEncontrado.complemento, restauranteEncontrado.bairro,
@@ -244,6 +247,23 @@ class RestauranteRepository {
             return await this.buscarPorId(restaurante.getId(), conn);
         } catch (err) {
             await conn.run("ROLLBACK");
+            throw err;
+        }
+    }
+
+    async excluirLogicamente(id) {
+        let conn;
+        try {
+            conn = await this.connection.connect();
+            const result = await conn.run(
+                `UPDATE restaurantes SET ativo = 0 WHERE id = ?`,
+                [id]
+            );
+            if (result.changes === 0) {
+                throw new NotFoundError(`Restaurante com ID ${id} não encontrado para exclusão lógica.`);
+            }
+            return true;
+        } catch (err) {
             throw err;
         }
     }

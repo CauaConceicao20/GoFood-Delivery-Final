@@ -66,6 +66,12 @@ class RestauranteController {
             this.authMiddleware.autorizar(['RESTAURANTE']),
             this.buscarRestaurantePorId.bind(this)
         );
+        this.router.delete(
+            "/excluirRestaurante/:id",
+            this.authMiddleware.autenticar.bind(this.authMiddleware),
+            this.authMiddleware.autorizar(['RESTAURANTE']),
+            this.excluirRestaurante.bind(this)
+        );
     }
 
     async registraRestaurante(req, res) {
@@ -189,7 +195,7 @@ class RestauranteController {
             const fotoDto = req.file ? new FotoRegisterRequestDto(req.file) : null;
 
             if (fotoDto) {
-                     foto = new Foto(null, fotoDto.nome, fotoDto.content_type, fotoDto.url,
+                foto = new Foto(null, fotoDto.nome, fotoDto.content_type, fotoDto.url,
                     fotoDto.tamanho);
             }
 
@@ -204,6 +210,19 @@ class RestauranteController {
                 } catch (e) {
                     console.error('Erro ao remover arquivo órfão:', e);
                 }
+            }
+            throw err;
+        }
+    }
+
+    async excluirRestaurante(req, res) {
+        try {
+            const restauranteId = parseInt(req.params.id);
+            await this.restauranteService.excluirLogicamente(restauranteId);
+            res.status(200).json({ mensagem: "Restaurante excluído logicamente com sucesso." });
+        } catch (err) {
+            if (err instanceof NotFoundError) {
+                return res.status(404).json({ erro: err.message });
             }
             throw err;
         }

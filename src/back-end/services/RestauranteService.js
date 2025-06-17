@@ -17,24 +17,24 @@ class RestauranteService {
     }
 
     async registra(restaurante, foto) {
-    try {
-        const gruposSistema = await this.grupoSerivce.buscarTodos();
+        try {
+            const gruposSistema = await this.grupoSerivce.buscarTodos();
+            const gruposUsuario = await this.usuarioGrupoService.buscaGruposDoUsuario(restaurante.getIdUsuario());
+            const jaTemGrupoRestaurante = gruposUsuario.some(grupo => grupo.getNome() === GrupoNomeEnum.RESTAURANTE);
 
-        const gruposUsuario = await this.usuarioGrupoService.buscaGruposDoUsuario(restaurante.getIdUsuario());
+            restaurante.setAtivo(true);
 
-        const jaTemGrupoRestaurante = gruposUsuario.some(grupo => grupo.getNome() === GrupoNomeEnum.RESTAURANTE);
-
-        return await this.restauranteRepository.registra(
-            restaurante,
-            restaurante.getIdsFormaPagamento(),
-            gruposSistema,
-            foto,
-            jaTemGrupoRestaurante
-        );
-    } catch (err) {
-        throw err;
+            return await this.restauranteRepository.registra(
+                restaurante,
+                restaurante.getIdsFormaPagamento(),
+                gruposSistema,
+                foto,
+                jaTemGrupoRestaurante
+            );
+        } catch (err) {
+            throw err;
+        }
     }
-}
 
     async buscarPorId(id) {
         try {
@@ -62,7 +62,7 @@ class RestauranteService {
         }
     }
 
-    async atualiza(id ,restauranteDto, foto) {
+    async atualiza(id, restauranteDto, foto) {
         try {
             const restaurante = await this.restauranteRepository.buscarPorId(id);
             if (!restaurante) throw new NotFoundError("Restaurante não encontrado");
@@ -80,9 +80,21 @@ class RestauranteService {
             endereco.setCidadeId(restauranteDto.cidadeId);
             restaurante.setEndereco(endereco);
 
-            restaurante.setDataAtualizacao(new Date().toISOString());
+            restaurante.setDataAtualizacao(new Date().toLocaleString('sv-SE', { timeZone: 'America/Sao_Paulo' }).replace(' ', 'T'));
 
             return await this.restauranteRepository.atualiza(restaurante, foto);
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async excluirLogicamente(id) {
+        try {
+            const restaurante = await this.restauranteRepository.buscarPorId(id);
+            if (!restaurante) {
+                throw new NotFoundError(`Restaurante com ID ${id} não encontrado para exclusão lógica.`);
+            }
+            return await this.restauranteRepository.excluirLogicamente(id);
         } catch (err) {
             throw err;
         }
