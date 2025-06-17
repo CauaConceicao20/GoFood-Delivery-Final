@@ -5,17 +5,14 @@ import Footer from '../../components/footer/Footer.jsx';
 import styles from './RestauranteMenu.module.css';
 import FotoLogo from '../../assets/logo-restaurante-hamburguer.jpg';
 import ProdutoCardapio from '../../components/produto_cardapio/ProdutoCardapio.jsx';
+import PedidoCard from '../../components/pedido_card/PedidoCard.jsx';
 
 const Restaurante = () => {
   const { id } = useParams();
   const [restaurante, setRestaurante] = useState(null);
   const [produtos, setProdutos] = useState([]);
+  const [pedidos, setPedidos] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const pedidos = [
-    { id: 101, cliente: "João Silva", itens: ["Burger Clássico", "Suco"], total: "R$ 35,00" },
-    { id: 102, cliente: "Maria Souza", itens: ["Burger Picante"], total: "R$ 32,90" }
-  ];
 
   useEffect(() => {
     const buscarRestaurante = async () => {
@@ -58,8 +55,28 @@ const Restaurante = () => {
       }
     };
 
+    const buscarPedidos = async () => {
+      try {
+        const resposta = await fetch(
+          `http://localhost:3001/api/v1/pedidos/pedidosDeRestaurante/${id}`,
+          {
+            method: 'GET',
+            credentials: 'include',
+          }
+        );
+        if (!resposta.ok) {
+          throw new Error('Erro ao buscar pedidos');
+        }
+        const dados = await resposta.json();
+        setPedidos(dados);
+      } catch (erro) {
+        console.error('Erro ao carregar pedidos:', erro);
+      }
+    };
+
     buscarRestaurante();
     buscarProdutos();
+    buscarPedidos();
   }, [id]);
 
   const excluirRestaurante = () => {
@@ -79,7 +96,7 @@ const Restaurante = () => {
             <h1>{restaurante.nome}</h1>
             <p>{restaurante.descricao}</p>
             <div className={styles.linksContainer}>
-              <Link to="/EdicaoRestaurante" className={styles.linkAsButton}>Edição Restaurante</Link>
+             <Link to={`/EdicaoRestaurante/${id}`} className={styles.linkAsButton}>Edição Restaurante</Link>
               <button className={`${styles.linkAsButton} ${styles.linkAsButtonExcluir}`} onClick={excluirRestaurante}>
                 Excluir Restaurante
               </button>
@@ -129,12 +146,7 @@ const Restaurante = () => {
           <div className={styles.blocoPedidos}>
             <h2>Pedidos Recebidos</h2>
             {pedidos.map(pedido => (
-              <div key={pedido.id} className={styles.pedidoCard}>
-                <h4>Pedido #{pedido.id}</h4>
-                <p><strong>Cliente:</strong> {pedido.cliente}</p>
-                <p><strong>Itens:</strong> {pedido.itens.join(", ")}</p>
-                <p><strong>Total:</strong> {pedido.total}</p>
-              </div>
+              <PedidoCard key={pedido.id} pedido={pedido} />
             ))}
           </div>
         </div>
