@@ -90,6 +90,12 @@ class RestauranteController {
 
             const token = await this.tokenService.refreshToken(usuario);
 
+            res.clearCookie('token', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'strict',
+            });
+
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
@@ -141,7 +147,7 @@ class RestauranteController {
             const restauranteId = parseInt(req.params.id);
 
             const usuario = await this.usaurioService.buscarPorId(usuarioId);
-            
+
             const restaurantes = await this.restauranteService.buscarRestaurantesAssociadosAUsuario(usuarioId);
             const restaurante = restaurantes.find(r => r.getId() === restauranteId);
 

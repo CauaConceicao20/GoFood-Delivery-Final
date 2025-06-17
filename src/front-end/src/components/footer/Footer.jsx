@@ -5,13 +5,54 @@ import MenuInferior from '../menu_inferior/MenuInferior';
 import IconeInicio from '../../assets/index/mobile/icons8-home-50.png';
 import IconeHamburguer from '../../assets/index/mobile/icons8-cardápio-50.png';
 import IconeCarrinho from '../../assets/icon-carrinho-de-compras-.png';
-import IconePerfil from '../../assets/icon-conta.png';
+import IconRestaurante from '../../assets/icon-restaurante.png';
+import ModalErro from '../modal_erro/ModalErro.jsx';
 
 function Footer() {
-  const [menuAtivo, setMenuAtivo] = useState(false);
+  const [menuGeralAtivo, setMenuGeralAtivo] = useState(false);
+  const [menuRestaurantesAtivo, setMenuRestaurantesAtivo] = useState(false);
+  const [restaurantes, setRestaurantes] = useState([]);
+  const [mostrarModal, setMostrarModal] = useState(false);
+  const [mensagemErro, setMensagemErro] = useState('');
 
-  const abrirMenuInferior = () => setMenuAtivo(true);
-  const fecharMenuInferior = () => setMenuAtivo(false);
+  const abrirMenuGeral = () => setMenuGeralAtivo(true);
+  const fecharMenuGeral = () => setMenuGeralAtivo(false);
+
+  const abrirMenuRestaurantes = async () => {
+    try {
+      const statusResponse = await fetch("http://localhost:3001/api/v1/auth/status", {
+        credentials: 'include',
+      });
+
+      if (!statusResponse.ok) {
+        const data = await statusResponse.json();
+        throw new Error(data?.erro || 'Erro de autenticação');
+      }
+
+      const statusData = await statusResponse.json();
+      if (!statusData.logado) {
+        throw new Error("Você precisa estar logado para acessar o menu de restaurantes.");
+      }
+
+      const restaurantesResponse = await fetch('http://localhost:3001/api/v1/restaurantes/buscaRestaurantesAssociados', {
+        credentials: 'include',
+      });
+
+      if (!restaurantesResponse.ok) {
+        throw new Error('Você não possui restaurantes, vá em menu');
+      }
+
+      const restaurantesData = await restaurantesResponse.json();
+      setRestaurantes(restaurantesData);
+      setMenuRestaurantesAtivo(true);
+
+    } catch (error) {
+      setMensagemErro(error.message || 'Erro inesperado');
+      setMostrarModal(true);
+    }
+  };
+
+  const fecharMenuRestaurantes = () => setMenuRestaurantesAtivo(false);
 
   return (
     <>
@@ -21,9 +62,9 @@ function Footer() {
         </div>
 
         <nav className="bottom-bar">
-          <div className="opcao-footer" id="btnInicio" onClick={abrirMenuInferior}>
+          <div className="opcao-footer" id="btnInicio">
             <div className="area-opcao-bottom-bar">
-              <Link to="/">
+              <Link to="/main_menu">
                 <img src={IconeInicio} alt="icone de inicio" />
               </Link>
               <div><span>Início</span></div>
@@ -32,33 +73,29 @@ function Footer() {
 
           <div className="divisao-bottom-bar"></div>
 
-          <div className="opcao-footer" id="btnPerfilFooter" onClick={abrirMenuInferior}>
+          <div className="opcao-footer" id="btnPerfilFooter" onClick={abrirMenuRestaurantes}>
             <div className="area-opcao-bottom-bar">
-
-              <Link to="/perfil">
-                <img src={IconePerfil} alt="icone de perfil" />
-              </Link>
-              <div><span>Perfil</span></div>
+              <div className="btn-restaurante-inferior" id="btn-restaurante-inferior">
+                <img src={IconRestaurante} alt="Ícone de restaurante" />
+              </div>
+              <div><span>Restaurante</span></div>
             </div>
           </div>
 
           <div className="divisao-bottom-bar"></div>
 
-          <div className="opcao-footer" id="btnCarrinhoFooter" onClick={abrirMenuInferior}>
+          <div className="opcao-footer" id="btnCarrinhoFooter">
             <div className="area-opcao-bottom-bar">
               <Link to="/carrinho">
                 <img src={IconeCarrinho} alt="icone de carrinho" />
               </Link>
-
-              <div>
-                <link rel="stylesheet" href="" />
-                <span>Carrinho</span></div>
+              <div><span>Carrinho</span></div>
             </div>
           </div>
 
           <div className="divisao-bottom-bar"></div>
 
-          <div className="opcao-footer" id="btnHamburguerFooter" onClick={abrirMenuInferior}>
+          <div className="opcao-footer" id="btnHamburguerFooter" onClick={abrirMenuGeral}>
             <div className="area-opcao-bottom-bar">
               <img src={IconeHamburguer} alt="icone menu hamburguer" />
               <div><span>Menu</span></div>
@@ -67,17 +104,53 @@ function Footer() {
         </nav>
       </footer>
 
-
-      <div className='lista-inferior'>
-        <MenuInferior onClose={fecharMenuInferior} ativo={menuAtivo}>
+      <div className="lista-inferior">
+        <MenuInferior onClose={fecharMenuGeral} ativo={menuGeralAtivo}>
           <li><Link to="/configuracoes">Configurações</Link></li>
           <li><Link to="/sobre">Sobre</Link></li>
+          <li><Link to="/perfil">Perfil</Link></li>
           <li><Link to="/cadastro/restaurante">Cadastrar Restaurante</Link></li>
-          <li><Link to="/RestaurantePerfil">Restaurante</Link></li>
         </MenuInferior>
       </div>
+
+      <div className="lista-inferior">
+        <MenuInferior onClose={fecharMenuRestaurantes} ativo={menuRestaurantesAtivo}>
+          <ul className="menu-opcoes">
+            {restaurantes.length > 0 ? (
+              restaurantes.map((restaurante) => (
+                <li
+                  key={restaurante.id}
+                  onClick={() => {
+                    fecharMenuRestaurantes();
+                    window.location.href = `/RestaurantePerfil/${restaurante.id}`;
+                  }}
+                >
+                  <img
+                    src={
+                      restaurante.fotoUrl
+                        ? `http://localhost:3001${restaurante.fotoUrl}`
+                        : '/default-logo.png'
+                    }
+                    alt={`Logo de ${restaurante.nome}`}
+                  />
+                  <span>{restaurante.nome}</span>
+                </li>
+              ))
+            ) : (
+              <li style={{ textAlign: 'center' }}>Você não possui restaurantes</li>
+            )}
+          </ul>
+        </MenuInferior>
+      </div>
+
+      {mostrarModal && (
+        <ModalErro
+          mensagem={mensagemErro}
+          onClose={() => setMostrarModal(false)}
+        />
+      )}
     </>
   );
-};
+}
 
 export default Footer;

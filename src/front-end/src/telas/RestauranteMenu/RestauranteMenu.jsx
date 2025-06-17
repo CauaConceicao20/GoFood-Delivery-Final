@@ -117,7 +117,7 @@ const Restaurante = () => {
           </div>
 
           <div className={styles.colunaInfo}>
-            <h3>Formas de Pagamento</h3>
+            <h3>Formas de Pagamento Aceitas</h3>
             <ul>
               {restaurante.formasPagamento.map(fp => (
                 <li key={fp.id}>{fp.nome}</li>

@@ -1,78 +1,81 @@
-/* Refatoração do menu-inferior baseado no menu-lateral */
-
 .menu-inferior {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 300px;
+
     background-color: #fff;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.18), 0 -1.5px 4px rgba(0, 0, 0, 0.10);
 
-    border-top-left-radius: 12px; 
-    border-top-right-radius: 12px; 
-    box-shadow: 0 -8px 32px rgba(0,0,0,0.18), 0 -1.5px 4px rgba(0,0,0,0.10);
-    
-    z-index: 1000; 
+    z-index: 1000;
 
-    transform: translateY(100%); 
-    opacity: 0; 
-    pointer-events: none; 
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out; 
+    transform: translateY(100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 
     display: flex;
     flex-direction: column;
     align-items: stretch;
+
+    max-height: 70vh; /* segurança para não passar da tela */
+    overflow-y: auto; /* rolagem se ultrapassar altura */
 }
 
 /* Estado ativo: menu visível */
 .menu-inferior.ativo {
-    transform: translateY(0); /* Desliza para cima */
-    opacity: 1; /* Torna-se visível */
-    pointer-events: auto; /* Torna-se interativo */
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
 }
 
-/* Estilos para as opções do menu (ul) */
 .menu-opcoes {
-    list-style: none; /* Remove marcadores de lista */
-    margin: 0; /* Remove margem padrão */
-    padding: 0; /* Remove padding padrão */
-    margin-top: 50px; /* Mantém o espaçamento do botão de fechar, ajuste se o botão fechar mudar */
+    list-style: none;
+    margin: 0;
+    padding: 20px 0 10px 0;
+    width: 100%;
 }
 
-/* Estilos para cada item da lista (li) - pode ser <a> se forem links */
 .menu-opcoes li {
-    font-family: "Arial", sans-serif; /* Usando Arial como fallback, ajuste se tiver Inter */
-    display: block; /* Garante que o padding e hover preencham a linha */
-    color: #333; /* Cor de texto mais escura para melhor contraste */
-    text-decoration: none; /* Remove sublinhado se for <a> */
-    padding: 12px 16px; /* Padding similar ao do menu-lateral */
-    border-radius: 6px; /* Borda arredondada para os itens no hover */
-    font-size: 1.1rem; /* Tamanho da fonte mais padronizado */
-    transition: background 0.15s, color 0.15s;  
-    font-weight: 500; 
+    font-family: "Arial", sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-bottom: 1px solid #eee;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background 0.15s, color 0.15s;
+    cursor: pointer;
 }
 
 .menu-opcoes li:hover {
-    background-color: #f4f4f4; 
-    color: #e53935; 
-    cursor: pointer;
+    background-color: #f5f5f5;
+    color: #e53935;
 }
 
+.menu-opcoes img {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    object-fit: cover;
+}
 
 .btn-fechar-menu-inferior {
     position: absolute;
-    top: 15px; 
-    right: 25px; 
-    color: var(--primary-red, #da291c); 
-    font-size: 30px; 
+    top: 15px;
+    right: 25px;
+    color: var(--primary-red, #da291c);
+    font-size: 30px;
     font-weight: bold;
     cursor: pointer;
-    background: transparent; 
-    border: none; 
-    padding: 5px; 
-    z-index: 1001; 
+    background: transparent;
+    border: none;
+    padding: 5px;
+    z-index: 1001;
 }
-
 
 @media (min-width: 579px) {
     .menu-inferior {

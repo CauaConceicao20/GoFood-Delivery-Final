@@ -69,7 +69,8 @@
   margin-top: 15px;
   max-height: 400px;
   overflow-y: auto;
-  padding-right: 8px; /* espaço para scrollbar */
+  padding-right: 8px;
+  /* espaço para scrollbar */
 }
 
 .pedidoCard {
@@ -124,7 +125,7 @@
 
 .colunaInfo {
   flex: 1;
-  min-width: 200px;
+  min-width: 10px;
   font-size: 14px;
 }
 
@@ -141,4 +142,25 @@
 
 .colunaInfo ul {
   padding-left: 18px;
+}
+
+@media (max-width: 579px) {
+  .colunaInfo {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 504px) {
+  .restauranteTopo {
+    flex-direction: column;
+  }
+  .logoRestaurante{
+    width: 100%;
+    height: auto;
+    object-fit:cover;
+  }
+  .infoExtraRestaurante {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
