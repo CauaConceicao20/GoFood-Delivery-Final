@@ -3,7 +3,6 @@ import { useParams, Link } from 'react-router-dom';
 import Header from '../../components/header/Header.jsx';
 import Footer from '../../components/footer/Footer.jsx';
 import styles from './RestauranteMenu.module.css';
-import FotoLogo from '../../assets/logo-restaurante-hamburguer.jpg';
 import ProdutoCardapio from '../../components/produto_cardapio/ProdutoCardapio.jsx';
 import PedidoCard from '../../components/pedido_card/PedidoCard.jsx';
 
@@ -16,6 +15,7 @@ const Restaurante = () => {
 
   useEffect(() => {
     const buscarRestaurante = async () => {
+
       try {
         const resposta = await fetch(
           `http://localhost:3001/api/v1/restaurantes/buscaRestaurante/${id}`,
@@ -91,12 +91,12 @@ const Restaurante = () => {
       <Header />
       <main className={styles.restauranteView}>
         <div className={styles.restauranteTopo}>
-          <img src={FotoLogo} alt="Logo Restaurante" className={styles.logoRestaurante} />
+        <img src={`http://localhost:3001${restaurante.fotoUrl}`} alt="Logo Restaurante" className={styles.logoRestaurante} />
           <div className={styles.infoRestaurante}>
             <h1>{restaurante.nome}</h1>
             <p>{restaurante.descricao}</p>
             <div className={styles.linksContainer}>
-             <Link to={`/EdicaoRestaurante/${id}`} className={styles.linkAsButton}>Edição Restaurante</Link>
+              <Link to={`/EdicaoRestaurante/${id}`} className={styles.linkAsButton}>Edição Restaurante</Link>
               <button className={`${styles.linkAsButton} ${styles.linkAsButtonExcluir}`} onClick={excluirRestaurante}>
                 Excluir Restaurante
               </button>
@@ -130,24 +130,33 @@ const Restaurante = () => {
           <div className={styles.blocoCardapio}>
             <h2>Cardápio</h2>
             <div className={styles.itensCardapio}>
-              {produtos.map(produto => (
-                <ProdutoCardapio
-                  key={produto.id}
-                  nome={produto.nome}
-                  descricao={produto.descricao}
-                  preco={produto.preco}
-                  fotoUrl={produto.fotoUrl}
-                />
-              ))}
-              <Link to="/cadastro-produtos" className={styles.linkAsButton}>Cadastrar Produtos</Link>
+              {produtos.length === 0 ? (
+                <p>Nenhum produto cadastrado ainda.</p>
+              ) : (
+                produtos.map(produto => (
+                  <ProdutoCardapio
+                    key={produto.id}
+                    nome={produto.nome}
+                    descricao={produto.descricao}
+                    preco={produto.preco}
+                    fotoUrl={produto.fotoUrl}
+                  />
+                ))
+              )}
+              <Link to={`/cadastro-produtos/${id}`} className={styles.linkAsButton}>Cadastrar Produtos</Link>
             </div>
           </div>
 
+
           <div className={styles.blocoPedidos}>
             <h2>Pedidos Recebidos</h2>
-            {pedidos.map(pedido => (
-              <PedidoCard key={pedido.id} pedido={pedido} />
-            ))}
+            {pedidos.length === 0 ? (
+              <p>Nenhum pedido foi realizado ainda.</p>
+            ) : (
+              pedidos.map(pedido => (
+                <PedidoCard key={pedido.id} pedido={pedido} />
+              ))
+            )}
           </div>
         </div>
       </main>

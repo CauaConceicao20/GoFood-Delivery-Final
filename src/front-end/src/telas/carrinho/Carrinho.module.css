@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 .main {
@@ -16,7 +17,7 @@ span {
 .carrinho {
   width: 100vw;
   max-width: 1200px;
-  padding: 30px 20px;
+  padding: 30px;
   margin: 0 auto 20px auto;
 }
 
@@ -147,13 +148,20 @@ span {
   font-size: clamp(18px, 2vw, 20px);
 }
 
+.botao-finalizar {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
 .botao-finalizar button {
   background-color: #E53935;
   color: white;
   border: none;
   border-radius: 10px;
   padding: 10px;
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   transition: background-color 0.3s ease;
   margin-left: 10px;
 }
@@ -284,33 +292,28 @@ input[type="checkbox"]:hover {
   cursor: pointer;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1290px) {
   .carrinho {
-    padding: 20px;
-  }
-
-  .alimento-do-carrinho {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .alimento-do-carrinho img {
-    width: 100%;
-    max-width: 180px;
-  }
-
-  .conteudo-alimento {
-    max-width: 100%;
-    width: 100%;
-    align-items: center;
-    text-align: center;
+    width: 900px;
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 998px) {
+  .carrinho {
+    width: 700px;
+  }
+}
+
+@media (max-width: 810px) {
+  .carrinho {
+    width: 400px;
+  }
+}
+
+@media (max-width: 680px) {
   .alimento-do-carrinho {
     max-width: 400px;
-    margin: auto auto 10px auto;
+
     flex-direction: column;
   }
 
@@ -326,13 +329,23 @@ input[type="checkbox"]:hover {
     max-width: 180px;
   }
 
-  .botao-finalizar button {
-    min-width: 100px;
-  }
-
   .conteudo-alimento h2 {
     padding: 0;
     margin: 0;
+  }
+
+  .div-checkbox,
+  .area-img-alimento,
+  .conteudo-alimento {
+    margin: 10px;
+  }
+
+  .conteudo-alimento {
+    padding: 0 10px;
+  }
+
+  .botao-finalizar {
+    justify-content: center;
   }
 }
 
@@ -342,4 +355,30 @@ input[type="checkbox"]:hover {
     align-items: center;
     gap: 16px;
   }
+}
+
+@media (max-width: 600px) {
+  .area-metodo-pagamento {
+    width: 100%;
+    align-items: center;
+  }
+
+  .area-metodo-pagamento select {
+    min-width: unset;
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+   .carrinho {
+      width: 300px;
+      margin: auto auto auto auto ;
+   }
+}
+
+@media (max-width: 393px) {
+   .carrinho {
+      width: 250px;
+      margin: auto auto auto auto ;
+   }
 }

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './EdicaoDados.css';
 import Header from '../../components/header/Header.jsx';
 import Footer from '../../components/footer/Footer.jsx';
 
 
-function EdicaoDados() { 
+function EdicaoDados() {
 
     const [restaurantData, setRestaurantData] = useState({
         nome: '',
@@ -23,11 +23,9 @@ function EdicaoDados() {
 
     const [cidadeOptions, setCidadeOptions] = useState([]);
 
-
     useEffect(() => {
         const fetchCidades = async () => {
             try {
-              
                 const response = await new Promise(resolve => setTimeout(() => {
                     resolve({
                         json: () => Promise.resolve([
@@ -37,18 +35,18 @@ function EdicaoDados() {
                             { id: '4', nome: 'Camaçari' }
                         ])
                     });
-                }, 500)); 
+                }, 500));
 
                 const data = await response.json();
-                setCidadeOptions(data); 
+                setCidadeOptions(data);
             } catch (error) {
                 console.error("Erro ao buscar cidades:", error);
-               
             }
         };
 
         fetchCidades();
-    }, []); 
+    }, []);
+
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
@@ -87,19 +85,16 @@ function EdicaoDados() {
                             <button className="EDR-back-button"> Voltar</button>
                         </Link>
 
-                        <h1 className="EDR-page-title">Editar Informações</h1>
+
+                        <h1 className="EDR-page-title">Informações</h1>
                     </div>
 
-
-
                     <form onSubmit={handleSubmit} className="EDR-restaurant-form">
-
                         <section className="EDR-form-section">
 
                             <h2 className="EDR-section-title">Informações do Restaurante</h2>
-           
-                            <div className="EDR-form-grid-2-cols">
 
+                            <div className="EDR-form-grid-2-cols">
                                 <div className="EDR-photo-upload-group">
                                     <input
                                         type="file"
@@ -107,10 +102,10 @@ function EdicaoDados() {
                                         name="foto"
                                         accept="image/*"
                                         onChange={handleChange}
-                                        className="EDR-photo-input" 
+                                        className="EDR-photo-input"
                                     />
                                     {restaurantData.foto ? (
-                                        <img src={restaurantData.foto} alt="Pré-visualização da foto" className="EDR-photo-preview" /> // Ajuste do className
+                                        <img src={restaurantData.foto} alt="Pré-visualização da foto" className="EDR-photo-preview" />
                                     ) : (
                                         <>
                                             <span className="EDR-plus-icon">+</span>
@@ -122,7 +117,8 @@ function EdicaoDados() {
                                 </div>
 
                                 <div className="EDR-form-group">
-                                    <label htmlFor="nome" className="EDR-form-label"> 
+                                    <label htmlFor="nome" className="EDR-form-label">
+                                        Nome do Restaurante *
                                     </label>
                                     <input
                                         type="text"
@@ -131,12 +127,12 @@ function EdicaoDados() {
                                         value={restaurantData.nome}
                                         onChange={handleChange}
                                         required
-                                        className="EDR-form-input" 
+                                        className="EDR-form-input"
                                     />
                                 </div>
 
-                                <div className="EDR-form-group EDR-full-width"> 
-                                    <label htmlFor="desc" className="EDR-form-label"> 
+                                <div className="EDR-form-group EDR-full-width">
+                                    <label htmlFor="desc" className="EDR-form-label">
                                         Faça uma breve descrição do seu restaurante
                                     </label>
                                     <textarea
@@ -145,15 +141,15 @@ function EdicaoDados() {
                                         value={restaurantData.desc}
                                         onChange={handleChange}
                                         rows="4"
-                                        className="EDR-form-textarea" 
+                                        className="EDR-form-textarea"
                                     ></textarea>
                                 </div>
                             </div>
                         </section>
 
-                        <section className="EDR-form-section"> 
-                            <h2 className="EDR-section-title">Endereço</h2> 
-                            <div className="EDR-form-grid-2-cols"> 
+                        <section className="EDR-form-section">
+                            <h2 className="EDR-section-title">Endereço</h2>
+                            <div className="EDR-form-grid-2-cols">
                                 <div className="EDR-form-group">
                                     <label htmlFor="cep" className="EDR-form-label">
                                         CEP *
@@ -165,13 +161,13 @@ function EdicaoDados() {
                                         value={restaurantData.cep}
                                         onChange={handleChange}
                                         required
-                                        className="EDR-form-input" 
+                                        className="EDR-form-input"
                                         placeholder="Ex: 00000-000"
                                     />
                                 </div>
 
-                                <div className="EDR-form-group"> 
-                                    <label htmlFor="logradouro" className="EDR-form-label"> 
+                                <div className="EDR-form-group">
+                                    <label htmlFor="logradouro" className="EDR-form-label">
                                         Logradouro *
                                     </label>
                                     <input
@@ -181,12 +177,12 @@ function EdicaoDados() {
                                         value={restaurantData.logradouro}
                                         onChange={handleChange}
                                         required
-                                        className="EDR-form-input" 
+                                        className="EDR-form-input"
                                     />
                                 </div>
 
                                 <div className="EDR-form-group">
-                                    <label htmlFor="numero" className="EDR-form-label"> 
+                                    <label htmlFor="numero" className="EDR-form-label">
                                         Número *
                                     </label>
                                     <input
@@ -196,12 +192,12 @@ function EdicaoDados() {
                                         value={restaurantData.numero}
                                         onChange={handleChange}
                                         required
-                                        className="EDR-form-input" 
+                                        className="EDR-form-input"
                                     />
                                 </div>
 
                                 <div className="EDR-form-group">
-                                    <label htmlFor="complemento" className="EDR-form-label"> 
+                                    <label htmlFor="complemento" className="EDR-form-label">
                                         Complemento
                                     </label>
                                     <input
@@ -210,12 +206,12 @@ function EdicaoDados() {
                                         name="complemento"
                                         value={restaurantData.complemento}
                                         onChange={handleChange}
-                                        className="EDR-form-input" 
+                                        className="EDR-form-input"
                                     />
                                 </div>
 
-                                <div className="EDR-form-group"> 
-                                    <label htmlFor="bairro" className="EDR-form-label"> 
+                                <div className="EDR-form-group">
+                                    <label htmlFor="bairro" className="EDR-form-label">
                                         Bairro *
                                     </label>
                                     <input
@@ -225,13 +221,13 @@ function EdicaoDados() {
                                         value={restaurantData.bairro}
                                         onChange={handleChange}
                                         required
-                                        className="EDR-form-input" 
+                                        className="EDR-form-input"
                                     />
                                 </div>
 
 
-                                <div className="EDR-form-group"> 
-                                    <label htmlFor="cidade" className="EDR-form-label"> 
+                                <div className="EDR-form-group">
+                                    <label htmlFor="cidade" className="EDR-form-label">
                                         Cidade *
                                     </label>
                                     <select
@@ -253,10 +249,10 @@ function EdicaoDados() {
                             </div>
                         </section>
 
-                        <section className="EDR-form-section"> 
-                            <h2 className="EDR-section-title">Informações da Empresa</h2> 
-                            <div className="EDR-form-group"> 
-                                <label htmlFor="razaoSocial" className="EDR-form-label"> 
+                        <section className="EDR-form-section">
+                            <h2 className="EDR-section-title">Informações da Empresa</h2>
+                            <div className="EDR-form-group">
+                                <label htmlFor="razaoSocial" className="EDR-form-label">
                                     Razão Social *
                                 </label>
                                 <input
@@ -266,17 +262,16 @@ function EdicaoDados() {
                                     value={restaurantData.razaoSocial}
                                     onChange={handleChange}
                                     required
-                                    className="EDR-form-input" 
+                                    className="EDR-form-input"
                                 />
                             </div>
                         </section>
-
 
                         <button
                             type="submit"
                             className="EDR-submit-button"
                         >
-                            Finalizar Edição
+                            Finalizar Cadastro
                         </button>
                     </form>
                 </div>
@@ -286,4 +281,4 @@ function EdicaoDados() {
     );
 }
 
-export default EdicaoDados; // Exportando como EdicaoDados
+export default EdicaoDados;

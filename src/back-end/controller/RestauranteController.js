@@ -24,7 +24,7 @@ class RestauranteController {
         this.restauranteService = new RestauranteService();
         this.restaurantePagamentoService = new RestaurantePagamentoService();
         this.enderecoService = new EnderecoService();
-        this.usaurioService = new UsuarioService();
+        this.usuarioService = new UsuarioService();
         this.fotoService = new FotoService();
         this.authMiddleware = new AuthMiddleware();
         this.tokenService = new TokenService();
@@ -68,7 +68,7 @@ class RestauranteController {
 
     async registraRestaurante(req, res) {
         try {
-            const usuario = await this.usaurioService.buscarPorId(req.usuario.id);
+            const usuario = await this.usuarioService.buscarPorId(req.usuario.id);
             const restauranteDto = new RestauranteRegisterRequestDto(JSON.parse(req.body.restaurante));
             const file = req.file;
 
@@ -121,7 +121,7 @@ class RestauranteController {
 
     async buscarRestaurantesAssociadosAoUsuario(req, res) {
         try {
-            const usuario = await this.usaurioService.buscarPorId(req.usuario.id);
+            const usuario = await this.usuarioService.buscarPorId(req.usuario.id);
             const restaurantes = await this.restauranteService.buscarRestaurantesAssociadosAUsuario(usuario.getId());
 
             const restaurantesDto = await Promise.all(restaurantes.map(async (restaurante) => {
@@ -146,7 +146,9 @@ class RestauranteController {
             const usuarioId = req.usuario.id;
             const restauranteId = parseInt(req.params.id);
 
-            const usuario = await this.usaurioService.buscarPorId(usuarioId);
+            console.log(usuarioId, restauranteId);
+
+            const usuario = await this.usuarioService.buscarPorId(usuarioId);
 
             const restaurantes = await this.restauranteService.buscarRestaurantesAssociadosAUsuario(usuarioId);
             const restaurante = restaurantes.find(r => r.getId() === restauranteId);

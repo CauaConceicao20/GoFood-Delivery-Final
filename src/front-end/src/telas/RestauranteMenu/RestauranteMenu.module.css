@@ -29,9 +29,9 @@
 }
 
 .logoRestaurante {
-  width: 120px;
-  height: 120px;
-  object-fit: contain;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
 }
 
 .infoRestaurante h1 {
@@ -150,7 +150,7 @@
   }
 }
 
-@media (max-width: 504px) {
+@media (max-width: 528px) {
   .restauranteTopo {
     flex-direction: column;
   }

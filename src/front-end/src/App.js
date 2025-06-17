@@ -30,9 +30,9 @@ function App() {
         <Route path="/carrinho" element={<Carrinho />} />
         <Route path="/perfil" element={<PerfilUsuario />} />
         <Route path="/RestaurantePerfil/:id" element={<PerfilRestaurante />} />
-        <Route path="/cadastro-produtos" element={<CadastroProdutos />} />
+        <Route path="/cadastro-produtos/:id" element={<CadastroProdutos />} />
         <Route path="/detalhes-pedido" element={<DetalhesPedido />} />
-        <Route path="/EdicaoRestaurante" element={<EdicaoRestaurante />} />
+        <Route path="/EdicaoRestaurante/:id" element={<EdicaoRestaurante />} />
         <Route path="/EdicaoUsuario" element={<EdicaoUsuario />} />
         <Route path="/sobre" element={<AboutScreen />} />
         <Route path="/configuracoes" element={<SettingsScreen />} />

@@ -6,7 +6,6 @@ class ProdutoRegisterRequestDto {
     this.descricao = body.descricao;
     this.preco = body.preco;
     this.categoriaId = body.categoriaId;
-    this.restauranteId = body.restauranteId;
 
     this.validarCampos();
   }
@@ -23,9 +22,6 @@ class ProdutoRegisterRequestDto {
     }
     if (!this.categoriaId) {
       throw new BadRequestError("A categoria do produto é obrigatória.");
-    }
-    if (!this.restauranteId || this.restauranteId <= 0) {
-      throw new BadRequestError("O restaurante do produto é obrigatório.");
     }
   }
 }

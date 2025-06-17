@@ -31,7 +31,7 @@ class ProdutoController {
     }
 
     iniciaRotas() {
-        this.router.post('/register',
+        this.router.post('/register/:id',
             this.configMulter,
             this.authMiddleware.autenticar.bind(this.authMiddleware),
             this.authMiddleware.autorizar(['RESTAURANTE']),
@@ -52,9 +52,10 @@ class ProdutoController {
     async registraProduto(req, res) {
         try {
             const usuarioId = req.usuario.id;
+            const restauranteId = req.params.id;
             await this.usuarioService.buscarPorId(usuarioId);
             const produtoDto = new ProdutoRegisterRequestDto(JSON.parse(req.body.produto));
-            const restaurante = await this.restauranteService.buscarPorId(produtoDto.restauranteId);
+            const restaurante = await this.restauranteService.buscarPorId(restauranteId);
             const file = req.file;
 
             if (!file) {

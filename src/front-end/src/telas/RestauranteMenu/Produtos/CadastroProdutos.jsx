@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import './CadastroProdutos.css';
 import Footer from '../../../components/footer/Footer';
 import Header from '../../../components/header/Header';
 import ModalErro from '../../../components/modal_erro/ModalErro.jsx'; // ajuste o caminho se necessário
 
 const CadastroProdutos = () => {
+  const { id } = useParams();
   const [produto, setProduto] = useState({
     foto: null,
     fotoPreview: null,
@@ -52,7 +53,8 @@ const CadastroProdutos = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3001/api/v1/produtos/register", {
+      const response = await fetch(
+        `http://localhost:3001/api/v1/produtos/register/${id}`, {
         method: "POST",
         body: formData,
         credentials: 'include'
@@ -91,7 +93,7 @@ const CadastroProdutos = () => {
           <div className="cadastro-container">
             <div className="header-cadastro-de-produto">
               <h1>Cadastrar Novo Produto</h1>
-              <Link to="/RestaurantePerfil" className="btn-voltar-perfil">
+              <Link to={`/RestaurantePerfil/${id}`} className="btn-voltar-perfil">
                 &larr; Voltar ao Perfil
               </Link>
             </div>
