@@ -15,6 +15,7 @@ import EdicaoUsuario from './telas/PerfilUsuario/EdicaoUsuario';
 import AboutScreen from './telas/aboutScreen/AboutScreen.jsx';
 import SettingsScreen from './telas/SettingsScreen/SettingsScreen.jsx'
 import ProdutoDetails from './telas/RestauranteMenu/Produtos/ProdutosDetails.jsx';
+import VisualizarProduto from './telas/produto/VisualizarProduto.jsx';
 
 
 
@@ -37,6 +38,7 @@ function App() {
         <Route path="/sobre" element={<AboutScreen />} />
         <Route path="/configuracoes" element={<SettingsScreen />} />
         <Route path="/ProdutoDetails" element={<ProdutoDetails />} />
+        <Route path="/visualizarProduto/:id" element={<VisualizarProduto />}/>
 
       </Routes>
     </div>

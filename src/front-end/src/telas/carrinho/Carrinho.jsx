@@ -214,7 +214,7 @@ const Carrinho = () => {
             <div className={styles["area-do-btn-voltar"]}>
               <button
                 className={styles["btn-de-voltar"]}
-                onClick={() => navigate(-1)} // aqui chama para voltar à página anterior
+                onClick={() => navigate(-1)}
                 aria-label="Voltar"
               >
                 <i className="fas fa-arrow-left"></i>

@@ -14,7 +14,6 @@ const CardItemRestaurante = ({
 }) => {
   const [mensagemModal, setMensagemModal] = useState('');
 
-  // Função para verificar se o usuário está autenticado
   const verificarAutenticacao = async () => {
     try {
       const response = await fetch('http://localhost:3001/api/v1/auth/status', {
@@ -71,7 +70,7 @@ const CardItemRestaurante = ({
     <>
       <article className="card-alimentos">
         <figure>
-          <a href={`/produto/${id}`}>
+          <a href={`/visualizarProduto/${id}`}>
             <img src={imagemProduto} alt={`Imagem de ${nomeProduto}`} />
           </a>
         </figure>

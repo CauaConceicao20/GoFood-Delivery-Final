@@ -1,0 +1,259 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.areaDeBtns {
+  display: flex;
+  gap: 20px;
+}
+
+.areaDoBtn {
+  margin-top: 40px;
+}
+
+.areaDoBtnVoltar {
+  margin-top: 100px;
+  margin-bottom: 20px;
+}
+
+.areaDoBtnVoltar a {
+  text-decoration: none;
+}
+
+.areaDoBtnVoltar img:hover {
+  cursor: pointer;
+}
+
+.btnDeVoltar {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2em;
+  color: #333;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btnDeVoltar:hover {
+  background-color: #f0f0f0;
+}
+
+.btnFazerPedido {
+  width: 200px;
+  padding: 10px;
+  background-color: #E53935;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btnFazerPedido:hover {
+  background-color: #a82d2d;
+  cursor: pointer;
+}
+
+.button {
+  background-color: #d9232d;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1em;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cardImgRestaurante img {
+  width: 20px;
+  height: 20px;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  display: block;
+  min-height: 100vh;
+}
+
+.dadosRestaurante {
+  margin-top: 20px;
+}
+
+.main {
+  flex: 1;
+}
+
+.preco {
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 10px;
+}
+
+.produtoAreaImg {
+  margin: auto;
+}
+
+.produtoAreaImg img {
+  max-width: 450px;
+  max-height: 300px;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  display: block;
+}
+
+.produtoDetalhes {
+  flex-grow: 1;
+}
+
+.produtoDetalhes .descricao {
+  font-size: 14px;
+  color: #555;
+  line-height: 22px;
+  margin-bottom: 15px;
+  border: 1px solid #eee;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.produtoDetails h1 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 29px;
+  color: #333;
+}
+
+.produtoInfo {
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.rating .fa-star {
+  color: #fbc02d;
+}
+
+.rating .reviews {
+  color: #999;
+  margin-left: 5px;
+}
+
+.ratingDelivery {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #777;
+  align-items: center;
+}
+
+.restauranteInfo {
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+/* MEDIA QUERIES */
+
+@media (max-width: 948px) {
+  .produtoInfo {
+    flex-direction: column;
+  }
+
+  .produtoAreaImg img {
+    height: auto;
+  }
+
+  .produtoDetalhes h1 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .produtoInfo {
+    flex-direction: column;
+  }
+
+  .produtoAreaImg {
+    margin: auto;
+    height: auto;
+  }
+
+  .produtoAreaImg img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .produtoDetalhes h1 {
+    font-size: 22px;
+  }
+
+  .btnFazerPedido {
+    width: 100%;
+  }
+}
+
+@media (max-width: 579px) {
+  .produtoAreaImg {
+    width: 100%;
+    height: auto;
+  }
+
+  .produtoAreaImg img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 24px;
+  }
+
+  .address {
+    font-size: 14px;
+  }
+
+  .restaurantDetails h1 {
+    font-size: 21px;
+  }
+
+  .productCard {
+    padding: 10px;
+  }
+
+  .productCard h3 {
+    font-size: 16px;
+  }
+
+  .productCard .price {
+    font-size: 17px;
+  }
+
+  .addToCartButton {
+    font-size: 13px;
+    padding: 8px;
+  }
+}
