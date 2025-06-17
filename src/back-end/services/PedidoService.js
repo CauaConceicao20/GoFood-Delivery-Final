@@ -3,7 +3,7 @@ import PedidoRepository from '../repository/PedidoRepository.js';
 import ProdutoService from './ProdutoService.js';
 import RestauranteService from './RestauranteService.js';
 import RestaurantePagamentoService from './RestaurantePagamentoService.js';
-import { PaymentMethodNotAcceptedError, NotFoundError } from '../exception/GlobalExceptions.js';
+import { PaymentMethodNotAcceptedError, NotFoundError, PedidoStatusUpdateError } from '../exception/GlobalExceptions.js';
 
 class PedidoService {
 
@@ -58,6 +58,61 @@ class PedidoService {
         }
     }
 
+    async buscarPorId(id) {
+        try {
+            const pedido = await this.pedidoRepository.buscarPorId(id)
+            if (!pedido) {
+                throw new NotFoundError(`Pedido com id ${id} não encontrado`);
+            }
+            return pedido;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async atualizaStatusDoPedido(pedido, novoStatus) {
+        try {
+            const statusAtual = pedido.getStatusPedido();
+
+            if (['CONCLUIDA', 'CANCELADO'].includes(statusAtual)) {
+                throw new PedidoStatusUpdateError(`Já está como ${statusAtual.toLowerCase()} e não pode ser alterado`);
+            }
+
+            const statusPermitidos = ['CONFIRMADO', 'CANCELADO', 'ENTREGUE', 'CONCLUIDA'];
+
+            if (!statusPermitidos.includes(novoStatus)) {
+                throw new PedidoStatusUpdateError('Status do pedido inválido');
+            }
+
+            if (novoStatus === 'CONCLUIDA' && statusAtual !== 'ENTREGUE') {
+                throw new PedidoStatusUpdateError('Só é possível concluir um pedido que já foi entregue');
+            }
+
+            if (novoStatus === 'ENTREGUE') {
+                pedido.setDataEntrega(this.geraDataAtual());
+            }
+
+            if (novoStatus === 'CANCELADO') {
+                if (pedido.getDataCancelamento()) {
+                    throw new PedidoStatusUpdateError('Pedido já foi cancelado');
+                }
+                pedido.setDataCancelamento(this.geraDataAtual());
+            }
+
+            if (novoStatus === 'CONFIRMADO') {
+                if (pedido.getDataConfirmacao()) {
+                    throw new PedidoStatusUpdateError('Pedido já foi confirmado');
+                }
+                pedido.setDataConfirmacao(this.geraDataAtual());
+            }
+
+            pedido.setStatusPedido(novoStatus);
+            await this.pedidoRepository.atualizaStatusDoPedido(pedido);
+        } catch (err) {
+            throw err;
+        }
+    }
+
     async buscarPedidosDoRestaurante(idRestaurante) {
         try {
             const pedidos = await this.pedidoRepository.buscarPedidosDoRestaurante(idRestaurante);
@@ -71,6 +126,12 @@ class PedidoService {
             throw err;
         }
     }
+
+
+    geraDataAtual() {
+        return new Date().toLocaleString('sv-SE', { timeZone: 'America/Sao_Paulo' }).replace(' ', 'T');
+    }
 }
+
 
 export default PedidoService;

@@ -39,6 +39,12 @@ class PedidoController {
             this.authMiddleware.autorizar(['RESTAURANTE']),
             this.buscarPedidosDoRestaurante.bind(this)
         );
+
+        this.router.put('/atualizaStatusPedido/:id/status',
+            this.authMiddleware.autenticar.bind(this.authMiddleware),
+            this.authMiddleware.autorizar(['RESTAURANTE']),
+            this.atualizarStatusPedido.bind(this)
+        );
     }
 
     async registraPedido(req, res) {
@@ -75,6 +81,28 @@ class PedidoController {
                 return new PedidoResponseDto(pedido, usuario, restaurante, produtos, metodoDePagamento, itensPedido);
             }));
             res.status(200).json(pedidosCompletos);
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async atualizarStatusPedido(req, res) {
+        try {
+            const pedidoId = req.params.id;
+            const status = req.body.status?.toUpperCase();
+
+            if (!status) {
+                return res.status(400).json({ erro: 'Status é obrigatório.' });
+            }
+
+            const pedido = await this.pedidoService.buscarPorId(pedidoId);
+
+            if (!pedido) {
+                return res.status(404).json({ erro: 'Pedido não encontrado.' });
+            }
+            await this.pedidoService.atualizaStatusDoPedido(pedido, status);
+
+            return res.status(200).json({ mensagem: 'Status atualizado com sucesso.' });
         } catch (err) {
             throw err;
         }

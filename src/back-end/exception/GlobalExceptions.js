@@ -47,5 +47,13 @@ class DifferentRestaurantProductsError extends BadRequestError {
   }
 }
 
+class PedidoStatusUpdateError extends BadRequestError {
+  constructor(message = 'Não foi possível atualizar o status do pedido') {
+    super(message);
+  }
+}
+
+
 export { NotFoundError, BadRequestError,  UnauthorizedError, ForbiddenError,
-  MinimumQuantityException, ForbiddenOwnRestaurantProductError, PaymentMethodNotAcceptedError ,DifferentRestaurantProductsError};
+  MinimumQuantityException, ForbiddenOwnRestaurantProductError, PaymentMethodNotAcceptedError, 
+  DifferentRestaurantProductsError, PedidoStatusUpdateError};
