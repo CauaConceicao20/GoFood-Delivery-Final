@@ -1,9 +1,10 @@
 import RestauranteRepository from '../repository/RestauranteRepository.js';
 import RestaurantePagamentoService from './RestaurantePagamentoService.js';
-import { BadRequestError } from '../exception/GlobalExceptions.js';
+import { BadRequestError, NotFoundError } from '../exception/GlobalExceptions.js';
 import GrupoService from './GrupoService.js';
 import { GrupoNomeEnum } from '../model/usuario/enums/GrupoNomeEnum.js';
 import UsuarioGrupoService from './UsuarioGrupoService.js';
+import Foto from '../model/foto/Foto.js';
 
 class RestauranteService {
 
@@ -39,7 +40,7 @@ class RestauranteService {
         try {
             const restaurante = await this.restauranteRepository.buscarPorId(id);
             if (!restaurante) {
-                throw new BadRequestError(`Restaurante com ID ${id} não encontrado.`);
+                throw new NotFoundError(`Restaurante com ID ${id} não encontrado.`);
             }
             return restaurante;
         } catch (err) {
@@ -52,7 +53,7 @@ class RestauranteService {
             const restaurantes = await this.restauranteRepository.buscarRestaurantesAssociadosAUsuario(idUsuario);
             for (const restaurante of restaurantes) {
                 if (!restaurante) {
-                    throw new BadRequestError(`Restaurante com ID ${idUsuario} não encontrado.`);
+                    throw new NotFoundError(`Restaurante com ID ${idUsuario} não encontrado.`);
                 }
             }
             return restaurantes;
@@ -61,9 +62,9 @@ class RestauranteService {
         }
     }
 
-    async atualiza(restauranteDto, fotoDto) {
+    async atualiza(id ,restauranteDto, foto) {
         try {
-            const restaurante = await this.restauranteRepository.buscarPorId(restauranteDto.id);
+            const restaurante = await this.restauranteRepository.buscarPorId(id);
             if (!restaurante) throw new NotFoundError("Restaurante não encontrado");
 
             restaurante.setNome(restauranteDto.nome);
@@ -81,7 +82,7 @@ class RestauranteService {
 
             restaurante.setDataAtualizacao(new Date().toISOString());
 
-            return await this.restauranteRepository.atualiza(restaurante, fotoDto);
+            return await this.restauranteRepository.atualiza(restaurante, foto);
         } catch (err) {
             throw err;
         }

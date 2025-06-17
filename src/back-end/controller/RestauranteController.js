@@ -16,6 +16,8 @@ import RestauranteResponseDto from '../model/restaurante/dtos/RestauranteRespons
 import fs from 'fs/promises';
 import path from 'path';
 import FotoService from '../services/FotoService.js';
+import RestauranteUpdateRequestDto from '../model/restaurante/dtos/RestauranteUpdateRequestDto.js';
+import { BadRequestError, NotFoundError } from '../exception/GlobalExceptions.js';
 
 class RestauranteController {
     constructor() {
@@ -175,11 +177,23 @@ class RestauranteController {
     }
 
     async atualizaRestaurante(req, res) {
+        let foto = null;
         try {
+            const restaurante = await this.restauranteService.buscarPorId(req.params.id);
+
+            if (!req.body.restaurante) {
+                new NotFoundError("Campo restaurante não foi enviado no corpo da requisição.");
+            }
+
             const restauranteDto = new RestauranteUpdateRequestDto(JSON.parse(req.body.restaurante));
             const fotoDto = req.file ? new FotoRegisterRequestDto(req.file) : null;
 
-            const restauranteAtualizado = await this.restauranteService.atualiza(restauranteDto, fotoDto);
+            if (fotoDto) {
+                     foto = new Foto(null, fotoDto.nome, fotoDto.content_type, fotoDto.url,
+                    fotoDto.tamanho);
+            }
+
+            const restauranteAtualizado = await this.restauranteService.atualiza(req.params.id, restauranteDto, foto);
 
             res.status(200).json(restauranteAtualizado);
         } catch (err) {
@@ -191,7 +205,6 @@ class RestauranteController {
                     console.error('Erro ao remover arquivo órfão:', e);
                 }
             }
-
             throw err;
         }
     }

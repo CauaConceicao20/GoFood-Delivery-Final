@@ -1,4 +1,6 @@
 import Connection from "../database/Connection.js";
+import path from 'path';
+import fs from 'fs/promises';
 import RestaurantePagamentoRepository from "./RestaurantePagamentoRepository.js";
 import Restaurante from "../model/restaurante/Restaurante.js";
 import FormaPagamentoRepository from "./FormaPagamentoRepository.js";
@@ -96,7 +98,6 @@ class RestauranteRepository {
     }
 
     async buscarPorId(id, conn) {
-
         try {
             if (!conn) conn = await this.connection.connect();
             const restauranteEncontrado = await conn.get(`SELECT * FROM restaurantes WHERE id = ?`, [id]);
@@ -112,7 +113,7 @@ class RestauranteRepository {
             const restaurante = new Restaurante(restauranteEncontrado.id, restauranteEncontrado.nome,
                 restauranteEncontrado.descricao, restauranteEncontrado.razao_social, restauranteEncontrado.taxa_frete,
                 restauranteEncontrado.data_cadastro, restauranteEncontrado.data_atualizacao, endereco,
-                restauranteEncontrado.usuario_id, null, restauranteEncontrado.cnpj );
+                restauranteEncontrado.usuario_id, null, restauranteEncontrado.cnpj);
 
             restaurante.setAberto(restauranteEncontrado.aberto);
             restaurante.setAtivo(restauranteEncontrado.ativo);
@@ -149,7 +150,7 @@ class RestauranteRepository {
         }
     }
 
-    async atualiza(restaurante, novaFoto) {
+    async atualiza(restaurante, foto) {
         let conn;
         try {
             conn = await this.connection.connect();
@@ -205,7 +206,7 @@ class RestauranteRepository {
             const query = `UPDATE restaurantes SET ${campos.join(', ')} WHERE id = ?`;
             await conn.run(query, valores);
 
-            if (novaFoto) {
+            if (foto) {
                 const row = await conn.get(
                     `SELECT id, url FROM fotos WHERE entidade_id = ? AND entidade_tipo = ?`,
                     [restaurante.getId(), 'RESTAURANTE']
@@ -214,9 +215,12 @@ class RestauranteRepository {
                 if (row) {
                     const caminhoAntigo = path.resolve('uploads', path.basename(row.url));
                     try {
+                        await fs.access(caminhoAntigo);
                         await fs.unlink(caminhoAntigo);
                     } catch (err) {
-                        console.warn('Falha ao excluir imagem antiga:', err.message);
+                        if (err.code !== 'ENOENT') {
+                            console.warn('Falha ao excluir imagem antiga:', err.message);
+                        }
                     }
 
                     await conn.run(`DELETE FROM fotos WHERE id = ?`, [row.id]);
@@ -226,10 +230,10 @@ class RestauranteRepository {
                     `INSERT INTO fotos (nome, content_type, tamanho, url, entidade_tipo, entidade_id)
                  VALUES (?, ?, ?, ?, ?, ?)`,
                     [
-                        novaFoto.getNome(),
-                        novaFoto.getContentType(),
-                        novaFoto.getTamanho(),
-                        novaFoto.getUrl(),
+                        foto.getNome(),
+                        foto.getContentType(),
+                        foto.getTamanho(),
+                        foto.getUrl(),
                         'RESTAURANTE',
                         restaurante.getId()
                     ]

@@ -45,7 +45,6 @@ class PedidoRepository {
     async buscarPedidosDoRestaurante(idRestaurante) {
         const conn = await this.connection.connect();
         try {
-            console.log(idRestaurante);
             const result = await conn.all('SELECT * FROM pedidos WHERE restaurante_id=?', [idRestaurante]);
 
             const pedidos = result.map(pedido => new Pedido(pedido.id, pedido.codigo,         

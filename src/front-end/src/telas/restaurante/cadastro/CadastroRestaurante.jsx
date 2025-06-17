@@ -43,7 +43,7 @@ const CadastroRestaurante = () => {
           setFormasPagamento(data);
         }
       } catch (err) {
-        setMensagemErro(err.message || "Erro ao buscar formas de pagamento");
+        setMensagemErro(err.erro || "Erro ao buscar formas de pagamento");
         setMostrarModal(true);
       }
     }
@@ -59,7 +59,7 @@ const CadastroRestaurante = () => {
           setCidades(data);
         }
       } catch (err) {
-        setMensagemErro(err.message || "Erro ao buscar cidades");
+        setMensagemErro(err.erro || "Erro ao buscar cidades");
         setMostrarModal(true);
       }
     }

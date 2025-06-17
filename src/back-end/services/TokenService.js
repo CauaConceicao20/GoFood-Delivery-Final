@@ -25,7 +25,6 @@ class TokenService {
         } catch (err) {
             throw err;
         }
-
     }
 
     async refreshToken(usuario) {

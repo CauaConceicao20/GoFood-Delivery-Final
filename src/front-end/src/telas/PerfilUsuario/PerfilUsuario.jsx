@@ -24,7 +24,7 @@ const PerfilUsuario = () => {
         <div className="profile-form">
           <table className="profile-table">
             <tbody>
-              {/* Linha 1: Nome Completo */}
+
               <tr>
                 <td className="label-cell">
                   <label className="required-field">Nome completo</label>
@@ -32,11 +32,9 @@ const PerfilUsuario = () => {
                 <td>
                   <span className="display-value">{userData.nomeCompleto}</span>
                 </td>
-                {/* Adiciona uma célula vazia para manter o layout de 4 colunas na linha */}
                 <td colSpan="2"></td>
               </tr>
 
-              {/* Nova Linha 2: Telefone de celular */}
               <tr>
                 <td className="label-cell">
                   <label className="required-field">Telefone de celular</label>
@@ -44,33 +42,31 @@ const PerfilUsuario = () => {
                 <td>
                   <span className="display-value">{userData.telefone}</span>
                 </td>
-                {/* Adiciona uma célula vazia para manter o layout de 4 colunas na linha */}
+                
                 <td colSpan="2"></td>
               </tr>
 
-              {/* Linha 3 (antiga Linha 2): E-mail */}
               <tr>
                 <td className="label-cell">
                   <label className="required-field">E-mail</label>
                 </td>
-                <td colSpan="3"> {/* Mantém colSpan="3" para ocupar o restante da linha */}
+                <td colSpan="3">
                   <span className="display-value">{userData.email}</span>
                 </td>
               </tr>
 
-              {/* Linha 4 (antiga Linha 3): Endereço */}
+          
               <tr>
                 <td className="label-cell">
                   <label className="required-field">Endereço</label>
                 </td>
-                <td colSpan="3"> {/* Mantém colSpan="3" para ocupar o restante da linha */}
+                <td colSpan="3">
                   <span className="display-value">{userData.endereco}</span>
                 </td>
               </tr>
 
-              {/* Linha 5 (antiga Linha 4): Data de nascimento e CPF */}
               <tr>
-                {/* Esta célula não está mais sob a foto, então não precisa de rowSpan */}
+              
                 <td className="label-cell">
                   <label className="required-field">Data de nascimento</label>
                 </td>
@@ -88,7 +84,7 @@ const PerfilUsuario = () => {
           </table>
         </div>
         <div className="form-actions">
-            <Link to="/EdicaoUsuario" className="edit-button"> {/* Use Link para navegar */}
+            <Link to="/EdicaoUsuario" className="edit-button">
               Editar Dados
             </Link>
           </div>
