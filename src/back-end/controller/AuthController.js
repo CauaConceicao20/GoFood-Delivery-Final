@@ -30,6 +30,7 @@ class AuthController {
 
     this.router.post("/refresh-token", this.refreshToken.bind(this));
     this.router.get("/status", this.status.bind(this));
+    this.router.get("/logout", this.logout.bind(this));
   }
 
   async login(req, res) {
@@ -114,6 +115,20 @@ class AuthController {
     } catch (err) {
       console.error(err);
       return res.status(401).json({ mensagem: "Usuário não autenticado ou inexistente." });
+    }
+  }
+
+  async logout(req, res) {
+    try {
+      res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+      });
+
+      res.status(200).json({ message: 'Logout successful' });
+    } catch (err) {
+      throw err;
     }
   }
 }

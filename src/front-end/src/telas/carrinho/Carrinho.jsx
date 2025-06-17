@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Carrinho.module.css";
 import { Link } from 'react-router-dom';
 import IconPesquisar from '../../assets/icon-pesquisar.png';
@@ -8,13 +9,14 @@ import CarrinhoItem from "../../components/item_carrinho/CarrinhoItem.jsx";
 import ModalErro from "../../components/modal_erro/ModalErro";
 
 const Carrinho = () => {
+  const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const [mensagemErro, setMensagemErro] = useState("");
   const [mensagemSucesso, setMensagemSucesso] = useState("");
   const [metodosPagamento, setMetodosPagamento] = useState([]);
   const [itensSelecionados, setItensSelecionados] = useState([]);
   const [metodoSelecionado, setMetodoSelecionado] = useState("");
-  const [subTotal, setSubTotal] = useState(0); // <- novo state para o subtotal
+  const [subTotal, setSubTotal] = useState(0);
 
   const buscarCarrinho = () => {
     fetch("http://localhost:3001/api/v1/carrinhos/buscarCarrinho", { credentials: "include" })
@@ -209,11 +211,15 @@ const Carrinho = () => {
       <main>
         <section className={styles.carrinho}>
           <div className={styles["area-do-btn-voltar"]}>
-            <button className={styles["btn-de-voltar"]}>
-              <Link to="/">
+            <div className={styles["area-do-btn-voltar"]}>
+              <button
+                className={styles["btn-de-voltar"]}
+                onClick={() => navigate(-1)} // aqui chama para voltar à página anterior
+                aria-label="Voltar"
+              >
                 <i className="fas fa-arrow-left"></i>
-              </Link>
-            </button>
+              </button>
+            </div>
           </div>
 
           <div className={styles["header-do-carrinho"]}>

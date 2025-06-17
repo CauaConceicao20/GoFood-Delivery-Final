@@ -105,7 +105,7 @@ const Header = () => {
     <>
       <header>
         <figure className="container-logo">
-          <Link to="/">
+          <Link to="/main_menu">
             <img id="logo-gofood" src={GoFoodLogo} alt="Logo da empresa" />
           </Link>
         </figure>
