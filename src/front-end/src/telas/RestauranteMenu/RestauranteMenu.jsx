@@ -91,7 +91,7 @@ const Restaurante = () => {
       <Header />
       <main className={styles.restauranteView}>
         <div className={styles.restauranteTopo}>
-        <img src={`http://localhost:3001${restaurante.fotoUrl}`} alt="Logo Restaurante" className={styles.logoRestaurante} />
+          <img src={`http://localhost:3001${restaurante.fotoUrl}`} alt="Logo Restaurante" className={styles.logoRestaurante} />
           <div className={styles.infoRestaurante}>
             <h1>{restaurante.nome}</h1>
             <p>{restaurante.descricao}</p>
@@ -150,13 +150,15 @@ const Restaurante = () => {
 
           <div className={styles.blocoPedidos}>
             <h2>Pedidos Recebidos</h2>
-            {pedidos.length === 0 ? (
-              <p>Nenhum pedido foi realizado ainda.</p>
-            ) : (
-              pedidos.map(pedido => (
-                <PedidoCard key={pedido.id} pedido={pedido} />
-              ))
-            )}
+            <div className={styles.pedidosLista}>
+              {pedidos.length === 0 ? (
+                <p>Nenhum pedido foi realizado ainda.</p>
+              ) : (
+                pedidos.map(pedido => (
+                  <PedidoCard key={pedido.id} pedido={pedido} />
+                ))
+              )}
+            </div>
           </div>
         </div>
       </main>
