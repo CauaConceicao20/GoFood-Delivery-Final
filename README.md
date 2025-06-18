@@ -1,3 +1,8 @@
+# Modelo de Dominio
+![Diagrama de classes](imagem_readme/modelo-de-dominio.png)
+
+
+
 # Como Rodar o Projeto (Front-end e Back-end)
 
 Este tutorial guiará você pelos passos para configurar e rodar tanto o front-end quanto o back-end do projeto.
